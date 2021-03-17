@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>login page</title>
+<link rel="stylesheet" type="text/css" href="login.css"/>
+<script src="https://kit.fontawesome.com/yourcode.js"></script>
+</head>
+<body>
+	<div id="login-box">
+		<h1>Login</h1>
+		<div class="form">
+        <p id="errorMsg"></p>
+			<div class="item">
+			   <!--icon may be added later-->
+			   <input id="userID" type="text" placeholder="Enter User ID">		   
+			</div>
+			<div class="item">
+			   <!--icon may be added later-->
+			   <input id="userPass" type="password" placeholder="Enter Password">		   
+			</div>
+		</div>
+        <button onclick="login()">login</button>
+        <p id="reg">
+            <a href="register.html">register</a>
+        </p>
+	</div>
+<script src="login.js"></script>	
+</body>
+</html>
