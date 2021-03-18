@@ -1,12 +1,11 @@
 .Top{
-    position: static;
-    display: block;
+    margin-bottom: 50px;
 }
 .icon{
-    width: 40px;
-    height:40px;
-    margin-top:30px;
+    width: 100px;
+    height:100px;
     background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    float:left;
 }
 .SearchBox{
     width: 40%;
@@ -35,11 +34,11 @@
     position: absolute;
     right: 0;
     outline: none;
-    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    background: #D86868;
     font-size: 18px;
 }
 .SearchButton:hover{
-    border: 1px solid dodgerblue;
+    border: 1px solid #485868;
 }
 
 .avatar{
@@ -55,12 +54,18 @@
 .avatar:hover{
 
 }
+.banner{
+    height: 100px;
+    width:90%;
+    background: #D86868;
+    margin: auto auto 50px;
+    display: block;
+
+}
 .gallery{
     display: block;
-    margin-top: 20px;
-    margin-left: 100px;
-    margin-right: 50px;
-    width: 80%;
+    width:85%;
+    float: left;
 }
 .text{
     display: block;
@@ -79,4 +84,5 @@
 
 .img:hover{
     border-color: black;
+
 }
