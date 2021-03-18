@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>login page</title>
-<link rel="stylesheet" type="text/css" href="login.css"/>
-<script src="https://kit.fontawesome.com/yourcode.js"></script>
+	<meta charset="utf-8">
+	<title>login page</title>
+	<link rel="stylesheet" type="text/css" href="css/login.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<div id="login-box">
+	<!--The logo and project name-->
+	<!--h1 id = "webName">DONUTS</h1><br>-->
+
+	<!--The login box-->
+	<div class="login-box">
 		<h1>Login</h1>
-		<div class="form">
-        <p id="errorMsg"></p>
+		<form id = "form" method="POST">
 			<div class="item">
-			   <!--icon may be added later-->
-			   <input id="userID" type="text" placeholder="Enter User ID">		   
+				<i class="fa fa-user-o" aria-hidden="true"></i>
+				<input id="userID" type="text" placeholder="User ID"><br>	
 			</div>
+
 			<div class="item">
-			   <!--icon may be added later-->
-			   <input id="userPass" type="password" placeholder="Enter Password">		   
+				<i class="fa fa-key" aria-hidden="true"></i>
+				<input id="userPass" type="password" placeholder="Password"><br>
 			</div>
-		</div>
-        <button onclick="login()">login</button>
-        <p id="reg">
-            <a href="register.html">register</a>
+
+			<input id="loginButton" class="btns" type="submit" value="Sign In">
+
+		</form>
+			   
+        <p class="link">
+            <a href="register.html">New user?</a>
         </p>
+		<!--May add "forget password?" function if possible-->
 	</div>
 <script src="login.js"></script>	
 </body>
