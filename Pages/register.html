@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>DONUTS-Register</title>
 	<link rel="stylesheet" type="text/css" href="css/login.css"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<!--The logo and project name-->
@@ -14,35 +15,35 @@
 		<form id="regForm" action="" method="POST" onsubmit="return regCheck()">
 
 			<!--show alert if input is not in 'xxxx@xxx' format-->
-			<p class="infomation" id="emailAlert"></p>
+			<p class="information" id="emailAlert"></p>
 			<div class="item">
 				<i class="fa fa-envelope-o" aria-hidden="true"></i>
-				<input id="email" type="text" name="email" placeholder="Email Address"><br>
+				<label for="email"></label><input id="email" type="text" name="email" placeholder="Email Address"><br>
 			</div>
 
-			<!--alert if passward length isnot valid-->
+			<!--alert if password length isnot valid-->
 			<!--info show suggested length/characters in password-->
-			<p class="infomation" id="passAlert"></p>
-			<p class="infomation" id="passInfo"></p>
+			<p class="information" id="passAlert"></p>
+			<p class="information" id="passInfo"></p>
 			<div class="item">
 				<i class="fa fa-key" aria-hidden="true"></i>
-				<input id="firstPass" type="password" name="password" placeholder="Enter Password"><br>
+				<label for="firstPass"></label><input id="firstPass" type="password" name="password" placeholder="Enter Password"><br>
 			</div>
 
 			<!--alert if the two password are different-->
 			<!--this input would NOT be submitted-->
-			<p class="infomation" id="passAlert2"></p>
+			<p class="information" id="passAlert2"></p>
 			<div class="item">
 				<i class="fa fa-key" aria-hidden="true"></i>
-				<input id="confirmPass" type="password" placeholder="Confirm Password"><br>
+				<label for="confirmPass"></label><input id="confirmPass" type="password" placeholder="Confirm Password"><br>
 			</div>
 
             <br>
 			<!--alert if the valid code is different from what is sent-->
-			<p class="infomation" id="validAlert"></p>
+			<p class="information" id="validAlert"></p>
 			<div class="valid">
                 <button type="button" onclick="sendValidation()">Send Email</button>
-				<input id="valid code" type="text" name="validCode" placeholder="Validation Code"><br>	
+				<label for="valid code"></label><input id="valid code" type="text" name="validCode" placeholder="Validation Code"><br>
             </div>
             
 			<input id="regButton" class="btns" type="submit" value="Sign Up">
@@ -51,7 +52,8 @@
 		<p class="link"><a href="login.html">Have Account?</a></p>
 
 	</div>
-	
+
+
 <script src="login.js"></script>	
 </body>
 </html>

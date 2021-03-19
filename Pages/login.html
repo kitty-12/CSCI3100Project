@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>DONUTS-Welcome</title>
 	<link rel="stylesheet" type="text/css" href="css/login.css"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<!--The logo and project name-->
@@ -13,23 +14,23 @@
 	<!--The login box-->
 	<div class="fm-box">
 		<h1>Login</h1>
-		<form id = "loginForm" action="" method="POST" onsubmit="return loginCheck()">
-			<!--show if the infomation is wrong-->
-			<p class="infomation" id="errMsg"></p>
+		<form id = "loginForm" action="" method="POST" onsubmit="return loginCheck(this);">
+			<!--show if the information is wrong-->
+			<p class="information" id="errMsg"></p>
 
 			<!--use email alert to show alert massage-->
-			<p class="infomation" id="emailAlert"></p>
+			<p class="information" id="emailAlert"></p>
 			<div class="item">
 				<i class="fa fa-user-o" aria-hidden="true"></i>
-				<input id="iEmail" type="text" name="email" placeholder="Email Address"><br>	
+				<label for="iEmail"></label><input id="iEmail" type="text" name="email" placeholder="Email Address"><br>
 			</div>
 
 			<div class="item">
 				<i class="fa fa-key" aria-hidden="true"></i>
-				<input id="userPass" type="password" name="password" placeholder="Password"><br>
+				<label for="userPass"></label><input id="userPass" type="password" name="password" placeholder="Password"><br>
 			</div>
 
-			<input id="loginButton" class="btns" type="submit" value="Sign In">
+			<input id="loginButton" class="btns" type="submit" value="Sign In" onclick="loginCheck(this)">
 		</form>
 			   
         <p class="link"><a href="register.html">New user?</a></p>
