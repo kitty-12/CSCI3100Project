@@ -82,7 +82,7 @@ function SearchPost(id, error) {
 	}
 
 	// ***Select all the routes related to the post.
-	stmt = `SELECT routeID FROM post WHERE postID = $1`;
+	/*stmt = `SELECT routeID FROM post WHERE postID = $1`;
     var rRows = db.Query(stmt, id);
     var err = db.Query(stmt, id);
 	if (err != nil) {
@@ -95,7 +95,7 @@ function SearchPost(id, error) {
 			return "", err;
 		}
 		sa.RouteIDs = append(sa.RouteIDs, rid);
-	}
+	}*/
 
     var res = json.Marshal(sa);
     var err = json.Marshal(sa);
