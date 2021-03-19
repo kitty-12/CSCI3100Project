@@ -1,1 +1,99 @@
+.Top{
+    margin-bottom: 50px;
+    height:120px;
+}
+.icon{
+    width: 100px;
+    height:100px;
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    float:left;
+}
+.SearchBox{
+    width: 40%;
+    height: 35px;
+    outline: hidden;
+    margin: 0 auto;
+    border: 1px solid black;
+    position: relative;
+}
+.InputBox{
+    width: 84%;
+    height: 30px;
+    border: none;
+    line-height: 15px;
+    outline: none;
+    padding-left: 10px;
+    caret-color: #a1c4fd;
+    font-size: 13px;
 
+
+}
+.SearchButton{
+    width: 80px;
+    height: 35px;
+    border: none;
+    position: absolute;
+    right: 0;
+    outline: none;
+    background: #D86868;
+    font-size: 18px;
+}
+.SearchButton:hover{
+    border: 1px solid #485868;
+}
+
+.avatar{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    object-position: center;
+    right: 50px;
+    position: absolute;
+    border: 1px solid black;
+}
+.avatar:hover{
+
+}
+.avatarR{
+    width: 100px;
+    height:100px;
+    border: 1px solid silver;
+    margin-left: 50px;
+}
+.banner{
+    height: 200px;
+    width:100%;
+    display: block;
+    z-index: -1;
+}
+.img{
+    margin: 30px;
+    border: 1px solid whitesmoke;
+    float: left;
+    height: 200px;
+    width: 200px;
+
+
+}
+
+.img:hover{
+    border-color: black;
+}
+.gallery{
+    display: block;
+    width:85%;
+    float: left;
+    margin-left: 150px;
+}
+.text{
+    display: block;
+    font-family: "Times New Roman", serif;
+    color: black;
+}
+.box{
+    display: block;
+    width: 85%;
+    float: left;
+    margin-left: 100px;
+}
