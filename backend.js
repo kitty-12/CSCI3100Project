@@ -2,10 +2,10 @@ var Admin={
     id: 'admin',
     password:'123456qwe',
     delete: function(post_id){
-        //Database operation
+        my_delete(post,{_id:"post_id"})//Database operation
     },
-    ban: function(){
-        //Database operation
+    ban: function(uid){
+        my_update(user,{_id:uid},{is_banned:true})//Database operation
     },
     announce: function(annoucement,user_id){
         alert(announcement);
