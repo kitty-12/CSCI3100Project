@@ -1,3 +1,4 @@
+// This is some naive design for database related coding
 // Connect to mongodb
 const mongoose = require('mongoose');
 const url = "mongodb://admin:123123@localhost:27017/";
