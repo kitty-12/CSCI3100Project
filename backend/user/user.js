@@ -1,8 +1,5 @@
 package user;
 
-import "database/sql";
-import "encoding/json";
-
 const userNameMinLen = 6;
 const userNameMaxLen = 20;
 const passMinLen     = 6;
@@ -30,7 +27,7 @@ function tokenAPI (){
 //login
 function LoginUser(db, tokenMap, jsonBody, error) {
 	var la = loginAPI;
-	var err = json.Unmarshal(jsonBody, &la);
+	var err = json.Unmarshal(jsonBody, la);//
 	if (err != nil) {
 		return ErrorToJSON(err)
 	}
@@ -41,7 +38,7 @@ function LoginUser(db, tokenMap, jsonBody, error) {
 	var row = db.QueryRow(stmt, la.UserName);
 
 	var hashedPassword;
-	err = row.Scan(&hashedPassword, &isAdmin);
+	err = row.Scan(hashedPassword, isAdmin); //
 	if (err != nil) {
 		return ErrorToJSON(ErrLoginInfo);
 	}
@@ -54,7 +51,7 @@ function LoginUser(db, tokenMap, jsonBody, error) {
 	ta = new tokenAPI();
 	if (isAdmin == 1) {
         var apiToken = bcrypt.GenerateFromPassword(time.Now().String(), 12);
-        var err = bcrypt.GenerateFromPassword((time.Now().String(), 12);
+        var err = bcrypt.GenerateFromPassword(time.Now().String(), 12);
 		if (err != nil) {
 			return ErrorToJSON(ErrAPIToken)
 		}
@@ -78,8 +75,8 @@ function LoginUser(db, tokenMap, jsonBody, error) {
 
 //logout
 function LogoutUser(tokenMap, jsonBody , error) {
-	var ta = tokenAPI{}
-	var err = json.Unmarshal(jsonBody, &ta)
+	var ta = new tokenAPI();
+	var err = json.Unmarshal(jsonBody, ta);//
 	if (err != nil) {
 		return ErrorToJSON(err)
 	}
@@ -99,5 +96,5 @@ function AddBlackList(){
 }
 
 function Complain(){
-    
+
 }
