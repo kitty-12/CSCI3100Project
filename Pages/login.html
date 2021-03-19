@@ -14,14 +14,19 @@
 	<div class="fm-box">
 		<h1>Login</h1>
 		<form id = "form" method="POST">
+			<!--show if the infomation is wrong-->
+			<p class="alert"><br></p>
+
+			<!--use email alert to show alert massage-->
+			<p id="emailAlert"><br></p>
 			<div class="item">
 				<i class="fa fa-user-o" aria-hidden="true"></i>
-				<input id="userID" type="text" placeholder="User ID"><br>	
+				<input id="iEmail" type="text" name="email" placeholder="Email Address"><br>	
 			</div>
 
 			<div class="item">
 				<i class="fa fa-key" aria-hidden="true"></i>
-				<input id="userPass" type="password" placeholder="Password"><br>
+				<input id="userPass" type="password" name="password" placeholder="Password"><br>
 			</div>
 
 			<input id="loginButton" class="btns" type="submit" value="Sign In">
