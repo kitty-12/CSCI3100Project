@@ -5,7 +5,7 @@ var Admin={
         //Database operation
     },
     ban: function(){
-        //what to do?
+        //Database operation
     },
     announce: function(annoucement,user_id){
         alert(announcement);
@@ -31,7 +31,7 @@ var Post={
     author: 'user',
     id: 'id',
     type: 0,//0 no image, 1 image
-    status: 0, //0 script, 1 out.
+    status: 0, //0 draft, 1 sent.
     title: 'title',
     text: 'text',
     image: image,//image?
