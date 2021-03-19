@@ -13,12 +13,12 @@
 	<!--The login box-->
 	<div class="fm-box">
 		<h1>Login</h1>
-		<form id = "form" method="POST">
+		<form id = "loginForm" action="" method="POST" onsubmit="return loginCheck()">
 			<!--show if the infomation is wrong-->
-			<p class="alert"><br></p>
+			<p class="infomation" id="errMsg"></p>
 
 			<!--use email alert to show alert massage-->
-			<p id="emailAlert"><br></p>
+			<p class="infomation" id="emailAlert"></p>
 			<div class="item">
 				<i class="fa fa-user-o" aria-hidden="true"></i>
 				<input id="iEmail" type="text" name="email" placeholder="Email Address"><br>	
