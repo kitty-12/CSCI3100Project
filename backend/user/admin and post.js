@@ -141,13 +141,13 @@ function SearchPost(id, error) {
 	var stmt = `SELECT postTitle FROM station WHERE postID = $1`;
 	var row = db.QueryRow(stmt, id);
 	var sa = new postGetAPI();
-	var err = row.Scan(&sa.PostTitle);
+	var err = row.Scan(sa.PostTitle);//
 	if (err != nil) {
 		return "", err;
 	}
 
 	// ***Select all the routes related to the post.
-	/*stmt = `SELECT routeID FROM post WHERE postID = $1`;
+	stmt = `SELECT routeID FROM post WHERE postID = $1`;
     var rRows = db.Query(stmt, id);
     var err = db.Query(stmt, id);
 	if (err != nil) {
@@ -155,12 +155,12 @@ function SearchPost(id, error) {
 	}
 	for (rRows.Next()) {
 		var rid;
-		err = rRows.Scan(&rid);
+		err = rRows.Scan(rid);//
 		if (err != nil) {
 			return "", err;
 		}
 		sa.RouteIDs = append(sa.RouteIDs, rid);
-	}*/
+	}
 
     var res = json.Marshal(sa);
     var err = json.Marshal(sa);
@@ -170,7 +170,7 @@ function SearchPost(id, error) {
 // PostStation creates a new station into the database.
 function PostPost(db, tokenMap, jsonBody, error) {
 	var sa = new postPostAPI();
-	var err = json.Unmarshal(jsonBody, &sa);
+	var err = json.Unmarshal(jsonBody, sa);//
 	if (err != nil) {
 		return ErrorToJSON(err);
 	}
@@ -186,10 +186,10 @@ function PostPost(db, tokenMap, jsonBody, error) {
 	if (err != nil) {
 		return ErrorToJSON(err);
 	}
-	defer stmt.Close();
+	//defer stmt.Close();
 
 	var r = new postPostRespAPI();
-	err = stmt.QueryRow(sa.PostTitle).Scan(&r.PostID);
+	err = stmt.QueryRow(sa.PostTitle).Scan(r.PostID);//
 	if (err != nil) {
 		return ErrorToJSON(err);
 	}
@@ -207,7 +207,7 @@ function PostPost(db, tokenMap, jsonBody, error) {
 // DeletePost deletes an existing post with the post id.
 function DeletePost(db, tokenMap, id, jsonBody, error) {
 	var ta = new tokenAPI();
-	var err = json.Unmarshal(jsonBody, &ta);
+	var err = json.Unmarshal(jsonBody, ta);//
 	if (err != nil) {
 		return ErrorToJSON(err);
 	}
@@ -231,5 +231,5 @@ function collect(){
 }
 
 function like(){
-    
+
 }
