@@ -1,14 +1,16 @@
 /* check the input format and return a boolean */
 function loginCheck(f){
-    var iEmail = document.getElementById("iEmail");
+    var iEmail = document.getElementById("iEmail").value;
     var n = iEmail.search("@");
-    window.alert("n=");
-    if(n != 1){
+    window.alert(n);
+    if(n == -1){
         document.getElementById("emailAlert").innerHTML="Please enter a valid email.";
-        window.alert("test");
+        window.alert("login fail");
         return false;
     }
     else{
+        document.getElementById("emailAlert").innerHTML="";
+        window.alert("login success");
         return true;
     }
 }
