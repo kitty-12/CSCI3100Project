@@ -1,3 +1,8 @@
+function checkEmail(email) {
+    let emailFormat = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return emailFormat.test(email);
+}
+
 /* check the input format and return a boolean */
 function loginCheck(f){
     var iEmail = document.getElementById("iEmail").value;
