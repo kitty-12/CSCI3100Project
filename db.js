@@ -1,7 +1,7 @@
 // This is some naive design for database related coding
 // Connect to mongodb
 const mongoose = require('mongoose');
-const url = "mongodb://admin:123123@localhost:27017/";
+const url = "mongodb+srv://yaohaishu:YHS123456@cluster0.4ccqg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 mongoose.connect(url, { useUnifiedTopology: true }, function (err) {
     if (err) {
         console.log('[CONNECT ERROR] - ', err.message);
