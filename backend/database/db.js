@@ -1,9 +1,9 @@
 // This is some naive design for database related coding
 
 // Connect to mongodb
-export const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const url = "mongodb+srv://yaohaishu:YHS123456@cluster0.4ccqg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-export function db_connect() {
+const connect = function db_connect() {
     mongoose.connect(url, {useUnifiedTopology: true}, function (err) {
         if (err) {
             console.log('[CONNECT ERROR] - ', err.message);
@@ -66,75 +66,76 @@ const tag = mongoose.model("tag",{
 
 // define basic functions
 // insert
-
-export const my_insert = function (collection,doc) {
-    const insertObj = new collection(doc)
-    insertObj.save()
-        .then(res=>{
-            console.log(res)
-            return
-        })
-        .catch(err=>{
-            console.log("insert failed"+err)
-            return false
-        })
-}
+const db = {
+    my_insert :function (collection, doc) {
+        const insertObj = new collection(doc)
+        insertObj.save()
+            .then(res => {
+                console.log(res)
+                return
+            })
+            .catch(err => {
+                console.log("insert failed" + err)
+                return false
+            })
+    },
 
 
 // find
-export const my_find=function (collection,type,filter) {  // e.g. filter = {uname:"Allen2"}, filter = {uname:/Allen/}
-    if(type==2) {
+    my_find : function (collection, type, filter) {  // e.g. filter = {uname:"Allen2"}, filter = {uname:/Allen/}
+        if (type == 2) {
 
-        collection.find(filter)
-            .then(res => {
-                console.log(res)
-                return res
-            })
-            .catch(err => {
-                console.log("find failed" + err)
-                return false
-            })
-    }
-    if(type==1) {
-        collection.findOne(filter)
-            .then(res => {
-                console.log(res)
-                return res
-            })
-            .catch(err => {
-                console.log("find failed" + err)
-                return false
-            })
-    }
-}
+            collection.find(filter)
+                .then(res => {
+                    console.log(res)
+                    return res
+                })
+                .catch(err => {
+                    console.log("find failed" + err)
+                    return false
+                })
+        }
+        if (type == 1) {
+            collection.findOne(filter)
+                .then(res => {
+                    console.log(res)
+                    return res
+                })
+                .catch(err => {
+                    console.log("find failed" + err)
+                    return false
+                })
+        }
+    },
 
 // update
-export const my_update=function (collection,filter,update) {
-    collection.updateOne(filter,update)
-        .then(res => {
-            console.log(res)
-            return
-        })
-        .catch(err => {
-                console.log("update failed" + err)
-                return false
-            }
-        )
-}
+    my_update : function (collection, filter, update) {
+        collection.updateOne(filter, update)
+            .then(res => {
+                console.log(res)
+                return
+            })
+            .catch(err => {
+                    console.log("update failed" + err)
+                    return false
+                }
+            )
+    },
 
 
 // delete
-export const my_delete=function (collection,filter) {
-    collection.deleteOne(filter)
-        .then(res => {
-            console.log(res)
-            return
-        })
-        .catch(err => {
-                console.log("delete failed" + err)
-                return false
-            }
-        )
+    my_delete : function (filter) {
+        post.deleteOne(filter)
+            .then(res => {
+                console.log(res)
+                return
+            })
+            .catch(err => {
+                    console.log("delete failed" + err)
+                    return false
+                }
+            )
+    }
 }
-
+module.exports = db
 
