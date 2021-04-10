@@ -1,16 +1,19 @@
 // This is some naive design for database related coding
-// Connect to mongodb
-const mongoose = require('mongoose');
-const url = "mongodb+srv://yaohaishu:YHS123456@cluster0.4ccqg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-mongoose.connect(url, { useUnifiedTopology: true }, function (err) {
-    if (err) {
-        console.log('[CONNECT ERROR] - ', err.message);
-        return; }
-    console.log("Connection is successful!");
-    mongoose.connection.close();
-});
 
+// Connect to mongodb
+export const mongoose = require('mongoose');
+const url = "mongodb+srv://yaohaishu:YHS123456@cluster0.4ccqg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+export function db_connect() {
+    mongoose.connect(url, {useUnifiedTopology: true}, function (err) {
+        if (err) {
+            console.log('[CONNECT ERROR] - ', err.message);
+            return;
+        }
+        console.log("Connection is successful!");
+    });
+}
 // define schema of the database
+
 const user = mongoose.model("user",{
     uname:String,
     pwd:String,
@@ -27,7 +30,7 @@ const user = mongoose.model("user",{
     Post:[],
     Message:{
         sender:String,
-        Type:Number,   //(like,collect,comment,chat,announce,complain)
+        Type:Number,   //(like,collect,comment,announce,complain)
         Text:String
     },
     Black_list:[],
@@ -63,7 +66,8 @@ const tag = mongoose.model("tag",{
 
 // define basic functions
 // insert
-my_insert = function (collection,doc) {
+
+export const my_insert = function (collection,doc) {
     const insertObj = new collection(doc)
     insertObj.save()
         .then(res=>{
@@ -78,7 +82,7 @@ my_insert = function (collection,doc) {
 
 
 // find
-my_find=function (collection,type,filter) {  // e.g. filter = {uname:"Allen2"}, filter = {uname:/Allen/}
+export const my_find=function (collection,type,filter) {  // e.g. filter = {uname:"Allen2"}, filter = {uname:/Allen/}
     if(type==2) {
 
         collection.find(filter)
@@ -105,7 +109,7 @@ my_find=function (collection,type,filter) {  // e.g. filter = {uname:"Allen2"}, 
 }
 
 // update
-my_update=function (collection,filter,update) {
+export const my_update=function (collection,filter,update) {
     collection.updateOne(filter,update)
         .then(res => {
             console.log(res)
@@ -120,7 +124,7 @@ my_update=function (collection,filter,update) {
 
 
 // delete
-my_delete=function (collection,filter) {
+export const my_delete=function (collection,filter) {
     collection.deleteOne(filter)
         .then(res => {
             console.log(res)
