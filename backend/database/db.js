@@ -81,7 +81,6 @@ const db = {
         insertObj.save()
             .then(res => {
                 console.log(res)
-                return
             })
             .catch(err => {
                 console.log("insert failed" + err)
@@ -91,8 +90,8 @@ const db = {
 
 
 // find
-    my_find : function (collection, type, filter) {  // e.g. filter = {uname:"Allen2"}, filter = {uname:/Allen/}
-        if (collection.equals("User")){
+    my_find : function (collection, filter, projection) {  // e.g. filter = {uname:"Allen2"}, filter = {uname:/Allen/}
+        if (collection.equals("User")){               // e.g. projection = {uname:1, pwd:1}
             var f = User
         }
         if (collection.equals("Article")){
@@ -101,8 +100,7 @@ const db = {
         if (collection.equals("Tag")){
             var f = Tag
         }
-        if (type.equals("many")) {
-            f.find(filter)
+        f.findOne(filter,projection)
                 .then(res => {
                     console.log(res)
                     return res
@@ -111,18 +109,7 @@ const db = {
                     console.log("find failed" + err)
                     return false
                 })
-        }
-        if (type.equals("one")) {
-            f.findOne(filter)
-                .then(res => {
-                    console.log(res)
-                    return res
-                })
-                .catch(err => {
-                    console.log("find failed" + err)
-                    return false
-                })
-        }
+
     },
 
 // update
@@ -139,7 +126,6 @@ const db = {
         up.updateOne(filter, update)
             .then(res => {
                 console.log(res)
-                return
             })
             .catch(err => {
                     console.log("update failed" + err)
@@ -154,7 +140,6 @@ const db = {
         Article.deleteOne(filter)
             .then(res => {
                 console.log(res)
-                return
             })
             .catch(err => {
                     console.log("delete failed" + err)
