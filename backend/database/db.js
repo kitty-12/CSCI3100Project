@@ -3,15 +3,7 @@
 // Connect to mongodb
 const mongoose = require('mongoose');
 const url = "mongodb+srv://yaohaishu:YHS123456@cluster0.4ccqg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-const connect = function db_connect() {
-    mongoose.connect(url, {useUnifiedTopology: true}, function (err) {
-        if (err) {
-            console.log('[CONNECT ERROR] - ', err.message);
-            return;
-        }
-        console.log("Connection is successful!");
-    });
-}
+
 // define schema of the database
 
 const user = mongoose.model("user",{
@@ -67,6 +59,15 @@ const tag = mongoose.model("tag",{
 // define basic functions
 // insert
 const db = {
+    connect : function db_connect() {
+        mongoose.connect(url, {useUnifiedTopology: true}, function (err) {
+            if (err) {
+                console.log('[CONNECT ERROR] - ', err.message);
+                return;
+            }
+            console.log("Connection is successful!");
+        });
+    },
     my_insert :function (collection, doc) {
         const insertObj = new collection(doc)
         insertObj.save()
