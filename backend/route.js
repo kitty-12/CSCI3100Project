@@ -1,43 +1,42 @@
 const express = require('express')
 const router = express.Router()
-const db = require('./db')
+const db = require('./database/db')
 const mail = require('./mail')
-
+cors = require("cors")
 
 //insert a tag
-router.post('/api/admin/saveArticle', function (req, res) {
-    db.my_insert(req.body.collection,req.body.content)
+router.post('/api/admin/saveArticle', cors(),function (req, res) {
+    db.my_insert(req.query.collection,req.query.content)
     res.send()
 })
 
 //register
-router.post('/api/admin/register', function (req, res) {
+router.post('/api/admin/register', cors(),function (req, res) {
     //mail.
     res.send()
 })
 
 //like
-router.post('/api/admin/like', function (req, res) {
-    let info = req.body.articleID
-    db.Article.find({_id: info.article_id}, function (err, docs) {
+router.post('/api/admin/like', cors(),function (req, res) {
+    db.my_find("Article",{_id: req.query.article_id}), function (err, docs) {
         if (err) {
             return
         }
-        docs[0].like.append(info.user_name)
-        db.post(docs[0]).save(function (err) {
+        docs[0].like.append(req.query.uid)
+        db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
                 return
             }
             res.send()
         })
-    })
-    db.User.find({_id: info._id}, function (err, docs) {
+    }
+    db.my_find("User",{_id: info._id}, function (err, docs) {
         if (err) {
             return
         }
-        docs[0].liked.append(info.article_id)
-        db.post(docs[0]).save(function (err) {
+        docs[0].liked.append(req.query.article_id)
+        db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
                 return
@@ -48,16 +47,16 @@ router.post('/api/admin/like', function (req, res) {
 })
 
 //editProfile
-router.post('/api/admin/editProfile', function (req, res) {
-    let info = req.body.UserInfo
+router.post('/api/admin/editProfile', cors(),function (req, res) {
+    let info = req.query.UserInfo
     db.User.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
         }
         docs[0].user_name = info.user_name
-        docs[0].Gender = info.Gender
-        docs[0].Birth = info.Birth
-        docs[0].Introduction = info.Introduction
+        docs[0].gender = info.Gender
+        docs[0].birth = info.Birth
+        docs[0].introduction = info.Introduction
         docs[0].picture = info.picture
         db.User(docs[0]).save(function (err) {
             if (err) {
@@ -70,13 +69,13 @@ router.post('/api/admin/editProfile', function (req, res) {
 })
 
 //collect
-router.post('/api/admin/collect', function (req, res) {
-    let info = req.body.CollectInfo
+router.post('/api/admin/collect', cors(),function (req, res) {
+    let info = req.query.CollectInfo
     db.User.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
         }
-        docs[0].Collected.append(info.Article_id)
+        docs[0].collected.append(info.Article_id)
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -88,7 +87,7 @@ router.post('/api/admin/collect', function (req, res) {
         if (err) {
             return
         }
-        docs[0].Collect.append(info.user_name)
+        docs[0].collect.append(info.user_name)
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -100,15 +99,15 @@ router.post('/api/admin/collect', function (req, res) {
 })
 
 //createComment
-router.post('/api/admin/createComment', function (req, res) {
-    let info = req.body.commentInfo
+router.post('/api/admin/createComment', cors(),function (req, res) {
+    let info = req.query.commentInfo
     db.Article.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
         }
-        docs[0].Comments.aid=info.aid
-        docs[0].Comments.Time=info.Time
-        docs[0].Comments.Text=info.Text
+        docs[0].comments.aid=info.aid
+        docs[0].comments.Time=info.Time
+        docs[0].comments.Text=info.Text
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -119,15 +118,10 @@ router.post('/api/admin/createComment', function (req, res) {
     })
 })
 
-//login
-router.post('/api/admin/signin', function (req, res) {
-    // req.session.user = req.body.userInfo
-    res.send()
-})
 
 //createArticle
-router.post('/api/admin/createArticle', function (req, res) {
-    new db.Article(req.body.articleInformation).save(function (err) {
+router.post('/api/admin/createArticle', cors(),function (req, res) {
+    new db.Article(req.query.articleInformation).save(function (err) {
         if (err) {
             res.status(500).send()
             return
@@ -137,8 +131,8 @@ router.post('/api/admin/createArticle', function (req, res) {
 })
 
 //updateArticle
-router.post('/api/admin/updateArticle', function (req, res) {
-    let info = req.body.articleInformation
+router.post('/api/admin/updateArticle', cors(),function (req, res) {
+    let info = req.query.articleInformation
     db.Article.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
@@ -161,8 +155,8 @@ router.post('/api/admin/updateArticle', function (req, res) {
 })
 
 //login
-router.post('/api/admin/login', function (req, res) {
-    let info = req.body.loginInfo
+router.post('/api/admin/login', cors(),function (req, res) {
+    let info = req.query.loginInfo
     db.User.find({_id: info._id}, function (err, docs){
         if(docs[0].pwd===info.pwd) {
             res.send(1)
@@ -173,8 +167,8 @@ router.post('/api/admin/login', function (req, res) {
 })
 
 //delete
-router.post('/api/admin/delete', function (req, res) {
-    db.Article.remove({_id: req.body._id}, function (err) {
+router.post('/api/admin/delete', cors(),function (req, res) {
+    db.Article.remove({_id: req.query._id}, function (err) {
         if (err) {
             res.status(500).send()
             return

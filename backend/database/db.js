@@ -6,59 +6,60 @@ const url = "mongodb+srv://yaohaishu:YHS123456@cluster0.4ccqg.mongodb.net/myFirs
 
 // define schema of the database
 
-const User = mongoose.model("User",{
-    uname:String,
-    pwd:String,
-    email:String,
-    profile:{
-        user_name:String,
-        gender:String,
-        birth:String,
-        introduction:String,
-        picture:{}
-    },
-    liked:[],
-    collected:[],
-    post:[],
-    message:{
-        sender:String,
-        type:Number,   //(like,collect,comment,announce,complain)
-        text:String
-    },
-    black_list:[],
-    is_admin:Boolean,
-    is_active:Boolean,
-    is_banned:Boolean
-    }
-)
 
-const Article = mongoose.model("Article", {
-    author: {
-        _id: String,
-        uname: String
-    },
-    img: {},
-    text: String,
-    post_time: Date,
-    read: Number,
-    like: Number,
-    collect: Number,
-    tag: [],
-    status: Number,
-    comments: {
-        aid: String,  // there may include all info that need to be displayed
-        time: Date,
-        text: String
-    }
-})
-
-const Tag = mongoose.model("Tag",{
-    name:String
-})
 
 // define basic functions
 // insert
 const db = {
+    User : mongoose.model("User",{
+            uname:String,
+            pwd:String,
+            email:String,
+            profile:{
+                user_name:String,
+                gender:String,
+                birth:Date,
+                introduction:String,
+                picture:{}
+            },
+            liked:[],
+            collected:[],
+            post:[],
+            message:{
+                sender:String,
+                type:Number,   //(like,collect,comment,announce,complain)
+                text:String
+            },
+            black_list:[],
+            is_admin:Boolean,
+            is_active:Boolean,
+            is_banned:Boolean
+        }
+    ),
+
+    Article : mongoose.model("Article", {
+        author: {
+            _id: String,
+            uname: String
+        },
+        img: {},
+        text: String,
+        post_time: Date,
+        read: Number,
+        like: [],
+        collect: Number,
+        tag: [],
+        status: Number,
+        comments: {
+            author_id: String,  // there may include all info that need to be displayed
+            time: Date,
+            text: String
+        }
+    }),
+
+    Tag : mongoose.model("Tag",{
+        name:String
+    }),
     connect : function () {
         mongoose.connect(url, {useUnifiedTopology: true}, function (err) {
             if (err) {
@@ -68,14 +69,14 @@ const db = {
             console.log("Connection is successful!");
         });
     },
-    my_insert :function (collection,doc) {
-        if (collection.equals("User")){
+    my_insert :function (collection,doc) {   //e.g. my_insert("Tag",{name:"fancy"})
+        if (collection === "User"){
             var insertObj = new User(doc)
         }
-        if (collection.equals("Article")){
+        if (collection === "Article"){
             var insertObj = new Article(doc)
         }
-        if (collection.equals("Tag")){
+        if (collection === "Tag"){
             var insertObj = new Tag(doc)
         }
         insertObj.save()
@@ -91,13 +92,13 @@ const db = {
 
 // find
     my_find : function (collection, filter, projection) {  // e.g. filter = {uname:"Allen2"}, filter = {uname:/Allen/}
-        if (collection.equals("User")){               // e.g. projection = {uname:1, pwd:1}
+        if (collection === "User"){               // e.g. projection = {uname:1, pwd:1}
             var f = User
         }
-        if (collection.equals("Article")){
+        if (collection === "Article"){
             var f = Article
         }
-        if (collection.equals("Tag")){
+        if (collection === "Tag"){
             var f = Tag
         }
         f.findOne(filter,projection)
@@ -114,13 +115,13 @@ const db = {
 
 // update
     my_update : function (collection, filter, update) {
-        if (collection.equals("User")){
+        if (collection === "User"){
             var up = User
         }
-        if (collection.equals("Article")){
+        if (collection === "Article"){
             var up = Article
         }
-        if (collection.equals("Tag")){
+        if (collection === "Tag"){
             var up = Tag
         }
         up.updateOne(filter, update)
