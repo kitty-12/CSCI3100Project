@@ -28,11 +28,11 @@ const db = {
             message:{
                 sender:String,
                 type:Number,   //(like,collect,comment,announce,complain)
-                text:String
+                text:String,
+                mstatus:String
             },
             black_list:[],
             is_admin:Boolean,
-            is_active:Boolean,
             is_banned:Boolean
         }
     ),
