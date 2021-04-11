@@ -58,7 +58,7 @@ router.post('/api/admin/like', cors(),function (req, res) {
 
 //editProfile
 router.post('/api/admin/editProfile', cors(),function (req, res) {
-    let info = req.query.UserInfo
+    let info = req.query.userInfo
     db.User.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
