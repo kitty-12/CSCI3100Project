@@ -12,17 +12,19 @@ router.post('/api/admin/saveArticle', cors(),function (req, res) {
 
 //like
 router.post('/api/admin/like', cors(),function (req, res) {
-    db.my_find("Article",{_id: req.query.article_id}), function (err, docs) {
+    let info = req.query.likeInfo
+    var authid
+    db.my_find("Article",{_id: info.article_id}), function (err, docs) {
         if (err) {
             return
         }
+        authid = docs[0].author._id
         docs[0].like.append(req.query.uid)
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
                 return
             }
-            res.send()
         })
     }
     db.my_find("User",{_id: info._id}, function (err, docs) {
@@ -30,6 +32,18 @@ router.post('/api/admin/like', cors(),function (req, res) {
             return
         }
         docs[0].liked.append(req.query.article_id)
+        db.User(docs[0]).save(function (err) {
+            if (err) {
+                res.status(500).send()
+                return
+            }
+        })
+    })
+    db.my_find("User",{_id: authid}, function (err, docs) {
+        if (err) {
+            return
+        }
+        docs[0].message.append(docs[0].uname, 1, 'Someone liked your post!', 'Unread')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -62,7 +76,8 @@ router.post('/api/admin/editProfile', cors(),function (req, res) {
 
 //collect
 router.post('/api/admin/collect', cors(),function (req, res) {
-    let info = req.query.CollectInfo
+    let info = req.query.collectInfo
+    var authid
     db.User.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
@@ -79,8 +94,21 @@ router.post('/api/admin/collect', cors(),function (req, res) {
         if (err) {
             return
         }
+        authid = docs[0].author._id
         docs[0].collect.append(info.user_name)
         db.Article(docs[0]).save(function (err) {
+            if (err) {
+                res.status(500).send()
+                return
+            }
+        })
+    })
+    db.my_find("User",{_id: authid}, function (err, docs) {
+        if (err) {
+            return
+        }
+        docs[0].message.append(docs[0].uname, 1, 'Someone collected your post!', 'Unread')
+        db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
                 return
@@ -93,10 +121,12 @@ router.post('/api/admin/collect', cors(),function (req, res) {
 //createComment
 router.post('/api/admin/createComment', cors(),function (req, res) {
     let info = req.query.commentInfo
+    var authid
     db.Article.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
         }
+        authid = docs[0].author._id
         docs[0].comments.aid=info.aid
         docs[0].comments.Time=info.Time
         docs[0].comments.Text=info.Text
@@ -105,11 +135,22 @@ router.post('/api/admin/createComment', cors(),function (req, res) {
                 res.status(500).send()
                 return
             }
+        })
+    })
+    db.my_find("User",{_id: authid}, function (err, docs) {
+        if (err) {
+            return
+        }
+        docs[0].message.append(docs[0].uname, 1, 'Your post has a new comment!', 'Unread')
+        db.User(docs[0]).save(function (err) {
+            if (err) {
+                res.status(500).send()
+                return
+            }
             res.send()
         })
     })
 })
-
 
 //createArticle
 router.post('/api/admin/createArticle', cors(),function (req, res) {
