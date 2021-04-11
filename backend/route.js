@@ -10,12 +10,6 @@ router.post('/api/admin/saveArticle', cors(),function (req, res) {
     res.send()
 })
 
-//register
-router.post('/api/admin/register', cors(),function (req, res) {
-    //mail.
-    res.send()
-})
-
 //like
 router.post('/api/admin/like', cors(),function (req, res) {
     db.my_find("Article",{_id: req.query.article_id}), function (err, docs) {
