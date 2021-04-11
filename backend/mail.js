@@ -6,12 +6,12 @@ const smtpTransport = require('nodemailer-smtp-transport')
 
 //创建连接对象
 const transport = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.163.com', // 服务 由于我用的163邮箱
+    host: 'smtp.aliyun.com', // 服务 由于我用的163邮箱
     port: 465, // smtp端口 默认无需改动
     secure: true,
     auth: {
-      user: 'crackerlink@163.com', // 用户名
-      pass: 'xxxxxxxxx' // SMTP授权码
+      user: 'donuts_team@aliyun.com', // 用户名
+      pass: 'donuts0414' // SMTP授权码
     }
 }));
 
@@ -29,7 +29,7 @@ const regEmail=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*
 exports.send=function (EMAIL){
   let code=randomFns()
   transport.sendMail({
-    from: 'xxxx@.com', // 发件邮箱
+    from: 'donuts_team@aliyun.com', // 发件邮箱
     to: EMAIL, // 收件列表
     subject: '验证你的电子邮件', // 标题
     html: `
