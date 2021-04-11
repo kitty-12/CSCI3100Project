@@ -228,10 +228,33 @@ router.post('/api/admin/addBlacklist', cors(),function (req, res) {
 //search
 router.post('/api/admin/search', cors(),function (req, res) {
     let info = req.body
-    db.my_find({collection: info.collection, filter:{info.filter}, projection:info.projetion}, function (docs) {
-        
-        res.send(docs)
+    db.User.find({_id: info._id}, function (err,docs) {
+        if (err) {
+            return
+        }
     })
-})
+    if(info.tag){
+        db.Article.find({tag:info.tag&&!docs[0].black_list},{sort: {info._sort:1}}, function (err,docs_2) {
+        if (err) {
+            return
+        }
+        res.send(docs_2)
+        })
+    }else if(info.user_name){
+        db.Article.find({tag:!docs[0].black_list,author:info.user_name},{sort: {info._sort:1}}, function (err,docs_2) {
+        if (err) {
+            return
+        }
+        res.send(docs_2)
+        })
+    }else{
+        db.Article.find({tag:!docs[0],title:info.user_name},{sort: {info._sort:1}}, function (err,docs_2) {
+        if (err) {
+            return
+        }
+        res.send(docs_2) 
+        }) 
+    }
+}
 
 module.exports = router
