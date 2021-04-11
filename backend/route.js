@@ -188,7 +188,7 @@ router.post('/', function(req, res){
             }
             else 
             {
-                mail.send(remail)
+                mail.send()
                 if( results[0].code != code ){ // wrong code
                     res.send({message: "Wrong code, please check or send it again"});
                 }
@@ -205,5 +205,18 @@ router.post('/', function(req, res){
         }
     });
 });
+
+//returnPersonalInfo
+router.post('/api/admin/returnPersonalInfo', cors(),function (req, res) {
+    let info = req.body
+    db.User.findOne({_id: info._id}, function (err, docs) {
+        if (err) {
+            return
+        }
+        res.send(docs)
+    })
+})
+
+//
 
 module.exports = router
