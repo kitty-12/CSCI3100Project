@@ -223,38 +223,23 @@ router.post('/api/admin/delete', cors(),function (req, res) {
     })
 })
 
-//register
-router.post('/', function(req, res){
-    let username = req.body.username || '',
-        password = req.body.password,
-        sid = req.body.sid,
-        code = req.body.code;
-        remail = req.body.email;
-    
-    db.User.find({email:remail}, function(results){
-        if( results.length > 0 ){  // has registed
-            if( results[0].state === 1){
-                res.send({message: "You have registed, please log in"});
-            }
-            else 
-            {
-                mail.send(remail)
-                if( results[0].code != code ){ // wrong code
-                    res.send({message: "Wrong code, please check or send it again"});
-                }
-                else{
-                    new db.User(req.body.userInfo).save(function (err) {
-                        if (err) {
-                            res.status(500).send()
-                            return
-                        }
-                    res.send()
-                    });
-                }
-            }
+//send email
+router.post('/api/admin/sendEmail', function(req, res){
+    let remail = req.body.email;
+    mail.send(remail)
+    res.send(code)
+})
+
+//add new user
+router.post('/api/admin/addNewUser', function(req, res){
+    let info = req.body.userInfo;
+    new db.User(req.body.userInfo).save(function (err) {
+        if (err) {
+            res.status(500).send()
+            return
         }
-    });
-});
+    res.send()
+})
 
 //returnPersonalInfo
 router.post('/api/admin/returnPersonalInfo', cors(),function (req, res) {
