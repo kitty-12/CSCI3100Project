@@ -6,7 +6,7 @@ const smtpTransport = require('nodemailer-smtp-transport')
 
 //创建连接对象
 const transport = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.aliyun.com', // 服务 由于我用的163邮箱
+    host: 'smtp.aliyun.com', // 服务
     port: 465, // smtp端口 默认无需改动
     secure: true,
     auth: {
