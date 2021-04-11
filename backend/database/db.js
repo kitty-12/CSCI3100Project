@@ -26,13 +26,10 @@ const db = {
             collected:[],
             post:[],
             message:{
-                sender:String,
                 type:Number,   //(like,collect,comment,announce,complain)
-                text:String,
-                mstatus:String
+                text:String
             },
             black_list:[],
-            is_admin:Boolean,
             is_banned:Boolean
         }
     ),
@@ -42,14 +39,12 @@ const db = {
             _id: String,
             uname: String
         },
-        img: {},
         text: String,
         post_time: Date,
         read: Number,
         like: [],
         collect: Number,
         tag: [],
-        status: Number,
         comments: {
             author_id: String,  // there may include all info that need to be displayed
             time: Date,
