@@ -14,11 +14,13 @@ router.post('/api/admin/saveArticle', cors(),function (req, res) {
 router.post('/api/admin/like', cors(),function (req, res) {
     let info = req.query.likeInfo
     var authid
+    var authname
     db.my_find("Article",{_id: info.article_id}), function (err, docs) {
         if (err) {
             return
         }
         authid = docs[0].author._id
+        authname = docs[0].author.uname
         docs[0].like.append(req.query.uid)
         db.Article(docs[0]).save(function (err) {
             if (err) {
@@ -43,7 +45,7 @@ router.post('/api/admin/like', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].message.append(docs[0].uname, 1, 'Someone liked your post!', 'Unread')
+        docs[0].message.append(authname, 1, 'Someone liked your post!', 'Unread')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -78,6 +80,7 @@ router.post('/api/admin/editProfile', cors(),function (req, res) {
 router.post('/api/admin/collect', cors(),function (req, res) {
     let info = req.query.collectInfo
     var authid
+    var authname
     db.User.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
@@ -95,6 +98,7 @@ router.post('/api/admin/collect', cors(),function (req, res) {
             return
         }
         authid = docs[0].author._id
+        authname = docs[0].author.uname
         docs[0].collect.append(info.user_name)
         db.Article(docs[0]).save(function (err) {
             if (err) {
@@ -107,7 +111,7 @@ router.post('/api/admin/collect', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].message.append(docs[0].uname, 1, 'Someone collected your post!', 'Unread')
+        docs[0].message.append(authname, 2, 'Someone collected your post!', 'Unread')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -122,11 +126,20 @@ router.post('/api/admin/collect', cors(),function (req, res) {
 router.post('/api/admin/createComment', cors(),function (req, res) {
     let info = req.query.commentInfo
     var authid
+    var authname
+    db.my_find("User",{_id: info.user_id}, function (err, docs) {
+        if (err) {
+            return
+        }
+        if (docs[0].is_banned)
+            res.send({message:"You are not allowed to comment."})
+    })
     db.Article.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
         }
         authid = docs[0].author._id
+        authname = docs[0].author.uname
         docs[0].comments.aid=info.aid
         docs[0].comments.Time=info.Time
         docs[0].comments.Text=info.Text
@@ -141,7 +154,7 @@ router.post('/api/admin/createComment', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].message.append(docs[0].uname, 1, 'Your post has a new comment!', 'Unread')
+        docs[0].message.append(authname, 3, 'Your post has a new comment!', 'Unread')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
