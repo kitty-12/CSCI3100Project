@@ -188,7 +188,7 @@ router.post('/', function(req, res){
             }
             else 
             {
-                mail.send()
+                mail.send(remail)
                 if( results[0].code != code ){ // wrong code
                     res.send({message: "Wrong code, please check or send it again"});
                 }
