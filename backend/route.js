@@ -170,10 +170,6 @@ router.post('/api/admin/delete', cors(),function (req, res) {
 })
 
 //register
-router.get('/', function(req, res){
-    res.send({message:"Click and send code to your email"});
-});
-//
 router.post('/', function(req, res){
     let username = req.body.username || '',
         password = req.body.password,
@@ -217,6 +213,25 @@ router.post('/api/admin/returnPersonalInfo', cors(),function (req, res) {
     })
 })
 
-//
+//addBlacklist
+router.post('/api/admin/addBlacklist', cors(),function (req, res) {
+    let info = req.body
+    db.User.findOne({_id: info._id}, function (err, docs) {
+        if (err) {
+            return
+        }
+        docs[0].black_list=info.tag
+        res.send()
+    })
+})
+
+//search
+router.post('/api/admin/search', cors(),function (req, res) {
+    let info = req.body
+    db.my_find({collection: info.collection, filter:{info.filter}, projection:info.projetion}, function (docs) {
+        
+        res.send(docs)
+    })
+})
 
 module.exports = router
