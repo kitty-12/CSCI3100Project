@@ -26,12 +26,10 @@ const randomFns=()=> { // 生成6位随机数
 const regEmail=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/ //验证邮箱正则
 
 //建立连接发送验证码
-exports.send=function (){
-let EMAIL=req.body.e_mail //req为请求体对象 我使用的是post请求方式，所以通过req.body获取用户提交的邮箱
-if (regEmail.test(EMAIL)){  //邮箱验证通过
+exports.send=function (EMAIL){
   let code=randomFns()
   transport.sendMail({
-    from: 'crackerlink@163.com', // 发件邮箱
+    from: 'xxxx@.com', // 发件邮箱
     to: EMAIL, // 收件列表
     subject: '验证你的电子邮件', // 标题
     html: `
@@ -43,8 +41,7 @@ if (regEmail.test(EMAIL)){  //邮箱验证通过
   function(error, data) {
     assert(!error,500,"发送验证码错误！")
     transport.close(); // 如果没用，关闭连接池
-  })
-};
+  })};
 //....验证码发送后的相关工作 
 //将邮箱和验证码保存到Code中，同时保证这条记录的唯一性。并在5分钟内将这条记录删除
 /*const Code = require("../models/Code")
