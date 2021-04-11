@@ -177,5 +177,41 @@ router.post('/api/admin/delete', cors(),function (req, res) {
     })
 })
 
+//register
+router.get('/', function(req, res){
+    res.send({message:"Click and send code to your email"});
+});
+//
+router.post('/', function(req, res){
+    let username = req.body.username || '',
+        password = req.body.password,
+        sid = req.body.sid,
+        code = req.body.code;
+        remail = req.body.email;
+    
+    db.User.find({email:remail}, function(results){
+        if( results.length > 0 ){  // has registed
+            if( results[0].state === 1){
+                res.send({message: "You have registed, please log in"});
+            }
+            else 
+            {
+                mail.send()
+                if( results[0].code != code ){ // wrong code
+                    res.send({message: "Wrong code, please check or send it again"});
+                }
+                else{
+                    new db.User(req.body.userInfo).save(function (err) {
+                        if (err) {
+                            res.status(500).send()
+                            return
+                        }
+                    res.send()
+                    });
+                }
+            }
+        }
+    });
+});
 
 module.exports = router
