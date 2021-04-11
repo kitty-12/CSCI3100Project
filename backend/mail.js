@@ -34,7 +34,7 @@ exports.send=function (EMAIL){
     subject: '验证你的电子邮件', // 标题
     html: `
     <p>你好！</p>
-    <p>您正在注册Cracker社区账号</p>
+    <p>您正在注册账号</p>
     <p>你的验证码是：<strong style="color: #ff4e2a;">${code}</strong></p>
     <p>***该验证码5分钟内有效***</p>` // html 内容
   }, 
