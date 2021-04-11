@@ -54,8 +54,6 @@ router.post('/api/admin/editProfile', cors(),function (req, res) {
             return
         }
         docs[0].user_name = info.user_name
-        docs[0].gender = info.Gender
-        docs[0].birth = info.Birth
         docs[0].introduction = info.Introduction
         docs[0].picture = info.picture
         db.User(docs[0]).save(function (err) {
