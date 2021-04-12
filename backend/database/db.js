@@ -40,6 +40,7 @@ const db = {
         },
         title: String,
         text: String,
+        img: [],
         post_time: Date,
         read: Number,
         like: [],
