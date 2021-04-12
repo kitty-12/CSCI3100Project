@@ -57,13 +57,20 @@ const db = {
         name:String
     }),
     connect : function () {
-        mongoose.connect(url, {useUnifiedTopology: true}, function (err) {
-            if (err) {
-                console.log('[CONNECT ERROR] - ', err.message);
-                return;
-            }
-            console.log("Connection is successful!");
-        });
+        if (mongoose.connection.readyState === 0){
+            mongoose.connect(url,
+                {useUnifiedTopology: true, useNewUrlParser: true ,useCreateIndex:true},
+                function (err) {
+                    if (err) {
+                        console.log('[CONNECT ERROR] - ', err.message);
+                        return;
+                    }
+                    console.log("Connection is successful!");
+                });
+        }
+        else{
+            console.log("db connected")
+        }
     },
     my_insert :function (collection,doc) {   //e.g. my_insert("Tag",{name:"fancy"})
         if (collection === "User"){
@@ -146,4 +153,5 @@ const db = {
     }
 }
 module.exports = db
+
 
