@@ -24,10 +24,10 @@ const db = {
         liked: [],
         collected: [],
         post: [],
-        message: {
+        message: [{
             type: Number,   //(like,collect,comment,announce,complain)
             text: String
-        },
+        }],
         black_list: [],
         is_banned: Boolean
 
