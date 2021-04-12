@@ -3,9 +3,7 @@ let router = express.Router()
 let multer = require('multer')
 let fs = require('fs');
 let path = require('path');
-let img_dir
-export let temp_id
-export let temp_img_dir
+let temp_img_dir = ""
 
 let upload = multer({
     storage: multer.diskStorage({
@@ -16,7 +14,7 @@ let upload = multer({
             let month = (date.getMonth() + 1).toString().padStart(2, '0');
             let day = date.getDate();
             let dir = "./static/" + year + month + day;
-            img_dir = dir
+            temp_img_dir = dir
 
             //判断目录是否存在，没有则创建
             if (!fs.existsSync(dir)) {
@@ -47,4 +45,5 @@ router.post('/upload', upload.single('file'), (req, res) => {
 })
 
 
-module.exports = router
+exports.router = router
+exports.temp = temp_img_dir

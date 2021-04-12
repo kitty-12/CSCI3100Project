@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 img = require("./img")
 routes = require("./route")
 
-app.use("",img)
+app.use("",img.router)
 app.use("/test",routes)
 
 
