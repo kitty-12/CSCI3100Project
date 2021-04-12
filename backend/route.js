@@ -6,12 +6,14 @@ cors = require("cors")
 let img = require("./img")
 //insert a tag
 router.post('/admin/saveArticle', cors(),function (req, res) {
+    db.connect()
     db.my_insert(req.query.collection,req.query.content)
     res.send()
 })
 
 //like
 router.post('/admin/like', cors(),function (req, res) {
+    db.connect()
     let info = req.query.likeInfo
     var authid
     var authname
@@ -58,6 +60,7 @@ router.post('/admin/like', cors(),function (req, res) {
 
 //editProfile
 router.post('/admin/editProfile', cors(),function (req, res) {
+    db.connect()
     let info = req.query.userInfo
     db.User.find({_id: info._id}, function (err, docs) {
         if (err) {
@@ -79,6 +82,7 @@ router.post('/admin/editProfile', cors(),function (req, res) {
 
 //collect
 router.post('/admin/collect', cors(),function (req, res) {
+    db.connect()
     let info = req.query.collectInfo
     var authid
     var authname
@@ -125,6 +129,7 @@ router.post('/admin/collect', cors(),function (req, res) {
 
 //createComment
 router.post('/admin/createComment', cors(),function (req, res) {
+    db.connect()
     let info = req.query.commentInfo
     var authid
     var authname
@@ -168,6 +173,7 @@ router.post('/admin/createComment', cors(),function (req, res) {
 
 //createArticle
 router.post('/admin/createArticle', cors(),function (req, res) {
+    db.connect()
     new db.Article(req.body.articleInformation).save(function (err) {
         if (err) {
             res.status(500).send()
@@ -179,6 +185,7 @@ router.post('/admin/createArticle', cors(),function (req, res) {
 
 //updateArticle
 router.post('/admin/updateArticle', cors(),function (req, res) {
+    db.connect()
     let info = req.body.articleInformation
     db.Article.find({_id: info._id}, function (err, docs) {
         if (err) {
@@ -191,7 +198,11 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         docs[0].read=0
         docs[0].like=[]
         docs[0].collect=[]
-        docs[0].img.push(img.temp)
+        if (info.hasImage === "1"){
+            docs[0].img.push(img.temp)
+        }else{
+            docs[0].img.push("默认图片地址")  /// 要改
+        }
         if(info.status){ //info.status:0 draft, 1 posted
             docs[0].Post_time=info.time
         }
@@ -227,6 +238,7 @@ router.post('/admin/login', cors(),function (req, res) {
 
 //delete
 router.post('/admin/delete', cors(),function (req, res) {
+    db.connect()
     db.Article.remove({_id: req.query._id}, function (err) {
         if (err) {
             res.status(500).send()
@@ -238,13 +250,15 @@ router.post('/admin/delete', cors(),function (req, res) {
 
 //send email
 router.post('/admin/sendEmail', function(req, res){
+    db.connect()
     let remail = req.body.email;
-    mail.send(remail)
-    res.send(code)
+    let code = mail.send(remail)
+    res.send({'code':code})
 })
 
 //add new user ？？？
 router.post('/admin/addNewUser', function(req, res){
+    db.connect()
     let info = req.body.userInfo;
     new db.User(req.body.userInfo).save(function (err) {
         if (err) {
@@ -257,6 +271,7 @@ router.post('/admin/addNewUser', function(req, res){
 
 //returnPersonalInfo
 router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
+    db.connect()
     let info = req.body
     db.User.findOne({_id: info._id}, function (err, docs) {
         if (err) {
@@ -268,6 +283,7 @@ router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
 
 //addBlacklist
 router.post('/admin/addBlacklist', cors(),function (req, res) {
+    db.connect()
     let info = req.body
     db.User.findOne({_id: info._id}, function (err, docs) {
         if (err) {
@@ -280,6 +296,7 @@ router.post('/admin/addBlacklist', cors(),function (req, res) {
 
 //search
 router.post('/admin/search', cors(),function (req, res) {
+    db.connect()
     let info = req.body
     var blacklist
     var result=new Array()
@@ -331,6 +348,7 @@ router.post('/admin/search', cors(),function (req, res) {
 
 //mainPage_Hot in history
 router.post('/admin/mainPage', cors(),function (req, res) {
+    db.connect()
     var blacklist
     var result=new Array()
     db.User.find({_id: req.body._id}, function (err,docs) {
@@ -354,6 +372,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
 
 //mainPage_latest
 router.post('/admin/mainPage', cors(),function (req, res) {
+    db.connect()
     var blacklist
     var result = new Array()
     db.User.find({_id: req.body._id}, function (err, docs) {
@@ -377,6 +396,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
 })
 //mainPage_hotThiWeek
 router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
+    db.connect()
     var blacklist
     var result = new Array()
     var aWeekBefore = req.body.date
@@ -400,13 +420,26 @@ router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
 })
 //articlePage
 router.post('/api/admin/articlePage', cors(),function (req, res) {
+    db.connect()
     let info = req.body
     db.Article.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
         }
         docs[0].read+=1
-        res.send(docs)
+        res.send(docs[0])
+    })
+})
+
+//articlePage(only comment)
+router.post('/api/admin/articlePage', cors(),function (req, res) {
+    db.connect()
+    let info = req.body
+    db.Article.find({_id: info._id}, { comments: 1 },function (err, docs) {
+        if (err) {
+            return
+        }
+        res.send(docs[0])
     })
 })
 

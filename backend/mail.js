@@ -23,10 +23,9 @@ const randomFns=()=> { // Generate 6-digit random number
     }
     return code 
 }
-const regEmail=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/ 
 
 //Establish a connection to send a verification code
-exports.send=function (EMAIL){
+exports.send= function (EMAIL){
   let code=randomFns()
   transport.sendMail({
     from: 'donuts_team@aliyun.com', // Sending mailbox
@@ -41,6 +40,7 @@ exports.send=function (EMAIL){
   function(error, data) {
     assert(!error,500,"Send verification code error！")
     transport.close();
+    return code
   })};
 //.... 
 //Save the email address and verification code in the Code, while ensuring the uniqueness of this record. And delete this record within 5 minutes
