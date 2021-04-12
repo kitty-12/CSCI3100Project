@@ -5,13 +5,13 @@ const mail = require('./mail')
 cors = require("cors")
 
 //insert a tag
-router.post('/api/admin/saveArticle', cors(),function (req, res) {
+router.post('/admin/saveArticle', cors(),function (req, res) {
     db.my_insert(req.query.collection,req.query.content)
     res.send()
 })
 
 //like
-router.post('/api/admin/like', cors(),function (req, res) {
+router.post('/admin/like', cors(),function (req, res) {
     let info = req.query.likeInfo
     var authid
     var authname
@@ -21,7 +21,7 @@ router.post('/api/admin/like', cors(),function (req, res) {
         }
         authid = docs[0].author._id
         authname = docs[0].author.uname
-        docs[0].like.append(req.query.uid)
+        docs[0].like.push(req.query.uid)
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -33,7 +33,7 @@ router.post('/api/admin/like', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].liked.append(req.query.article_id)
+        docs[0].liked.push(req.query.article_id)
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -45,7 +45,7 @@ router.post('/api/admin/like', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].message.append(authname, 1, 'Someone liked your post!', 'Unread')
+        docs[0].message.push(authname, 1, 'Someone liked your post!', 'Unread')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -57,7 +57,7 @@ router.post('/api/admin/like', cors(),function (req, res) {
 })
 
 //editProfile
-router.post('/api/admin/editProfile', cors(),function (req, res) {
+router.post('/admin/editProfile', cors(),function (req, res) {
     let info = req.query.userInfo
     db.User.find({_id: info._id}, function (err, docs) {
         if (err) {
@@ -77,7 +77,7 @@ router.post('/api/admin/editProfile', cors(),function (req, res) {
 })
 
 //collect
-router.post('/api/admin/collect', cors(),function (req, res) {
+router.post('/admin/collect', cors(),function (req, res) {
     let info = req.query.collectInfo
     var authid
     var authname
@@ -85,7 +85,7 @@ router.post('/api/admin/collect', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].collected.append(info.Article_id)
+        docs[0].collected.push(info.Article_id)
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -99,7 +99,7 @@ router.post('/api/admin/collect', cors(),function (req, res) {
         }
         authid = docs[0].author._id
         authname = docs[0].author.uname
-        docs[0].collect.append(info.user_name)
+        docs[0].collect.push(info.user_name)
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -111,7 +111,7 @@ router.post('/api/admin/collect', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].message.append(authname, 2, 'Someone collected your post!', 'Unread')
+        docs[0].message.push(authname, 2, 'Someone collected your post!', 'Unread')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -123,7 +123,7 @@ router.post('/api/admin/collect', cors(),function (req, res) {
 })
 
 //createComment
-router.post('/api/admin/createComment', cors(),function (req, res) {
+router.post('/admin/createComment', cors(),function (req, res) {
     let info = req.query.commentInfo
     var authid
     var authname
@@ -154,7 +154,7 @@ router.post('/api/admin/createComment', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].message.append(authname, 3, 'Your post has a new comment!', 'Unread')
+        docs[0].message.push(authname, 3, 'Your post has a new comment!', 'Unread')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -166,7 +166,7 @@ router.post('/api/admin/createComment', cors(),function (req, res) {
 })
 
 //createArticle
-router.post('/api/admin/createArticle', cors(),function (req, res) {
+router.post('/admin/createArticle', cors(),function (req, res) {
     new db.Article(req.query.articleInformation).save(function (err) {
         if (err) {
             res.status(500).send()
@@ -177,7 +177,7 @@ router.post('/api/admin/createArticle', cors(),function (req, res) {
 })
 
 //updateArticle
-router.post('/api/admin/updateArticle', cors(),function (req, res) {
+router.post('/admin/updateArticle', cors(),function (req, res) {
     let info = req.query.articleInformation
     db.Article.find({_id: info._id}, function (err, docs) {
         if (err) {
@@ -187,7 +187,11 @@ router.post('/api/admin/updateArticle', cors(),function (req, res) {
         docs[0].Text = info.text
         docs[0].Status = info.status
         docs[0].Img = info.imag
-        if(info.status){
+        docs[0].tag=info.tag
+        docs[0].read=0
+        docs[0].like=[]
+        docs[0].collect=[]
+        if(info.status){ //info.status:0 draft, 1 posted
             docs[0].Post_time=info.time
         }
         db.Article(docs[0]).save(function (err) {
@@ -201,7 +205,7 @@ router.post('/api/admin/updateArticle', cors(),function (req, res) {
 })
 
 //login
-router.post('/api/admin/login', cors(),function (req, res) {
+router.post('/admin/login', cors(),function (req, res) {
     let info = req.query.loginInfo
     db.User.find({_id: info._id}, function (err, docs){
         if(docs[0].pwd===info.pwd) {
@@ -213,7 +217,7 @@ router.post('/api/admin/login', cors(),function (req, res) {
 })
 
 //delete
-router.post('/api/admin/delete', cors(),function (req, res) {
+router.post('/admin/delete', cors(),function (req, res) {
     db.Article.remove({_id: req.query._id}, function (err) {
         if (err) {
             res.status(500).send()
@@ -224,14 +228,14 @@ router.post('/api/admin/delete', cors(),function (req, res) {
 })
 
 //send email
-router.post('/api/admin/sendEmail', function(req, res){
+router.post('/admin/sendEmail', function(req, res){
     let remail = req.body.email;
     mail.send(remail)
     res.send(code)
 })
 
 //add new user
-router.post('/api/admin/addNewUser', function(req, res){
+router.post('/admin/addNewUser', function(req, res){
     let info = req.body.userInfo;
     new db.User(req.body.userInfo).save(function (err) {
         if (err) {
@@ -242,7 +246,7 @@ router.post('/api/admin/addNewUser', function(req, res){
 })
 
 //returnPersonalInfo
-router.post('/api/admin/returnPersonalInfo', cors(),function (req, res) {
+router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
     let info = req.body
     db.User.findOne({_id: info._id}, function (err, docs) {
         if (err) {
@@ -253,7 +257,7 @@ router.post('/api/admin/returnPersonalInfo', cors(),function (req, res) {
 })
 
 //addBlacklist
-router.post('/api/admin/addBlacklist', cors(),function (req, res) {
+router.post('/admin/addBlacklist', cors(),function (req, res) {
     let info = req.body
     db.User.findOne({_id: info._id}, function (err, docs) {
         if (err) {
@@ -265,35 +269,134 @@ router.post('/api/admin/addBlacklist', cors(),function (req, res) {
 })
 
 //search
-router.post('/api/admin/search', cors(),function (req, res) {
+router.post('/admin/search', cors(),function (req, res) {
     let info = req.body
+    var blacklist
+    var result=new Array()
     db.User.find({_id: info._id}, function (err,docs) {
         if (err) {
             return
         }
     })
+    blacklist=docs[0].black_list
     if(info.tag){
-        db.Article.find({tag:info.tag&&!docs[0].black_list},{sort: {info._sort:1}}, function (err,docs_2) {
+        db.Article.find({tag:info.tag},{sort: {info._sort:-1}}, function (err,docs_2) {
         if (err) {
             return
         }
-        res.send(docs_2)
+        for(var i=0; i<docs.length; i++){
+            if(blacklist.filter(item=>(docs_2[i].tag).includes(item))){
+               result.push(docs_2[i])
+            }
+        }
+        res.send(result) 
         })
     }else if(info.user_name){
-        db.Article.find({tag:!docs[0].black_list,author:info.user_name},{sort: {info._sort:1}}, function (err,docs_2) {
+        db.Article.find({author:info.user_name},{sort: {info._sort:-1}}, function (err,docs_2) {
         if (err) {
             return
         }
-        res.send(docs_2)
+        for(var i=0; i<docs.length; i++){
+            if(blacklist.filter(item=>(docs_2[i].tag).includes(item))){
+               result.push(docs_2[i])
+            }
+        }
+        res.send(result) 
         })
     }else{
-        db.Article.find({tag:!docs[0],title:info.user_name},{sort: {info._sort:1}}, function (err,docs_2) {
+        db.Article.find({title:info.title},{sort: {info._sort:-1}}, function (err,docs_2) {
         if (err) {
             return
         }
-        res.send(docs_2) 
+        for(var i=0; i<docs.length; i++){
+            if(blacklist.filter(item=>(docs_2[i].tag).includes(item))){
+               result.push(docs_2[i])
+            }
+        }
+        res.send(result) 
         }) 
     }
-}
+})
+
+    
+//mainPage_Hot in history
+router.post('/admin/mainPage', cors(),function (req, res) {
+    var blacklist
+    var result=new Array()
+    db.User.find({_id: req.body._id}, function (err,docs) {
+        if (err) {
+            return
+        }
+    })
+    blacklist=docs[0].black_list
+    db.Article.find({tag},null,{sort: {read:-1}}, function (err,docs) {
+        if (err) {
+            return
+        }
+        for(var i=0; i<docs.length; i++){
+            if(blacklist.filter(item=>(docs[i].tag).includes(item))){
+               result.push(docs[i])
+            }
+        }
+        res.send(result) 
+})
+
+//mainPage_latest
+router.post('/admin/mainPage', cors(),function (req, res) {
+    var blacklist
+    var result=new Array()
+    db.User.find({_id: req.body._id}, function (err,docs) {
+        if (err) {
+            return
+        }
+    })
+    blacklist=docs[0].black_list
+    db.Article.find({},null,{sort: {post_time:-1}}, function (err,docs) {
+        if (err) {
+            return
+        }
+        for(var i=0; i<docs.length; i++){
+            if(blacklist.filter(item=>(docs[i].tag).includes(item))){
+               result.push(docs[i])
+            }
+        }
+        res.send(result)
+})
+
+//mainPage_hotThiWeek
+router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
+    var blacklist
+    var result=new Array()
+    var aWeekBefore=req.body.date
+    db.User.find({_id: req.body._id}, function (err,docs) {
+        if (err) {
+            return
+        }
+    })
+    blacklist=docs[0].black_list
+    db.Article.find({post_time>aWeekBefore},null,{sort: {read:-1}}, function (err,docs) {
+        if (err) {
+            return
+        }
+        for(var i=0; i<docs.length; i++){
+            if(blacklist.filter(item=>(docs[i].tag).includes(item))){
+               result.push(docs[i])
+            }
+        }
+        res.send(result)
+})
+    
+//articlePage
+router.post('/api/admin/articlePage', cors(),function (req, res) {
+    let info = req.body
+    db.Article.find({_id: info._id}, function (err, docs) {
+        if (err) {
+            return
+        }
+        docs[0].read+=1
+        res.send(docs)
+    })
+})
+
 
 module.exports = router
