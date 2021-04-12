@@ -25,7 +25,7 @@ const db = {
         collected: [],
         post: [],
         message: [{
-            type: Number,   //(like,collect,comment,announce,complain)
+            type: String,   //(like,collect,comment,announce,complain)
             text: String
         }],
         black_list: [],
@@ -67,13 +67,13 @@ const db = {
     },
     my_insert :function (collection,doc) {   //e.g. my_insert("Tag",{name:"fancy"})
         if (collection === "User"){
-            var insertObj = new User(doc)
+            var insertObj = new this.User(doc)
         }
         if (collection === "Article"){
-            var insertObj = new Article(doc)
+            var insertObj = new this.User(doc)
         }
         if (collection === "Tag"){
-            var insertObj = new Tag(doc)
+            var insertObj = new this.User(doc)
         }
         insertObj.save()
             .then(res => {
