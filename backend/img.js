@@ -1,40 +1,58 @@
-const express = require('express');
-const img = express().Router();
-const multer = require('multer');
-const db = require("./database/db")
-const fs = require('fs')
-const cors = require("cors");
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "./static/" + req);    // 保存的路径，备注：需要自己创建
-    },
-    filename: function (req, file, cb) {
-        // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
-        cb(null, file.fieldname + '-' + Date.now());
-    }
+let express = require('express')
+let router = express.Router()
+let multer = require('multer')
+let fs = require('fs');
+let path = require('path');
+const cors = require('cors')
+let img_dir
+let upload = multer({
+    storage: multer.diskStorage({
+        //设置文件存储位置
+        destination: function(req, file, cb) {
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = (date.getMonth() + 1).toString().padStart(2, '0');
+            let day = date.getDate();
+            let dir = "./static/" + year + month + day;
+            img_dir = dir
+
+            //判断目录是否存在，没有则创建
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir, {
+                    recursive: true
+                });
+            }
+
+            //dir就是上传文件存放的目录
+            cb(null, dir);
+        },
+        //设置文件名称
+        filename: function(req, file, cb) {
+            let fileName = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
+            //fileName就是上传文件的文件名
+            cb(null, fileName);
+        }
+    })
 });
 
-// upload img
+router.post('/upload', upload.single('file'), (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json({
+        file: req.file
+    })
+})
 
+router.post('/first', cors(),function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json({name:'aaa',pwd:'123'});
 
-// 通过 storage 选项来对 上传行为 进行定制化
-const upload = multer({ storage: storage })
-
-// 单图上传
-img.post('/upload', cors(),upload.array('logo'), function(req, res){
-    const file = req.file;
-    res.send({ret_code: '0'});
-});
-
-img.get('/form', cors(),function(req, res, next){
-    const form = fs.readFileSync('localhost:8080/makeDojins', {encoding: 'utf8'});
-    res.send(form);
 });
 
 
 // fetch img
-img.post('', cors(),function (req, res) {
-    db.Article.remove({_id: req.query._id}, function (err) {
+router.post('', cors(),function (req, res) {
+    db.Article.find({_id: req.query._id}, function (err,doc) {
+
         if (err) {
             res.status(500).send()
             return
@@ -44,7 +62,7 @@ img.post('', cors(),function (req, res) {
 })
 
 // fetch profile
-img.post('', cors(),function (req, res) {
+router.post('', cors(),function (req, res) {
     db.Article.remove({_id: req.query._id}, function (err) {
         if (err) {
             res.status(500).send()
@@ -53,5 +71,5 @@ img.post('', cors(),function (req, res) {
         res.send()
     })
 })
-img.use
-module.exports = img
+
+module.exports = router
