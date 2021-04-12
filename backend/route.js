@@ -168,7 +168,7 @@ router.post('/admin/createComment', cors(),function (req, res) {
 
 //createArticle
 router.post('/admin/createArticle', cors(),function (req, res) {
-    new db.Article(req.query.articleInformation).save(function (err) {
+    new db.Article(req.body.articleInformation).save(function (err) {
         if (err) {
             res.status(500).send()
             return
@@ -179,7 +179,7 @@ router.post('/admin/createArticle', cors(),function (req, res) {
 
 //updateArticle
 router.post('/admin/updateArticle', cors(),function (req, res) {
-    let info = req.query.articleInformation
+    let info = req.body.articleInformation
     db.Article.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
@@ -208,8 +208,7 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
 
 //login
 router.post('/admin/login', cors(),function (req, res) {
-    let info = req.query.loginInfo
-    db.User.find({_id: info._id}, function (err, docs){
+    db.User.find({email: req.body.email}, function (err, docs){
         if (err) {
             res.status(500).send()
             return
