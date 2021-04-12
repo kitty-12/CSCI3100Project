@@ -3,8 +3,12 @@ let router = express.Router()
 let multer = require('multer')
 let fs = require('fs');
 let path = require('path');
-const cors = require('cors')
+let cors = require('cors')
 let img_dir
+let db = require("./database/db")
+export let temp_id
+export let temp_img_dir
+
 let upload = multer({
     storage: multer.diskStorage({
         //设置文件存储位置
@@ -34,42 +38,15 @@ let upload = multer({
         }
     })
 });
-
+// upload img
 router.post('/upload', upload.single('file'), (req, res) => {
+    temp_img_dir = req.file.path
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
         file: req.file
     })
+
 })
 
-router.post('/first', cors(),function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.json({name:'aaa',pwd:'123'});
-
-});
-
-
-// fetch img
-router.post('', cors(),function (req, res) {
-    db.Article.find({_id: req.query._id}, function (err,doc) {
-
-        if (err) {
-            res.status(500).send()
-            return
-        }
-        res.send()
-    })
-})
-
-// fetch profile
-router.post('', cors(),function (req, res) {
-    db.Article.remove({_id: req.query._id}, function (err) {
-        if (err) {
-            res.status(500).send()
-            return
-        }
-        res.send()
-    })
-})
 
 module.exports = router
