@@ -186,7 +186,6 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         docs[0].Tile = info.title
         docs[0].Text = info.text
         docs[0].Status = info.status
-        docs[0].Img = info.imag
         docs[0].tag=info.tag
         docs[0].read=0
         docs[0].like=[]
@@ -204,6 +203,22 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
     })
 })
 
+//updateImag
+router.post('/admin/updateArticle', cors(),function (req, res){
+    let info = req.query.articleInformation
+    db.Article.find({_id: info._id}, function (err, docs) {
+        if (err) {
+            return
+        }
+        docs[0].img.push(info.imagAddress)
+        db.Article(docs[0]).save(function (err) {
+            if (err) {
+                res.status(500).send()
+                return
+            }
+        })
+        res.send()
+})
 //login
 router.post('/admin/login', cors(),function (req, res) {
     let info = req.query.loginInfo
