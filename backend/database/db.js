@@ -11,45 +11,45 @@ const url = "mongodb+srv://yaohaishu:YHS123456@cluster0.4ccqg.mongodb.net/myFirs
 // define basic functions
 // insert
 const db = {
-    User : mongoose.model("User",{
-            uname:String,
-            pwd:String,
-            email:String,
-            profile:{
-                user_name:String,
-                gender:String,
-                birth:Date,
-                introduction:String,
-                picture:{}
-            },
-            liked:[],
-            collected:[],
-            post:[],
-            message:{
-                type:Number,   //(like,collect,comment,announce,complain)
-                text:String
-            },
-            black_list:[],
-            is_banned:Boolean
-        }
-    ),
+    User : mongoose.model("User", {
+        uname: String,
+        pwd: String,
+        email: String,
+        profile: {
+            user_name: String,
+            introduction: String,
+            banner: String,
+            picture: String
+        },
+        liked: [],
+        collected: [],
+        post: [],
+        message: {
+            type: Number,   //(like,collect,comment,announce,complain)
+            text: String
+        },
+        black_list: [],
+        is_banned: Boolean
+
+    }),
 
     Article : mongoose.model("Article", {
         author: {
-            _id: String,
+            author_id: String,
             uname: String
         },
+        title: String,
         text: String,
         post_time: Date,
         read: Number,
         like: [],
         collect: Number,
         tag: [],
-        comments: {
+        comments: [{
             author_id: String,  // there may include all info that need to be displayed
             time: Date,
             text: String
-        }
+        }]
     }),
 
     Tag : mongoose.model("Tag",{
