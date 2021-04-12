@@ -207,8 +207,8 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
 
 
 //login
-router.post('/admin/login', cors(),function (req, res) {
-    db.User.find({email: req.body.email}, function (err, docs){
+router.get('/admin/login', cors(),function (req, res) {
+    db.User.find({email: req.query.email}, function (err, docs){
         if (err) {
             res.status(500).send()
             return
