@@ -210,6 +210,10 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
 router.post('/admin/login', cors(),function (req, res) {
     let info = req.query.loginInfo
     db.User.find({_id: info._id}, function (err, docs){
+        if (err) {
+            res.status(500).send()
+            return
+        }
         if(docs[0].pwd===info.pwd) {
             res.send(1)
         }else{
