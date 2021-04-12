@@ -3,7 +3,7 @@ const router = express.Router()
 const db = require('./database/db')
 const mail = require('./mail')
 cors = require("cors")
-
+let img = require("./img")
 //insert a tag
 router.post('/admin/saveArticle', cors(),function (req, res) {
     db.my_insert(req.query.collection,req.query.content)
@@ -190,6 +190,7 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         docs[0].read=0
         docs[0].like=[]
         docs[0].collect=[]
+        docs[0].img.push(img.temp_img_dir)
         if(info.status){ //info.status:0 draft, 1 posted
             docs[0].Post_time=info.time
         }
@@ -203,22 +204,7 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
     })
 })
 
-//updateImag
-router.post('/admin/updateArticle', cors(),function (req, res){
-    let info = req.query.articleInformation
-    db.Article.find({_id: info._id}, function (err, docs) {
-        if (err) {
-            return
-        }
-        docs[0].img.push(info.imagAddress)
-        db.Article(docs[0]).save(function (err) {
-            if (err) {
-                res.status(500).send()
-                return
-            }
-        })
-        res.send()
-})
+
 //login
 router.post('/admin/login', cors(),function (req, res) {
     let info = req.query.loginInfo
