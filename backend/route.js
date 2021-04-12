@@ -206,17 +206,21 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
 })
 
 
+
 //login
-router.get('/admin/login', cors(),function (req, res) {
-    db.User.find({email: req.query.email}, function (err, docs){
+router.post('/admin/login', cors(),function (req, res) {
+    //console.log("before connect");
+    db.connect();
+    //console.log("after connect");
+    db.User.find({email: req.body.email}, function (err, docs){
         if (err) {
             res.status(500).send()
             return
         }
-        if(docs[0].pwd===req.query.pwd) {
-            res.send(1)
+        if(docs[0].pwd===req.body.pwd) {
+            res.send('1')
         }else{
-            res.send(0)
+            res.send('0')
         }
     })
 })
