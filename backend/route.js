@@ -213,7 +213,7 @@ router.get('/admin/login', cors(),function (req, res) {
             res.status(500).send()
             return
         }
-        if(docs[0].pwd===info.pwd) {
+        if(docs[0].pwd===req.query..pwd) {
             res.send(1)
         }else{
             res.send(0)
