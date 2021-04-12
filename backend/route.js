@@ -285,7 +285,7 @@ router.post('/admin/search', cors(),function (req, res) {
             return
         }
         for(var i=0; i<docs.length; i++){
-            if(blacklist.filter(item=>(docs_2[i].tag).includes(item))){
+            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
                result.push(docs_2[i])
             }
         }
@@ -297,7 +297,7 @@ router.post('/admin/search', cors(),function (req, res) {
             return
         }
         for(var i=0; i<docs.length; i++){
-            if(blacklist.filter(item=>(docs_2[i].tag).includes(item))){
+            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
                result.push(docs_2[i])
             }
         }
@@ -309,7 +309,7 @@ router.post('/admin/search', cors(),function (req, res) {
             return
         }
         for(var i=0; i<docs.length; i++){
-            if(blacklist.filter(item=>(docs_2[i].tag).includes(item))){
+            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
                result.push(docs_2[i])
             }
         }
@@ -334,7 +334,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
             return
         }
         for(var i=0; i<docs.length; i++){
-            if(blacklist.filter(item=>(docs[i].tag).includes(item))){
+            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
                result.push(docs[i])
             }
         }
@@ -356,7 +356,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
             return
         }
         for(var i=0; i<docs.length; i++){
-            if(blacklist.filter(item=>(docs[i].tag).includes(item))){
+            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
                result.push(docs[i])
             }
         }
@@ -379,7 +379,7 @@ router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
             return
         }
         for(var i=0; i<docs.length; i++){
-            if(blacklist.filter(item=>(docs[i].tag).includes(item))){
+            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
                result.push(docs[i])
             }
         }
