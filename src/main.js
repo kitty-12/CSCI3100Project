@@ -19,7 +19,9 @@ const router = new VueRouter({
   routes: [
     {path: "/", redirect: "/login" },
     {path: "/login", component: () => import("@/components/login.vue")},
-    {path: "/home", component: () => import("@/components/home.vue")},
+    {path:"/user",component:()=>import("@/components/User.vue")},
+    {path:"/main",component:()=>import("@/components/MainPage")},
+    {path:"/result",component:()=>import("@/components/SearchResult")},
     {path: "/register", component: () => import("@/components/register.vue")},
     {path: "/upload", component: () => import("@/components/makeFanwork.vue")},
     {path: "/test", component: () => import("@/components/test.vue")}
