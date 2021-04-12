@@ -1,9 +1,9 @@
 const express = require('express'),
+    bodyParser = require("body-parser");
     app = express(),
     expressPort = 3000,
-    img = require("./img")
+
 cors = require("cors")
-routes = require("./route")
 
 
 // allow interaction between different host
@@ -20,11 +20,19 @@ app.listen(expressPort,()=>{
     console.log("listening on " + expressPort)
 })
 
-app.use("",img)
-app.use("/test",routes)
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+//app.use('/',img, express.static('static'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(multer({ dest: '/tmp/'}).array('image'));
 
+img = require("./img")
+routes = require("./route")
+
+app.use("",img)
+app.use("/test",routes)
 
 
 
