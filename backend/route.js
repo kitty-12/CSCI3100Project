@@ -236,7 +236,7 @@ router.post('/admin/sendEmail', function(req, res){
     res.send(code)
 })
 
-//add new user
+//add new user ？？？
 router.post('/admin/addNewUser', function(req, res){
     let info = req.body.userInfo;
     new db.User(req.body.userInfo).save(function (err) {
@@ -244,7 +244,8 @@ router.post('/admin/addNewUser', function(req, res){
             res.status(500).send()
             return
         }
-    res.send()
+        res.send()
+    })
 })
 
 //returnPersonalInfo
@@ -282,7 +283,7 @@ router.post('/admin/search', cors(),function (req, res) {
     })
     blacklist=docs[0].black_list
     if(info.tag){
-        db.Article.find({tag:info.tag},{sort: {info._sort:-1}}, function (err,docs_2) {
+        db.Article.find({tag:info.tag},{sort: {read:-1}}, function (err,docs_2) {
         if (err) {
             return
         }
@@ -291,10 +292,10 @@ router.post('/admin/search', cors(),function (req, res) {
                result.push(docs_2[i])
             }
         }
-        res.send(result) 
+        res.send(result)
         })
     }else if(info.user_name){
-        db.Article.find({author:info.user_name},{sort: {info._sort:-1}}, function (err,docs_2) {
+        db.Article.find({author:info.user_name},{sort: {read:-1}}, function (err,docs_2) {
         if (err) {
             return
         }
@@ -303,10 +304,10 @@ router.post('/admin/search', cors(),function (req, res) {
                result.push(docs_2[i])
             }
         }
-        res.send(result) 
+        res.send(result)
         })
     }else{
-        db.Article.find({title:info.title},{sort: {info._sort:-1}}, function (err,docs_2) {
+        db.Article.find({title:info.title},{sort: {read:-1}}, function (err,docs_2) {
         if (err) {
             return
         }
@@ -315,12 +316,12 @@ router.post('/admin/search', cors(),function (req, res) {
                result.push(docs_2[i])
             }
         }
-        res.send(result) 
-        }) 
+        res.send(result)
+        })
     }
 })
 
-    
+
 //mainPage_Hot in history
 router.post('/admin/mainPage', cors(),function (req, res) {
     var blacklist
@@ -335,59 +336,61 @@ router.post('/admin/mainPage', cors(),function (req, res) {
         if (err) {
             return
         }
-        for(var i=0; i<docs.length; i++){
-            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
-               result.push(docs[i])
+        for (var i = 0; i < docs.length; i++) {
+            if (!(blacklist.filter(item => (docs[i].tag).includes(item)))) {
+                result.push(docs[i])
             }
         }
-        res.send(result) 
+        res.send(result)
+    })
 })
 
 //mainPage_latest
 router.post('/admin/mainPage', cors(),function (req, res) {
     var blacklist
-    var result=new Array()
-    db.User.find({_id: req.body._id}, function (err,docs) {
+    var result = new Array()
+    db.User.find({_id: req.body._id}, function (err, docs) {
         if (err) {
             return
         }
     })
-    blacklist=docs[0].black_list
-    db.Article.find({},null,{sort: {post_time:-1}}, function (err,docs) {
+    blacklist = docs[0].black_list
+    db.Article.find({}, null, {sort: {post_time: -1}}, function (err, docs) {
         if (err) {
             return
         }
-        for(var i=0; i<docs.length; i++){
-            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
-               result.push(docs[i])
+        for (var i = 0; i < docs.length; i++) {
+            if (!(blacklist.filter(item => (docs[i].tag).includes(item)))) {
+                result.push(docs[i])
             }
         }
         res.send(result)
-})
 
+    })
+})
 //mainPage_hotThiWeek
 router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
     var blacklist
-    var result=new Array()
-    var aWeekBefore=req.body.date
-    db.User.find({_id: req.body._id}, function (err,docs) {
+    var result = new Array()
+    var aWeekBefore = req.body.date
+    db.User.find({_id: req.body._id}, function (err, docs) {
         if (err) {
             return
         }
     })
-    blacklist=docs[0].black_list
-    db.Article.find({post_time>aWeekBefore},null,{sort: {read:-1}}, function (err,docs) {
+    blacklist = docs[0].black_list
+    db.Article.find({post_time: {$gt: aWeekBefore}}, null, {sort: {read: -1}}, function (err, docs) {
         if (err) {
             return
         }
-        for(var i=0; i<docs.length; i++){
-            if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
-               result.push(docs[i])
+        for (var i = 0; i < docs.length; i++) {
+            if (!(blacklist.filter(item => (docs[i].tag).includes(item)))) {
+                result.push(docs[i])
             }
         }
         res.send(result)
+    })
 })
-    
 //articlePage
 router.post('/api/admin/articlePage', cors(),function (req, res) {
     let info = req.body
@@ -399,6 +402,5 @@ router.post('/api/admin/articlePage', cors(),function (req, res) {
         res.send(docs)
     })
 })
-
 
 module.exports = router

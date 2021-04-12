@@ -3,9 +3,7 @@ let router = express.Router()
 let multer = require('multer')
 let fs = require('fs');
 let path = require('path');
-let cors = require('cors')
 let img_dir
-let db = require("./database/db")
 export let temp_id
 export let temp_img_dir
 
