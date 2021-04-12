@@ -191,7 +191,7 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         docs[0].read=0
         docs[0].like=[]
         docs[0].collect=[]
-        docs[0].img.push(img.temp_img_dir)
+        docs[0].img.push(img.temp)
         if(info.status){ //info.status:0 draft, 1 posted
             docs[0].Post_time=info.time
         }
