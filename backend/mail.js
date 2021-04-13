@@ -40,9 +40,9 @@ exports.send= function (EMAIL){
   function(error, data) {
     //assert(!error,500,"Send verification code error！")
     transport.close();
-  }
+  })
     return code
-  )}
+  }
 //.... 
 //Save the email address and verification code in the Code, while ensuring the uniqueness of this record. And delete this record within 5 minutes
 /*const Code = require("../models/Code")
