@@ -451,7 +451,7 @@ router.post('/admin/sendAvatar', cors(),function (req, res) {
             res.status(500).send()
             return
         }
-        res.send({avatar:docs[0].profile.picture})
+        res.send({'avatar':docs[0].profile.picture})
     })
 })
 
