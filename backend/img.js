@@ -4,8 +4,6 @@ let multer = require('multer')
 let fs = require('fs');
 let path = require('path');
 let temp_img_dir = null
-let temp_profile_dir = null
-let temp_banner_dir = null
 let temp = null
 
 let upload = multer({
@@ -43,27 +41,30 @@ router.post('/img', upload.single('file'), (req, res) => {
     temp_img_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
-        file: req.file
+//        file: req.file,
+        path: temp_img_dir
     })
 
 })
 
 // upload profile
 router.post('/profile', upload.single('file'), (req, res) => {
-    temp_profile_dir = temp + "/" + req.file.filename
+    temp_img_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
-        file: req.file
+        file: req.file,
+        path: temp_img_dir
     })
 
 })
 
 // upload banner
 router.post('/banner', upload.single('file'), (req, res) => {
-    temp_banner_dir = temp + "/" + req.file.filename
+    temp_img_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
-        file: req.file
+        file: req.file,
+        path: temp_img_dir
     })
 
 })
@@ -71,6 +72,3 @@ router.post('/banner', upload.single('file'), (req, res) => {
 
 
 exports.router = router
-exports.temp_img = temp_img_dir
-exports.temp_profile = temp_profile_dir
-exports.temp_banner = temp_banner_dir
