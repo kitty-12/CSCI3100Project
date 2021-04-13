@@ -14,7 +14,7 @@ let upload = multer({
             let month = (date.getMonth() + 1).toString().padStart(2, '0');
             let day = date.getDate();
             let dir = "./static/" + year + month + day;
-            temp_img_dir = dir
+            temp_img_dir = "/static/" + year + month + day
 
             //判断目录是否存在，没有则创建
             if (!fs.existsSync(dir)) {
@@ -36,7 +36,7 @@ let upload = multer({
 });
 // upload img
 router.post('/upload', upload.single('file'), (req, res) => {
-    temp_img_dir = req.file.path
+    temp_img_dir = temp_img_dir + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
         file: req.file
