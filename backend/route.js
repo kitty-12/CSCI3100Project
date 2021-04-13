@@ -17,7 +17,7 @@ router.post('/admin/like', cors(),function (req, res) {
     let info = req.query.likeInfo
     var authid
     var authname
-    db.my_find("Article",{_id: info.article_id}), function (err, docs) {
+    db.Article.find({_id: info.article_id}), function (err, docs) {
         if (err) {
             return
         }
@@ -31,7 +31,7 @@ router.post('/admin/like', cors(),function (req, res) {
             }
         })
     }
-    db.my_find("User",{_id: info._id}, function (err, docs) {
+    db.User.find(,{_id: info._id}, function (err, docs) {
         if (err) {
             return
         }
@@ -43,7 +43,7 @@ router.post('/admin/like', cors(),function (req, res) {
             }
         })
     })
-    db.my_find("User",{_id: authid}, function (err, docs) {
+    db.User.find({_id: authid}, function (err, docs) {
         if (err) {
             return
         }
@@ -112,7 +112,7 @@ router.post('/admin/collect', cors(),function (req, res) {
             }
         })
     })
-    db.my_find("User",{_id: authid}, function (err, docs) {
+    db.User.find({_id: authid}, function (err, docs) {
         if (err) {
             return
         }
@@ -133,14 +133,14 @@ router.post('/admin/createComment', cors(),function (req, res) {
     let info = req.query.commentInfo
     var authid
     var authname
-    db.my_find("User",{_id: info.user_id}, function (err, docs) {
+    db.User.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
         }
         if (docs[0].is_banned)
             res.send({message:"You are not allowed to comment."})
     })
-    db.my_find("Article",{_id: info.article_id}), function (err, docs) {
+    db.Article.find({_id: info.article_id}), function (err, docs) {
         if (err) {
             return
         }
@@ -156,7 +156,7 @@ router.post('/admin/createComment', cors(),function (req, res) {
             }
         })
     })
-    db.my_find("User",{_id: authid}, function (err, docs) {
+    db.User.find({_id: authid}, function (err, docs) {
         if (err) {
             return
         }
