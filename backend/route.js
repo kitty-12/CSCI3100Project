@@ -140,7 +140,7 @@ router.post('/admin/createComment', cors(),function (req, res) {
         if (docs[0].is_banned)
             res.send({message:"You are not allowed to comment."})
     })
-    db.Article.find({_id: info.user_id}, function (err, docs) {
+    db.my_find("Article",{_id: info.article_id}), function (err, docs) {
         if (err) {
             return
         }
