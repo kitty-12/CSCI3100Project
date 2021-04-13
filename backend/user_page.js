@@ -44,7 +44,7 @@ router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
 router.post('/admin/returnPersonalArtical', cors(),function (req, res) {
     db.connect()
     let info = req.body
-    db.Artical.find({author_id: info._id}, function (err, docs) {
+    db.Artical.find({author_id: info._id}, ['_id','title','img'], function (err, docs) {
         if (err) {
             return
         }
@@ -64,6 +64,23 @@ router.post('/admin/returnCollectedArtical', cors(),function (req, res) {
                 return
             }
             res.send({id:docs_2._id,title:docs_2.title,img:docs_2.img})
+        })
+    })
+})
+//returnMessage
+router.post('/admin/returnMessage', cors(),function (req, res) {
+    db.connect()
+    let info = req.body
+    db.User.findOne({_id: info._id}, function (err, docs) {
+        if (err) {
+            return
+        }
+        res.send(docs[0].message.splice(0,docs[0].message.length))
+        db.User(docs[0]).save(function (err) {
+            if (err) {
+                res.status(500).send()
+                return
+            }
         })
     })
 })
