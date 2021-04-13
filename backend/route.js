@@ -371,7 +371,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
 })
 
 //mainPage_latest
-router.post('/admin/mainPage_latest', cors(),function (req, res) {
+router.post('/admin/mainPage', cors(),function (req, res) {
     db.connect()
     var blacklist
     var result = new Array()
@@ -451,7 +451,7 @@ router.post('/admin/sendAvatar', cors(),function (req, res) {
             res.status(500).send()
             return
         }
-        res.send(doc[0].profile.picture)
+        res.send({avatar:docs[0].profile.picture})
     })
 })
 
