@@ -26,7 +26,7 @@ router.post('/api/admin/articlePage', cors(),function (req, res) {
 })
 
 //articlePage(only comment)
-router.post('/api/admin/articlePage', cors(),function (req, res) {
+router.post('/api/admin/articlePage1', cors(),function (req, res) {
     db.connect()
     let info = req.body
     db.Article.find({_id: info._id}, { comments: 1 },function (err, docs) {
