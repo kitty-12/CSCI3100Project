@@ -4,21 +4,24 @@
       <div>
         <!--Website icon-->
         <el-tooltip class="item" effect="dark" content="Go to Main Page" placement="bottom-start">
-          <router-link to="/main" class = "icon"></router-link>
+          <div @click="gotoMain" class = "icon"></div>
         </el-tooltip>
         <!--Search box-->
-        <div class = "SearchBox">
-          <label>
-            <input v-model="keyword" class = "InputBox" placeholder="Search your favorite works">
-          </label>
-          <button v-on:click="search" class = "SearchButton">Search!</button>
+        <div style="float: left;width:40%;margin-top: 30px;margin-left: 5%">
+          <el-input placeholder="Search your interests!" v-model="keyword" >
+            <el-button @click="search" slot="append" icon="el-icon-search"></el-button>
+          </el-input>
         </div>
         <div>
-          <div>
-              <router-link @click="gotoUser"><img :src="imglink" class = "avatar"></router-link>
+          <div style="float: left;width: 30%;margin-top: 10px;">
+              <div @click="gotoUser" class="demo-basic--circle">
+                <div style="margin-left: 70%">
+                  <el-avatar :size="80" :src="imglink"></el-avatar>
+                </div>
+              </div>
+              </div>
           </div>
         </div>
-      </div>
     </nav>
     <div class="Top-3">
       <div class="Top-2">
@@ -59,7 +62,7 @@ name: "Navigator",
       keyword: '',
       url: "",
       uname:'',
-      imglink: "",
+      imglink: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       drawer:false,
       direction: 'rtl',
       messageList:[]
@@ -68,15 +71,18 @@ name: "Navigator",
   methods: {
     search: function () {
       console.log(this.keyword)//check whether got input
-      this.$router.push({name:"result",params:{type:"1",keyword:this.keyword,uid:this.uid}});
+      this.$router.push({name:"result",params:{type:"1",keyword:this.keyword,uid:this.userid}});
     },
     gotoUser:function (){
       this.$router.push({name:"user",params:{uid1:this.uid,uid2:this.uid}});
     },
+    gotoMain:function (){
+      this.$router.push({name:"main",params:{uid:this.userid}})
+    },
     getMessage:function (){
-      this.$http.get(
-          "http://localhost:3000/test/admin/returnMessage",
-          {params:{info:this.uid}},
+      this.$http.post(
+          "http://localhost:3000/user_page/admin/returnMessage",
+          {info:this.uid},
           {emulateJSON:true}).then(
           function(res){
             console.log(res);
@@ -100,16 +106,16 @@ name: "Navigator",
         title:'',
         text:'',
         img:[],
-        post_time: new Date(),
+        post_time: Date,
         read: '',
         like: [],
         collect: 0,
         tag: [],
         comments: []
       };
-      this.$http.get(
-          "http://localhost:3000/test/admin/createArticle",
-          {params:{articleInformation:obj}},
+      this.$http.post(
+          "http://localhost:3000/create_article/admin/createArticle",
+          {articleInformation:obj},
           {emulateJSON:true}).then(
           function(res){
             console.log(res);
@@ -127,9 +133,9 @@ name: "Navigator",
     let obj={
       _id:this.userid
     }
-    this.$http.get(
-        "http://localhost:3000/test/admin/returnPersonalInfo",
-        {params:{info:obj}},
+    this.$http.post(
+        "http://localhost:3000/user_page/admin/returnPersonalInfo",
+        obj,
         {emulateJSON:true}).then(
         function(res){
           console.log(res);
