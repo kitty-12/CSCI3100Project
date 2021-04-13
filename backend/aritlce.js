@@ -47,13 +47,18 @@ router.post('/admin/like', cors(),function (req, res) {
             return
         }
         authid = docs[0].author._id
-        docs[0].like.push(info.likerid)
-        db.Article(docs[0]).save(function (err) {
-            if (err) {
-                res.status(500).send()
-                return
-            }
-        })
+        if(docs[0].like.includes(info.likerid)){
+            res.send("You've already liked this article!")
+            return
+        }else{
+            docs[0].like.push(info.likerid)
+            db.Article(docs[0]).save(function (err) {
+                if (err) {
+                    res.status(500).send()
+                    return
+                }
+            })
+        }
     }
     db.User.find({_id: info.likerid}, function (err, docs) {
         if (err) {
@@ -105,14 +110,19 @@ router.post('/admin/collect', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].collected.push(info.Article_id)
-        db.Article(docs[0]).save(function (err) {
-            if (err) {
-                res.status(500).send()
-                return
-            }
-        })
+        if(docs[0].collected.includes(info.Article_id)){
+            res.send("You've already collected this article!")
+            return
+        }else{
+            docs[0].collected.push(info.Article_id)
+            db.Article(docs[0]).save(function (err) {
+                if (err) {
+                    res.status(500).send()
+                    return
+                }
+            })
         collectername = docs[0].author.uname
+        }
     })
     db.Article.find({_id: info.article_id}, function (err, docs) {
         if (err) {
