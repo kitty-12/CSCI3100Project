@@ -35,7 +35,7 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         docs[0].like=[]
         docs[0].collect=[]
         if (info.hasImage === "1"){
-             docs[0].img.push(img.temp_img)
+             docs[0].img.push(req.body.img_path)
         }else{
             docs[0].img.push("默认图片地址")  /// 要改
         }
