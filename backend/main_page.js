@@ -10,7 +10,6 @@ let img = require("./img")
 //add new user
 router.post('/admin/addNewUser', function(req, res){
     db.connect()
-    let info = req.body.userInfo;
     new db.User(req.body.userInfo).save(function (err) {
         if (err) {
             res.status(500).send()
