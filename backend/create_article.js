@@ -27,7 +27,7 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].tile = info.title
+        docs[0].title = info.title
         docs[0].text = info.text
         docs[0].status = info.status
         docs[0].tag=info.tag
