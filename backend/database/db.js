@@ -12,11 +12,10 @@ const url = "mongodb+srv://yaohaishu:YHS123456@cluster0.4ccqg.mongodb.net/myFirs
 // insert
 const db = {
     User : mongoose.model("User", {
-        uname: String,
         pwd: String,
         email: String,
         profile: {
-            user_name: String,
+            uname: String,
             introduction: String,
             banner: String,
             picture: String
