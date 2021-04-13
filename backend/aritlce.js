@@ -48,7 +48,7 @@ router.post('/admin/like', cors(),function (req, res) {
         }
         authid = docs[0].author._id
         if(docs[0].like.includes(info.likerid)){
-            res.send("You've already liked this article!")
+            res.send(1)
             return
         }else{
             docs[0].like.push(info.likerid)
@@ -111,7 +111,7 @@ router.post('/admin/collect', cors(),function (req, res) {
             return
         }
         if(docs[0].collected.includes(info.Article_id)){
-            res.send("You've already collected this article!")
+            res.send(1)
             return
         }else{
             docs[0].collected.push(info.Article_id)
