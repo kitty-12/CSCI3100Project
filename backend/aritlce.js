@@ -21,7 +21,7 @@ router.post('/api/admin/articlePage', cors(),function (req, res) {
                 return
             }
         })
-        res.send(docs[0])
+        res.send(docs[0].comments)
     })
 })
 
