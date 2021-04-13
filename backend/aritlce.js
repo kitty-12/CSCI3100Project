@@ -21,7 +21,7 @@ router.post('/api/admin/articlePage', cors(),function (req, res) {
                 return
             }
         })
-        res.send(docs[0].comments)
+        res.send(docs[0])
     })
 })
 
@@ -33,7 +33,7 @@ router.post('/api/admin/articlePage1', cors(),function (req, res) {
         if (err) {
             return
         }
-        res.send(docs[0])
+        res.send(docs[0].comments)
     })
 })
 //like
@@ -90,7 +90,7 @@ router.post('/admin/like', cors(),function (req, res) {
 //delete
 router.post('/admin/delete', cors(),function (req, res) {
     db.connect()
-    db.Article.remove({_id: req.query._id}, function (err) {
+    db.Article.remove({_id: req.body._id}, function (err) {
         if (err) {
             res.status(500).send()
             return
@@ -103,7 +103,7 @@ router.post('/admin/delete', cors(),function (req, res) {
 //collect
 router.post('/admin/collect', cors(),function (req, res) {
     db.connect()
-    let info = req.query.collectInfo
+    let info = req.body
     var authid
     var collectername
     db.User.find({_id: info.user_id}, function (err, docs) {
@@ -155,7 +155,7 @@ router.post('/admin/collect', cors(),function (req, res) {
 //createComment
 router.post('/admin/createComment', cors(),function (req, res) {
     db.connect()
-    let info = req.query.commentInfo
+    let info = req.body
     var authid
     var commentername
     db.User.find({_id: info.user_id}, function (err, docs) {
