@@ -72,7 +72,7 @@ router.post('/admin/like', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].message.push(likername, 1, 'Someone liked your post!', 'Unread')
+        docs[0].message.push(likername, info.article_id, 1, 'Someone liked your post!')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -131,7 +131,7 @@ router.post('/admin/collect', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].message.push(collectername, 2, 'Someone collected your post!', 'Unread')
+        docs[0].message.push(collectername, info.article_id, 2, 'Someone collected your post!')
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -156,7 +156,7 @@ router.post('/admin/createComment', cors(),function (req, res) {
             res.send({message:"You are not allowed to comment."})
         commentername = docs[0].author.uname
     })
-    db.Article.find({_id: info.article_id}), function (err, docs) {
+    db.Article.find({_id: info.article_id}, function (err, docs) {
         if (err) {
             return
         }
@@ -171,16 +171,16 @@ router.post('/admin/createComment', cors(),function (req, res) {
             }
         })
     })
-db.User.find({_id: authid}, function (err, docs) {
-    if (err) {
-        return
-    }
-    docs[0].message.push(commentername = docs[0].author.uname, 3, 'Your post has a new comment!', 'Unread')
-    db.User(docs[0]).save(function (err) {
+    db.User.find({_id: authid}, function (err, docs) {
         if (err) {
-            res.status(500).send()
             return
         }
+        docs[0].message.push(commentername, info.article_id, 3, 'Your post has a new comment!')
+        db.User(docs[0]).save(function (err) {
+            if (err) {
+                res.status(500).send()
+                return
+            }
         res.send()
     })
 })
