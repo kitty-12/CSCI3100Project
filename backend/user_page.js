@@ -16,8 +16,8 @@ router.post('/admin/editProfile', cors(),function (req, res) {
         }
         docs[0].user_name = info.user_name
         docs[0].introduction = info.Introduction
-        docs[0].picture = img.temp_profile
-        docs[0].banner = img.temp_banner
+        docs[0].picture = req.body.profile_path
+        docs[0].banner = req.body.banner_path
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
