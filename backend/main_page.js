@@ -62,7 +62,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
 })
 
 //mainPage_latest
-router.post('/admin/mainPage', cors(),function (req, res) {
+router.post('/admin/mainPage_latest', cors(),function (req, res) {
     db.connect()
     var blacklist
     var result = new Array()
