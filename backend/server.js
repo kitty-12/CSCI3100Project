@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-
+// routes
 app.use("/upload",img.router)
 app.use("/plugin",plugin)
 app.use("/article",article)
