@@ -9,7 +9,7 @@ let img = require("./img")
 //editProfile
 router.post('/admin/editProfile', cors(),function (req, res) {
     db.connect()
-    let info = req.query.userInfo
+    let info = req.body
     db.User.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
