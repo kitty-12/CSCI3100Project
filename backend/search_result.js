@@ -17,8 +17,9 @@ router.post('/admin/search', cors(),function (req, res) {
         if (err) {
             return
         }
-    })
-    blacklist=docs[0].black_list
+        blacklist=docs[0].black_list
+    })    
+    /*
     if(info.tag){
         db.Article.find({tag:info.tag},{sort: {read:-1}}, function (err,docs_2) {
             if (err) {
@@ -50,6 +51,38 @@ router.post('/admin/search', cors(),function (req, res) {
             }
             for(var i=0; i<docs.length; i++){
                 if(!(blacklist.filter(item=>(docs[i].tag).includes(item)))){
+                    result.push(docs_2[i])
+                }
+            }
+            res.send(result)
+        })
+    }
+    */
+    let filter={
+        $or:[
+            {uname:/info.user_name/},
+            {title:/info.title/},
+        ]
+    }
+    if(info.criterion==="1"){//by read
+        db.Article.find({filter},{sort: {read:-1}}, function (err,docs_2) {
+            if (err) {
+                return
+            }
+            for(var i=0; i<docs.length; i++){
+                if(!(blacklist.filter(item=>(docs_2[i].tag).includes(item)))){
+                    result.push(docs_2[i])
+                }
+            }
+            res.send(result)
+        })
+    }else{//by time            
+        db.Article.find({filter},{sort: {post_time:-1}}, function (err,docs_2) {
+            if (err) {
+                return
+            }
+            for(var i=0; i<docs.length; i++){
+                if(!(blacklist.filter(item=>(docs_2[i].tag).includes(item)))){
                     result.push(docs_2[i])
                 }
             }
