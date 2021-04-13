@@ -362,8 +362,9 @@ router.post('/admin/mainPage', cors(),function (req, res) {
         if (err) {
             return
         }
+        blacklist=docs[0].black_list
     })
-    blacklist=docs[0].black_list
+    
     db.Article.find({tag},null,{sort: {read:-1}}, function (err,docs) {
         if (err) {
             return
@@ -386,8 +387,9 @@ router.post('/admin/mainPage', cors(),function (req, res) {
         if (err) {
             return
         }
+        blacklist = docs[0].black_list
     })
-    blacklist = docs[0].black_list
+    
     db.Article.find({}, null, {sort: {post_time: -1}}, function (err, docs) {
         if (err) {
             return
@@ -411,8 +413,9 @@ router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
         if (err) {
             return
         }
+        blacklist = docs[0].black_list
     })
-    blacklist = docs[0].black_list
+    
     db.Article.find({post_time: {$gt: aWeekBefore}}, null, {sort: {read: -1}}, function (err, docs) {
         if (err) {
             return
