@@ -119,7 +119,7 @@ router.post('/admin/collect', cors(),function (req, res) {
             return
         }
         authid = docs[0].author._id
-        docs[0].collect.push(info.user_name)
+        docs[0].collect+=1
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
