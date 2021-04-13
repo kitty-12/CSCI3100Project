@@ -39,7 +39,7 @@ let upload = multer({
     })
 });
 // upload img
-router.post('/upload/img', upload.single('file'), (req, res) => {
+router.post('/img', upload.single('file'), (req, res) => {
     temp_img_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
@@ -49,7 +49,7 @@ router.post('/upload/img', upload.single('file'), (req, res) => {
 })
 
 // upload profile
-router.post('/upload/profile', upload.single('file'), (req, res) => {
+router.post('/profile', upload.single('file'), (req, res) => {
     temp_profile_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
@@ -59,7 +59,7 @@ router.post('/upload/profile', upload.single('file'), (req, res) => {
 })
 
 // upload banner
-router.post('/upload/banner', upload.single('file'), (req, res) => {
+router.post('/banner', upload.single('file'), (req, res) => {
     temp_banner_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
