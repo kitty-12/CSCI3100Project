@@ -34,10 +34,10 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         docs[0].read=0
         docs[0].like=[]
         docs[0].collect=0
-        if (info.hasImage === "1"){
-             docs[0].img.push(info.img)
+        if (info.img !== []){
+             docs[0].img = info.img
         }else{
-            docs[0].img.push("默认图片地址")  /// 要改
+            docs[0].img = "默认图片地址"  /// 要改
         }
         if(info.status){ //info.status:0 draft, 1 posted
             docs[0].post_time=info.time
