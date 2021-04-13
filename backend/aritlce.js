@@ -39,7 +39,7 @@ router.post('/api/admin/articlePage', cors(),function (req, res) {
 //like
 router.post('/admin/like', cors(),function (req, res) {
     db.connect()
-    let info = req.query.likeInfo
+    let info = req.body
     var authid
     var likername
     db.Article.find({_id: info.article_id}), function (err, docs) {
@@ -47,7 +47,7 @@ router.post('/admin/like', cors(),function (req, res) {
             return
         }
         authid = docs[0].author._id
-        docs[0].like.push(req.query.uid)
+        docs[0].like.push(info.likerid)
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
@@ -55,12 +55,12 @@ router.post('/admin/like', cors(),function (req, res) {
             }
         })
     }
-    db.User.find({_id: info._id}, function (err, docs) {
+    db.User.find({_id: info.likerid}, function (err, docs) {
         if (err) {
             return
         }
         likername = docs[0].author.uname
-        docs[0].liked.push(req.query.article_id)
+        docs[0].liked.push(info.article_id)
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
