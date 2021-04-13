@@ -33,14 +33,14 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         docs[0].tag=info.tag
         docs[0].read=0
         docs[0].like=[]
-        docs[0].collect=[]
+        docs[0].collect=0
         if (info.hasImage === "1"){
-             docs[0].img.push(req.body.img_path)
+             docs[0].img.push(info.img)
         }else{
             docs[0].img.push("默认图片地址")  /// 要改
         }
         if(info.status){ //info.status:0 draft, 1 posted
-            docs[0].Post_time=info.time
+            docs[0].post_time=info.time
         }
         db.Article(docs[0]).save(function (err) {
             if (err) {
