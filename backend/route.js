@@ -443,4 +443,16 @@ router.post('/api/admin/articlePage', cors(),function (req, res) {
     })
 })
 
+//send avatar
+router.post('/admin/sendAvatar', cors(),function (req, res) {
+    db.connect();
+    db.User.find({_id: req.body._id}, function (err, docs){
+        if (err) {
+            res.status(500).send()
+            return
+        }
+        res.send(doc[0].profile.picture)
+    })
+})
+
 module.exports = router
