@@ -290,6 +290,12 @@ router.post('/admin/addBlacklist', cors(),function (req, res) {
             return
         }
         docs[0].black_list=info.tag
+        db.User(docs[0]).save(function (err) {
+            if (err) {
+                res.status(500).send()
+                return
+            }
+        })
         res.send()
     })
 })
@@ -427,6 +433,12 @@ router.post('/api/admin/articlePage', cors(),function (req, res) {
             return
         }
         docs[0].read+=1
+        db.Article(docs[0]).save(function (err) {
+            if (err) {
+                res.status(500).send()
+                return
+            }
+        })
         res.send(docs[0])
     })
 })
