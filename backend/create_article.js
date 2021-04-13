@@ -37,7 +37,7 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         if (info.img !== []){
              docs[0].img = info.img
         }else{
-            docs[0].img = "默认图片地址"  /// 要改
+            docs[0].img = "/static/img/defalt.jpg"  /// defalt img
         }
         if(info.status){ //info.status:0 draft, 1 posted
             docs[0].post_time=info.time
