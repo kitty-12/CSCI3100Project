@@ -44,7 +44,7 @@ router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
 router.post('/admin/returnPersonalArtical', cors(),function (req, res) {
     db.connect()
     let info = req.body
-    db.Artical.find({author_id: info._id}, ['_id','title','img'], function (err, docs) {
+    db.Article.find({author_id: info._id}, ['_id','title','img'], function (err, docs) {
         if (err) {
             return
         }
