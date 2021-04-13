@@ -40,8 +40,7 @@ let upload = multer({
 router.post('/img', upload.single('file'), (req, res) => {
     temp_img_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
-    res.json({
-//        file: req.file,
+    res.send({
         path: temp_img_dir
     })
 
@@ -51,8 +50,7 @@ router.post('/img', upload.single('file'), (req, res) => {
 router.post('/profile', upload.single('file'), (req, res) => {
     temp_img_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
-    res.json({
-        file: req.file,
+    res.send({
         path: temp_img_dir
     })
 
@@ -62,8 +60,7 @@ router.post('/profile', upload.single('file'), (req, res) => {
 router.post('/banner', upload.single('file'), (req, res) => {
     temp_img_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
-    res.json({
-        file: req.file,
+    res.send({
         path: temp_img_dir
     })
 
