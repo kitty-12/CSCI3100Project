@@ -27,9 +27,9 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].Tile = info.title
-        docs[0].Text = info.text
-        docs[0].Status = info.status
+        docs[0].tile = info.title
+        docs[0].text = info.text
+        docs[0].status = info.status
         docs[0].tag=info.tag
         docs[0].read=0
         docs[0].like=[]
