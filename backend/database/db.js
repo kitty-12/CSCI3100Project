@@ -24,7 +24,9 @@ const db = {
         collected: [],
         post: [],
         message: [{
-            type: String,   //(like,collect,comment,announce,complain)
+            sender: String,
+            article_id: String,
+            type: String,   //(like,collect,comment,complain)
             text: String
         }],
         black_list: [],
