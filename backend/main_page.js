@@ -48,7 +48,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
         blacklist=docs[0].black_list
     })
 
-    db.Article.find({tag},null,{sort: {read:-1}}, function (err,docs) {
+    db.Article.find({},null,{sort: {read:-1}}, function (err,docs) {
         if (err) {
             return
         }
