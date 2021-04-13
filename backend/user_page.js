@@ -48,7 +48,7 @@ router.post('/admin/returnPersonalArtical', cors(),function (req, res) {
         if (err) {
             return
         }
-        res.send({id:docs._id,title:docs.title,img:docs.img})
+        res.send({_id:docs._id,title:docs.title,img:docs.img})
     })
 })
 //returnCollectedArtical
@@ -59,11 +59,11 @@ router.post('/admin/returnCollectedArtical', cors(),function (req, res) {
         if (err) {
             return
         }
-        db.Artical.find({_id: {$in:docs.collected}},['_id','title','img'], function (err, docs_2) {
+        db.Article.find({_id: {$in:docs.collected}},['_id','title','img'], function (err, docs_2) {
             if (err) {
                 return
             }
-            res.send({id:docs_2._id,title:docs_2.title,img:docs_2.img})
+            res.send({_id:docs_2._id,title:docs_2.title,img:docs_2.img})
         })
     })
 })
