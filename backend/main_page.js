@@ -30,12 +30,13 @@ router.post('/admin/login', cors(),function (req, res) {
             return
         }
         if(docs[0].pwd===req.body.pwd) {
-            res.send('1')
+            res.send({msg:'1',uid:docs[0]._id})
         }else{
-            res.send('0')
+            res.send({msg:'0'})
         }
     })
 })
+
 //mainPage_Hot in history
 router.post('/admin/mainPage', cors(),function (req, res) {
     db.connect()
