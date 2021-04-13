@@ -22,7 +22,7 @@ router.post('/admin/createArticle', cors(),function (req, res) {
 //updateArticle
 router.post('/admin/updateArticle', cors(),function (req, res) {
     db.connect()
-    let info = req.body.articleInformation
+    let info = req.body
     db.Article.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
