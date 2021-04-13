@@ -38,7 +38,7 @@ exports.send= function (EMAIL){
     <p>***The verification code is valid within 5 minutes***</p>` // html content
   }, 
   function(error, data) {
-    assert(!error,500,"Send verification code error！")
+    //assert(!error,500,"Send verification code error！")
     transport.close();
   }
     return code
