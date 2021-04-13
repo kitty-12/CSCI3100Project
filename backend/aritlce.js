@@ -33,7 +33,7 @@ router.post('/api/admin/articlePage1', cors(),function (req, res) {
         if (err) {
             return
         }
-        res.send(docs[0].comments)
+        res.send(docs[0])
     })
 })
 //like
