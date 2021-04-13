@@ -174,12 +174,13 @@ router.post('/admin/createComment', cors(),function (req, res) {
 //createArticle
 router.post('/admin/createArticle', cors(),function (req, res) {
     db.connect()
-    new db.Article(req.body.articleInformation).save(function (err) {
+    let article= new db.Article(req.body.articleInformation)
+        article.save(function (err) {
         if (err) {
             res.status(500).send()
             return
         }
-        res.send()
+        res.send(article._id)
     })
 })
 
