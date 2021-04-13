@@ -23,6 +23,7 @@ router.post('/admin/createArticle', cors(),function (req, res) {
 router.post('/admin/updateArticle', cors(),function (req, res) {
     db.connect()
     let info = req.body
+    console.log(info)
     db.Article.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
@@ -34,8 +35,8 @@ router.post('/admin/updateArticle', cors(),function (req, res) {
         docs[0].read=0
         docs[0].like=[]
         docs[0].collect=0
-        if (info.img !== []){
-             docs[0].img = info.img
+        if (info.hasImage !== '0'){
+            docs[0].img = info.img
         }else{
             docs[0].img = "/static/img/default.jpg"  /// default img
         }
