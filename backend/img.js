@@ -3,7 +3,10 @@ let router = express.Router()
 let multer = require('multer')
 let fs = require('fs');
 let path = require('path');
-let temp_img_dir = ""
+let temp_img_dir = null
+let temp_profile_dir = null
+let temp_banner_dir = null
+let temp = null
 
 let upload = multer({
     storage: multer.diskStorage({
@@ -14,7 +17,8 @@ let upload = multer({
             let month = (date.getMonth() + 1).toString().padStart(2, '0');
             let day = date.getDate();
             let dir = "./static/" + year + month + day;
-            temp_img_dir = "/static/" + year + month + day
+            temp = "/static/" + year + month + day
+
 
             //判断目录是否存在，没有则创建
             if (!fs.existsSync(dir)) {
@@ -35,8 +39,28 @@ let upload = multer({
     })
 });
 // upload img
-router.post('/upload', upload.single('file'), (req, res) => {
-    temp_img_dir = temp_img_dir + "/" + req.file.filename
+router.post('/upload/img', upload.single('file'), (req, res) => {
+    temp_img_dir = temp + "/" + req.file.filename
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json({
+        file: req.file
+    })
+
+})
+
+// upload profile
+router.post('/upload/profile', upload.single('file'), (req, res) => {
+    temp_profile_dir = temp + "/" + req.file.filename
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json({
+        file: req.file
+    })
+
+})
+
+// upload banner
+router.post('/upload/banner', upload.single('file'), (req, res) => {
+    temp_banner_dir = temp + "/" + req.file.filename
     res.header("Access-Control-Allow-Origin", "*");
     res.json({
         file: req.file
@@ -45,5 +69,8 @@ router.post('/upload', upload.single('file'), (req, res) => {
 })
 
 
+
 exports.router = router
-exports.temp = temp_img_dir
+exports.temp_img = temp_img_dir
+exports.temp_profile = temp_profile_dir
+exports.temp_banner = temp_banner_dir
