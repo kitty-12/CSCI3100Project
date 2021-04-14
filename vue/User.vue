@@ -253,9 +253,9 @@ name: "User",
         function (res){
           console.log(res);
           for (let i=0;i<res.body.length;i++){
-            this.collection.push({aid:res.body[i]._id,title:res.body[i].title,img:'http://localhost:8081'+res.body[i].img[0]});
+            this.collections.push({aid:res.body[i]._id,title:res.body[i].title,img:'http://localhost:8081'+res.body[i].img[0]});
           }
-          console.log(this.collection)
+          console.log(this.collections)
         },
         function (res){
           console.log(res.status);
