@@ -169,36 +169,35 @@ router.post('/admin/createComment', cors(),function (req, res) {
         }
         if (docs[0].is_banned)
             res.send({message:"You are not allowed to comment."})
-        commentername = docs[0].author.uname
-    })
-    db.Article.find({_id: info.article_id}, function (err, docs) {
-        if (err) {
-            return
-        }
-        authid = docs[0].author._id
-        docs[0].comments.aid=info.aid
-        docs[0].comments.time=info.Time
-        docs[0].comments.text=info.Text
-        title=docs[0].title
-        db.Article(docs[0]).save(function (err) {
-            if (err) {
-                res.status(500).send()
-                return
-            }
-        })
-        db.User.find({_id: authid}, function (err, docs) {
+        commentername = docs[0].profile.uname
+    
+        db.Article.find({_id: info.article_id}, function (err, docs2) {
             if (err) {
                 return
             }
-            docs[0].message.push(commentername+" commented your post: "+ title)
-            db.User(docs[0]).save(function (err) {
+            authid = docs2[0].author._id
+            title=docs2[0].title
+            docs2[0].comments.push(commentername +": "+ info.Text)
+            db.Article(docs2[0]).save(function (err) {
                 if (err) {
                     res.status(500).send()
                     return
                 }
-                res.send()
             })
-        })    
+            db.User.find({_id: authid}, function (err, docs) {
+                if (err) {
+                    return
+                }
+                docs[0].message.push(commentername+" commented your post: "+ title)
+                db.User(docs[0]).save(function (err) {
+                    if (err) {
+                        res.status(500).send()
+                        return
+                    }
+                    res.send()
+                })
+            })
+        })
     })
 })
 
