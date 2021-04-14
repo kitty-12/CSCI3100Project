@@ -109,7 +109,7 @@ export default {
         //Comment,
     },
 
-    mounted: function(){
+    created: function(){
         this.article_id = this.$route.params.article_id;
         console.log(this.article_id)
         this.uid = this.$route.params.uid;
@@ -235,6 +235,16 @@ export default {
         },
 
         collect(){
+            if(this.click2 == 1)
+            {
+                this.$notify({
+                    title: 'Message',
+                    message: 'You have collectd this fanwork',
+                    duration: 0
+                });
+
+                return
+            }
             let collectInfo = {
                 user_id:this.uid,
                 article_id:this.article_id,
@@ -248,8 +258,14 @@ export default {
                 .then(
                     function(res){
                         if(res.ok){
-                            this.article.like[this.article.like.length] = ''; //
-                            this.click1 = 1;
+                            //this.article.like[this.article.like.length] = ''; //
+                            this.article.collect += 1;
+                            this.click2 = 1;
+                            this.$notify({
+                                title: 'Message',
+                                message: 'Thanks for your collecting ♥',
+                                duration: 0
+                            });
                         }
                     }
                 );

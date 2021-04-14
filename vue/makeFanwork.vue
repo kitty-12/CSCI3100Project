@@ -110,7 +110,7 @@ import Navigator from "./Navigator.vue";
           Navigator,
         },
 
-        mounted:function(){
+        created:function(){
           this.uid = this.$route.params.uid
           console.log(this.$route.params.uid)
           this.articleInformation._id = this.$route.params.article_id

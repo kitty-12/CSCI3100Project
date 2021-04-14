@@ -142,7 +142,10 @@ export default {
     this.userid=this.$route.params.uid;
 
     //this.userid='6075fe1570e05207fc5570d3'
-    
+    if(!this.userid)
+    {
+      this.$router.push('/')
+    }
     this.$http.post(
         "http://localhost:3000/main_page/admin/mainPage",
         {_id: this.userid},
