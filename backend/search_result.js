@@ -60,16 +60,16 @@ router.post('/admin/search', cors(),function (req, res) {
     */
     let filter={
         $or:[
-            {uname:/info.user_name/},
-            {title:/info.title/},
+            {"author.uname":{$regex:info.key}},
+            {title:{$regex:info.key}},
         ]
     }
     if(info.criterion==="1"){//by read
-        db.Article.find({filter},{sort: {read:-1}}, function (err,docs_2) {
+        db.Article.find(filter,{sort: {read:-1}}, function (err,docs_2) {
             if (err) {
                 return
             }
-            for(var i=0; i<docs.length; i++){
+            for(var i=0; i<docs_2.length; i++){
                 if((blacklist.filter(item=>(docs_2[i].tag).includes(item))).length===0){
                     result.push(docs_2[i])
                 }
@@ -77,11 +77,11 @@ router.post('/admin/search', cors(),function (req, res) {
             res.send(result)
         })
     }else{//by time            
-        db.Article.find({filter},{sort: {post_time:-1}}, function (err,docs_2) {
+        db.Article.find(filter,{sort: {post_time:-1}}, function (err,docs_2) {
             if (err) {
                 return
             }
-            for(var i=0; i<docs.length; i++){
+            for(var i=0; i<docs_2.length; i++){
                 if((blacklist.filter(item=>(docs_2[i].tag).includes(item))).length===0){
                     result.push(docs_2[i])
                 }
