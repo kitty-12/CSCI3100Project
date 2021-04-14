@@ -113,11 +113,11 @@ router.post('/admin/collect', cors(),function (req, res) {
         if (err) {
             return
         }
-        if(docs[0].collected.includes(info.Article_id)){
+        if(docs[0].collected.includes(info.article_id)){
             res.send("1")
             return
         }else{
-            docs[0].collected.push(info.Article_id)
+            docs[0].collected.push(info.article_id)
             db.Article(docs[0]).save(function (err) {
                 if (err) {
                     res.status(500).send()
