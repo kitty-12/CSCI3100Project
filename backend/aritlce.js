@@ -42,7 +42,7 @@ router.post('/admin/like', cors(),function (req, res) {
     let info = req.body
     var authid
     var likername
-    db.Article.find({_id: info.article_id}), function (err, docs) {
+    db.Article.find({_id: info.article_id}, function (err, docs) {
         if (err) {
             return
         }
@@ -60,32 +60,32 @@ router.post('/admin/like', cors(),function (req, res) {
             })
         }
         db.User.find({_id: info.likerid}, function (err, docs) {
-        if (err) {
-            return
-        }
-        likername = docs[0].author.uname
-        docs[0].liked.push(info.article_id)
-        db.User(docs[0]).save(function (err) {
             if (err) {
-                res.status(500).send()
                 return
             }
+            likername = docs[0].author.uname
+            docs[0].liked.push(info.article_id)
+            db.User(docs[0]).save(function (err) {
+                if (err) {
+                    res.status(500).send()
+                    return
+                }
+            })
+            db.User.find({_id: authid}, function (err, docs) {
+                if (err) {
+                    return
+                }
+                docs[0].message.push(likername, info.article_id, 1, 'Someone liked your post!')
+                db.User(docs[0]).save(function (err) {
+                    if (err) {
+                        res.status(500).send()
+                        return
+                    }
+                    res.send()
+                })
+            })
         })
     })
-    db.User.find({_id: authid}, function (err, docs) {
-        if (err) {
-            return
-        }
-        docs[0].message.push(likername, info.article_id, 1, 'Someone liked your post!')
-        db.User(docs[0]).save(function (err) {
-            if (err) {
-                res.status(500).send()
-                return
-            }
-            res.send()
-        })
-    })
-    }
 })
 //delete
 router.post('/admin/delete', cors(),function (req, res) {
@@ -123,31 +123,31 @@ router.post('/admin/collect', cors(),function (req, res) {
             })
         collectername = docs[0].author.uname
         }
-    })
-    db.Article.find({_id: info.article_id}, function (err, docs) {
-        if (err) {
-            return
-        }
-        authid = docs[0].author._id
-        docs[0].collect+=1
-        db.Article(docs[0]).save(function (err) {
+        db.Article.find({_id: info.article_id}, function (err, docs) {
             if (err) {
-                res.status(500).send()
                 return
             }
+            authid = docs[0].author._id
+              docs[0].collect+=1
+            db.Article(docs[0]).save(function (err) {
+                if (err) {
+                    res.status(500).send()
+                    return
+                }
+            })
         })
-    })
-    db.User.find({_id: authid}, function (err, docs) {
-        if (err) {
-            return
-        }
-        docs[0].message.push(collectername, info.article_id, 2, 'Someone collected your post!')
-        db.User(docs[0]).save(function (err) {
+        db.User.find({_id: authid}, function (err, docs) {
             if (err) {
-                res.status(500).send()
                 return
             }
-            res.send()
+            docs[0].message.push(collectername, info.article_id, 2, 'Someone collected your post!')
+            db.User(docs[0]).save(function (err) {
+                if (err) {
+                    res.status(500).send()
+                    return
+                }
+                res.send()
+            })
         })
     })
 })
