@@ -16,7 +16,7 @@
           <div style="float: left;width: 30%;margin-top: 10px;">
               <div @click="gotoUser" class="demo-basic--circle">
                 <div style="margin-left: 70%">
-                  <el-avatar :size="80" :src="imglink"></el-avatar>
+                  <el-avatar :size="80" :src="imglink" class="avataricon"></el-avatar>
                 </div>
               </div>
               </div>
@@ -130,7 +130,7 @@ name: "Navigator",
      
     }
   },
-  mounted() {
+  created() {
     this.userid=this.uid;
     let obj={
       _id:this.userid
@@ -142,7 +142,7 @@ name: "Navigator",
         function(res){
           console.log(res);
           if(res.body.profile.picture !==''){
-            this.imglink='http://localhost:8081'+res.body.profile.picture;
+            this.imglink=res.body.profile.picture;
           }
           this.uname=res.body.profile.uname;
         },
@@ -244,5 +244,9 @@ name: "Navigator",
   float: right;
   height: 60px;
   width: 10%;
+}
+
+.avataricon{
+  background-color: #ffffff;
 }
 </style>

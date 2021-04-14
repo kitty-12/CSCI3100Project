@@ -21,7 +21,7 @@
           <p style="float:left;">Please edit your profile:</p>
           <el-input
               type="text"
-              placeholder="Pleaser enter your new name"
+              placeholder="Please enter your new name"
               v-model="input_name"
               maxlength="25"
               show-word-limit
@@ -38,39 +38,19 @@
           </el-input>
           <div style="margin: 20px 0;"></div>
           <p>Upload Your New Avatar</p>
-          <el-upload
-              class="img"
-              ref="upload"
-              :show-file-list="true"
-              :limit="1"
-              :action= actionUp
-              :http-request="fileRequest"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :file-list="fileList"
-              :auto-upload = false
-              list-type="picture">
-            <el-button slot="trigger" size="small" type="primary" style="">Choose img</el-button>
-            <div slot="tip" class="el-upload_tip"></div>
-          </el-upload>
-          <el-button size="small" type="success" @click="submitUpload">Upload</el-button>
-          <p>Upload Your New Banner</p>
-          <el-upload
-              class="img"
-              ref="upload1"
-              :show-file-list="true"
-              :limit="1"
-              :action= actionUp1
-              :http-request="fileRequest1"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :file-list="fileList1"
-              :auto-upload = false
-              list-type="picture">
-            <el-button slot="trigger" size="small" type="primary" style="float: left;margin: 0 auto;">Choose img</el-button>
-            <div slot="tip" class="el-upload_tip"></div>
-          </el-upload>
-          <el-button size="small" type="success" @click="submitUpload">Upload</el-button>
+            <el-input
+              type="text"
+              placeholder="Please enter your new avatar address"
+              v-model="input_avatar">
+            </el-input>
+
+          <p>Choose Your New Banner</p>
+            <el-input
+              type="text"
+              placeholder="Please enter your new banner address"
+              v-model="input_banner">
+            </el-input>
+          
           <div style="margin: 20px 0;"></div>
         </div>
       </div>
@@ -199,15 +179,10 @@ name: "User",
       input_avatar: '',
       input_banner: '',
       input_gender: '',
-      actionUp:'/api/upload',
-      actionUp1:'/api/upload',
-      fileList:[],
-      fileList1:[]
-      //imgList:[]
 
   }
   },
-  mounted() {
+  created() {
     this.userid=this.$route.params.uid1;
     this.aid=this.$route.params.uid2;
     if (this.userid==this.aid){
@@ -222,8 +197,8 @@ name: "User",
               console.log(res);
               this.username=res.body.profile.uname;
               this.profile=res.body.profile.introduction;
-              this.avatarLink='http://localhost:8081'+res.body.profile.picture;
-              this.bannerLink='http://localhost:8081'+res.body.profile.banner;
+              this.avatarLink= res.body.profile.picture;
+              this.bannerLink= res.body.profile.banner;
               //this.works=res.docs.
 
             },
@@ -261,10 +236,15 @@ name: "User",
           console.log(res.status);
         }
     );
+    
   },
   methods:{
       edit_on: function(){
         this.isEditting=true
+        this.input_name = this.username
+        this.input_profile = this.profile
+        this.input_avatar = this.avatarLink
+        this.input_banner = this.bannerLink
         console.log("Open edit profile")
       },
       save_change:function (){
@@ -286,11 +266,11 @@ name: "User",
                   this.profile=this.input_profile;
                   if(this.input_avatar!=='')
                   {
-                      this.avatarLink = 'http://localhost:8081'+ this.input_avatar
+                      this.avatarLink = this.input_avatar
                   }
                   if(this.input_banner!=='')
                   {
-                      this.bannerLink = 'http://localhost:8081'+ this.input_banner
+                      this.bannerLink = this.input_banner
                   }
                 },
                 function (res){
@@ -304,34 +284,7 @@ name: "User",
         this.isEditting = false
         this.$router.push({name:"user",params:{uid1:this.userid,uid2:this.userid}});
       },
-      fileRequest(item) {
-        let uploadData = new FormData()
-        uploadData.append('file',item.file)
-        this.$axios.post('/upload/profile',uploadData)
-          .then(res =>{
-            console.log(res);
-            console.log(res);
-            this.input_avatar=res.data.path
-            console.log(this.input_avatar)
-          })
-      },
-      submitUpload() {
-      this.$refs.upload.submit();
-      },
 
-      fileRequest1(item) {
-        let uploadData = new FormData()
-        uploadData.append('file',item.file)
-        this.$axios.post('/upload/banner',uploadData)
-          .then(res =>{
-            console.log(res);
-            console.log(res);
-            this.input_banner=res.data.path
-          })
-      },
-      submitUpload1() {
-      this.$refs.upload1.submit();
-      },
 
     handleRemove(file,fileList){
       console.log(file,fileList);

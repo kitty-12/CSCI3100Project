@@ -54,7 +54,7 @@ name: "SearchResult",
       currentData:[]
     }
   },
-  mounted() {
+  created() {
     this.type=this.$route.params.type;
     this.keyword=this.$route.params.keyword;
     this.uid=this.$route.params.uid;
@@ -79,7 +79,7 @@ name: "SearchResult",
     {
       this.$http.post(
           "http://localhost:3000/user_page/admin/returnPersonalArtical",
-          {info:this.uid},
+          {_id:this.uid},
           {emulateJSON:true}).then(
           function (res){
             console.log(res);
@@ -95,7 +95,7 @@ name: "SearchResult",
     else if(this.type=='4') {
       this.$http.post(
           "http://localhost:3000/user_page/admin/returnCollectedArtical",
-          {info: this.uid},
+          {_id: this.uid},
           {emulateJSON: true}).then(
           function (res) {
             console.log(res);
