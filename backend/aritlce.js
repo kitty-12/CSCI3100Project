@@ -143,7 +143,7 @@ router.post('/admin/collect', cors(),function (req, res) {
                 if (err) {
                     return
                 }
-                docs[0].message.push(collectername+" collected your post: '+title)
+                docs[0].message.push(collectername+" collected your post: "+title)
                 db.User(docs[0]).save(function (err) {
                     if (err) {
                         res.status(500).send()
