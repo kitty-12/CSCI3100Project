@@ -12,7 +12,7 @@ main_page = require("./main_page")
 plugin = require("./plugin")
 search_result = require("./search_result")
 user_page = require("./user_page")
-
+admin = require("./admin")
 
 // allow interaction between different host
 app.all('*', function(req, res, next) {
@@ -43,4 +43,4 @@ app.use("/create_article",create_article)
 app.use("/main_page",main_page)
 app.use("/search_result",search_result)
 app.use("/user_page",user_page)
-
+app.use("/admin",admin)
