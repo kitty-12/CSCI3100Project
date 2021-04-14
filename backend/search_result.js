@@ -65,7 +65,7 @@ router.post('/admin/search', cors(),function (req, res) {
         ]
     }
     if(info.criterion==="1"){//by read
-        db.Article.find(filter,{sort: {read:-1}}, function (err,docs_2) {
+        db.Article.find(filter,null,{sort: {read:-1}}, function (err,docs_2) {
             if (err) {
                 return
             }
@@ -77,7 +77,7 @@ router.post('/admin/search', cors(),function (req, res) {
             res.send(result)
         })
     }else{//by time            
-        db.Article.find(filter,{sort: {post_time:-1}}, function (err,docs_2) {
+        db.Article.find(filter,null,{sort: {post_time:-1}}, function (err,docs_2) {
             if (err) {
                 return
             }
