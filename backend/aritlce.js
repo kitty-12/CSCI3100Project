@@ -47,7 +47,7 @@ router.post('/admin/like', cors(),function (req, res) {
         if (err) {
             return
         }
-        authid = docs[0].author._id
+        authid = docs[0].author.author_id
         title = docs[0].title
         if(docs[0].like.includes(info.likerid)){
             res.send("1")
@@ -130,7 +130,7 @@ router.post('/admin/collect', cors(),function (req, res) {
             if (err) {
                 return
             }
-            authid = docs[0].author._id
+            authid = docs[0].author.author_id
             title = docs[0].title
             docs[0].collect+=1
             db.Article(docs[0]).save(function (err) {
@@ -175,7 +175,7 @@ router.post('/admin/createComment', cors(),function (req, res) {
             if (err) {
                 return
             }
-            authid = docs2[0].author._id
+            authid = docs2[0].author.author_id
             title=docs2[0].title
             docs2[0].comments.push(commentername +": "+ info.Text)
             db.Article(docs2[0]).save(function (err) {
