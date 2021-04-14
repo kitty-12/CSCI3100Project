@@ -19,16 +19,14 @@
             <el-input class="item" type="password" v-model="regform.repassword"></el-input>
         </el-form-item>
 
+        <p class="msg">{{tip}}</p>
         
         <el-button type="primary" @click="sendEmail">send code</el-button>
         
-
         <el-form-item label="code" label-width="40px" prop="code">
             <el-input class="item" type="text" v-model="regform.code"></el-input>
         </el-form-item>
-
-        <p class="msg">{{tip}}</p>
-
+        
         <router-link to="/login">Have Account? Sign In</router-link>
 
         <el-form-item>
@@ -49,7 +47,7 @@ export default {
             rules: {
                 email: [
                     {required: true, message: "Please enter your email address", trigger: "blur"},
-                    {min: 1}
+                    {type: 'email', message:"Please enter an valid email address", trigger: "blur"},
                 ],
                 username: [
                     {required: true, message: "Please enter your email address", trigger: "blur"},
@@ -73,19 +71,24 @@ export default {
         sendEmail() {
             this.$refs["regform"].validate(valid => {
                 if(valid){
-                    let data = new FormData();
-                    data.append('email', this.regform.email);
-                    data.append('username', this.regform.username);
-                    this.$axios.post({
-                        url: '/',
+                    if(this.regform.password !== this.regform.repassword)
+                    {
+                        this.tip = 'The two passwords are different!!!';
+                        return false;
+                    }
+                    let data = {email: this.regform.email}
+                    //data.append('username', this.regform.username);
+                    this.$http.post(
+                        'http://localhost:3000/plugin/admin/sendEmail', 
                         data,
-                    }).then(function(res){
-                        if(res.body.msg === 'ok')
-                        {
-                            this.tip = 'Please input your validation code in your email';
-                            this.code = res.body.code;
-                        }
-                    })
+                        {emulateJSON: true})
+                        .then(
+                            function(res){
+                                this.code = res.body.code;
+                                console.log(res);
+                                console.log(this.code);
+                            }
+                        );
                 }
                 else{
                     return false;
@@ -94,7 +97,7 @@ export default {
             
         },
 
-        singUp() {
+        signUp() {
             this.$refs["regform"].validate(valid => {
                 if(valid){
                     if(this.code != this.regform.code)
@@ -103,25 +106,41 @@ export default {
                         return false;
                     }
                     
-                    let data = new FormData();
-                    data.append('email', this.regform.email);
-                    data.append('username', this.regform.username);
-                    data.append('password', this.regform.password);
+                    let data = {
+                        pwd:this.regform.password,
+                        email:this.regform.email,
+                        profile: {
+                            uname: this.regform.username,
+                            introduction:'',
+                            banner:'',
+                            picture:''
+                        },
+                        liked:[],
+                        collected:[],
+                        post:[],
+                        message: [],
+                        black_list:[],
+                        is_banned: 0
+                        
+                    }
 
-                    this.$axios.post({
-                        url: '/',
-                        data,
-                    }).then(function(res){
-                        if(res.body.msg === 'ok')
-                        {
-
-                            alert("register success! Your user id is ", res.body.uid, ". Now you can login.");
-                            this.$router.push("/login");
-                        }
-                        else{
-                            alert("error");
-                        }
-                    })
+                    console.log(data)
+                    this.$http.post(
+                        'http://localhost:3000/main_page/admin/addNewUser', 
+                        {userInfo:data},
+                        {emulateJSON: true})
+                        .then(
+                            function(res){
+                            console.log(res);
+                            if(res.body == 'exist')
+                            {
+                                alert("The email has registered. Please use another email or login")
+                            }
+                            if(res.ok)
+                             alert('Now you can sign in')
+                             this.$router.push('/login')
+                            }
+                        );
                 }
                 else{
                     return false;

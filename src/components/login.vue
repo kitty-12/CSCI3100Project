@@ -7,8 +7,8 @@
             <el-input class="item" type = "text" v-model="form.email"></el-input>
         </el-form-item>
 
-        <el-form-item label="password" label-width="80px" prop="password">
-            <el-input class="item" type="password" v-model="form.password"></el-input>
+        <el-form-item label="pwd" label-width="80px" prop="pwd">
+            <el-input class="item" type="password" v-model="form.pwd"></el-input>
         </el-form-item>
 
         <router-link to="/register">New User? Register</router-link>
@@ -31,9 +31,9 @@ export default {
             rules: {
                 email: [
                     {required: true, message: "Please enter your email address", trigger: "blur"},
-                    {min: 1}
+                    {type: 'email', message:"Please enter an valid email address", trigger: "blur"},
                 ],
-                password: [
+                pwd: [
                     {required: true, message: "Please enter your password", trigger: "blur"},
                     {min: 6, max: 20, message: "6-20 characters", trigger: "blur"}
                 ]
@@ -46,17 +46,24 @@ export default {
         onSubmit() {
             this.$refs["form"].validate( valid => {
                 if (valid) {
+                    console.log(this.form);
+
+                    let postform = {
+                        email:this.form.email,
+                        pwd:this.form.pwd
+                    }
                     
                     this.$http.post(
-                        "http://localhost:3000/test",
-                        this.form,
+                        "http://localhost:3000/main_page/admin/login",
+                        postform,
                         {emulateJSON: true})
                         .then(
                             function (res) {
                                 console.log(res);
-                                if(res.body.msg === 'ok')
+                                if(res.body.msg == '1')
                                 {
-                                    this.$router.push("/home");
+                                    console.log(res.body.uid)
+                                    this.$router.push({name:"main",params: {uid: res.body.uid}});
                                 }
                                 else{
                                     alert("Your email/ password is not valid!");
@@ -68,6 +75,7 @@ export default {
                         );
                 //this.$router.push("/home");
                 }else {
+                    //this.$router.push({name:"main",params: {uid: this.form.email, }});
                     return false;
                 }
             });
