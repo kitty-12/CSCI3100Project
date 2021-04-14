@@ -75,8 +75,8 @@ router.post('/admin/returnMessage', cors(),function (req, res) {
         if (err) {
             return
         }
-        res.send(docs[0].message.splice(0,docs[0].message.length))
-        db.User(docs[0]).save(function (err) {
+        res.send(docs.message.splice(0,docs.message.length))
+        db.User(docs).save(function (err) {
             if (err) {
                 res.status(500).send()
                 return
