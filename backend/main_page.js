@@ -54,7 +54,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
             return
         }
         for (var i = 0; i < docs.length; i++) {
-            if (!(blacklist.filter(item => (docs[i].tag).includes(item)))) {
+            if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
                 result.push(docs[i])
             }
         }
@@ -79,7 +79,7 @@ router.post('/admin/mainPage_latest', cors(),function (req, res) {
             return
         }
         for (var i = 0; i < docs.length; i++) {
-            if (!(blacklist.filter(item => (docs[i].tag).includes(item)))) {
+            if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
                 result.push(docs[i])
             }
         }
@@ -105,7 +105,7 @@ router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
             return
         }
         for (var i = 0; i < docs.length; i++) {
-            if (!(blacklist.filter(item => (docs[i].tag).includes(item)))) {
+            if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
                 result.push(docs[i])
             }
         }
