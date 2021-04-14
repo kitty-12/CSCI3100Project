@@ -46,7 +46,7 @@ router.post('/admin/like', cors(),function (req, res) {
         if (err) {
             return
         }
-        authid = docs[0].author.author._id
+        authid = docs[0].author.author_id
         if(docs[0].like.includes(info.likerid)){
             res.send(1)
             return
