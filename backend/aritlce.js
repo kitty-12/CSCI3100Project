@@ -108,7 +108,7 @@ router.post('/admin/collect', cors(),function (req, res) {
     let info = req.body
     var authid
     var collectername
-    var title 
+    var title
     db.User.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
@@ -117,14 +117,16 @@ router.post('/admin/collect', cors(),function (req, res) {
             res.send("1")
             return
         }else{
+            console.log(docs[0].collected)
+            console.log(info)
             docs[0].collected.push(info.article_id)
-            db.Article(docs[0]).save(function (err) {
+            db.User(docs[0]).save(function (err) {
                 if (err) {
                     res.status(500).send()
                     return
                 }
             })
-        collectername = docs[0].profile.uname
+            collectername = docs[0].profile.uname
         }
         db.Article.find({_id: info.article_id}, function (err, docs1) {
             if (err) {
@@ -152,7 +154,7 @@ router.post('/admin/collect', cors(),function (req, res) {
                     res.send()
                 })
             })
-        })        
+        })
     })
 })
 
