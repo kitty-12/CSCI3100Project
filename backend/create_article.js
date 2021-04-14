@@ -21,13 +21,14 @@ router.post('/admin/createArticle', cors(),function (req, res) {
                 return
             }
             docs[0].post.push(article._id)
-            db.User.(docs[0]).save(function (err) {
-            if (err) {
-                res.status(500).send()
-                return
-            }
-        })
-    })    
+            db.User(docs[0]).save(function (err) {
+                if (err) {
+                    res.status(500).send()
+                    return
+                }
+            })
+        })    
+    })
 })
 
 //updateArticle
