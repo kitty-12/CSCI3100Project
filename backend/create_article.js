@@ -16,7 +16,13 @@ router.post('/admin/createArticle', cors(),function (req, res) {
             return
         }
         res.send(article._id)
-    })
+        db.User.find({_id: req.body._id}, function (err, docs) {
+            if (err) {
+                return
+            }
+            docs[0].post.push(article._id)
+        })
+    })    
 })
 
 //updateArticle
