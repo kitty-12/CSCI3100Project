@@ -18,7 +18,7 @@ router.post('/admin/editProfile', cors(),function (req, res) {
         console.log(docs[0])
         docs[0].profile.uname = info.uname
         docs[0].profile.introduction = info.introduction
-        docs[0].profile.picture = info.profile
+        docs[0].profile.picture = info.picture
         docs[0].profile.banner = info.banner
         db.User(docs[0]).save(function (err) {
             if (err) {
