@@ -46,7 +46,7 @@ router.post('/admin/like', cors(),function (req, res) {
         if (err) {
             return
         }
-        authid = docs[0].author._id
+        authid = docs[0].author.author._id
         if(docs[0].like.includes(info.likerid)){
             res.send(1)
             return
@@ -64,7 +64,7 @@ router.post('/admin/like', cors(),function (req, res) {
         if (err) {
             return
         }
-        likername = docs[0].author.uname
+        likername = docs[0].profile.uname
         docs[0].liked.push(info.article_id)
         db.User(docs[0]).save(function (err) {
             if (err) {
