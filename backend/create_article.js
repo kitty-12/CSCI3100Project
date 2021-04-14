@@ -16,7 +16,7 @@ router.post('/admin/createArticle', cors(),function (req, res) {
             return
         }
         res.send(article._id)
-        db.User.find({_id: req.body._id}, function (err, docs) {
+        db.User.find({_id: req.body.articleInformation。author.author_id}, function (err, docs) {
             if (err) {
                 return
             }
