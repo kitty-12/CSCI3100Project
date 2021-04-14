@@ -61,24 +61,24 @@ router.post('/admin/like', cors(),function (req, res) {
                 }
             })
         }
-        db.User.find({_id: info.likerid}, function (err, docs) {
+        db.User.find({_id: info.likerid}, function (err, docs1) {
             if (err) {
                 return
             }
-            likername = docs[0].profile.uname
-            docs[0].liked.push(info.article_id)
-            db.User(docs[0]).save(function (err) {
+            likername = docs1[0].profile.uname
+            docs1[0].liked.push(info.article_id)
+            db.User(docs1[0]).save(function (err) {
                 if (err) {
                     res.status(500).send()
                     return
                 }
             })
-            db.User.find({_id: authid}, function (err, docs) {
+            db.User.find({_id: authid}, function (err, docs2) {
                 if (err) {
                     return
                 }
-                docs[0].message.push(likername+" liked"+" your article: "+title)
-                db.User(docs[0]).save(function (err) {
+                docs2[0].message.push(likername+" liked"+" your article: "+title)
+                db.User(docs2[0]).save(function (err) {
                     if (err) {
                         res.status(500).send()
                         return
@@ -126,25 +126,25 @@ router.post('/admin/collect', cors(),function (req, res) {
             })
         collectername = docs[0].profile.uname
         }
-        db.Article.find({_id: info.article_id}, function (err, docs) {
+        db.Article.find({_id: info.article_id}, function (err, docs1) {
             if (err) {
                 return
             }
-            authid = docs[0].author.author_id
-            title = docs[0].title
-            docs[0].collect+=1
-            db.Article(docs[0]).save(function (err) {
+            authid = docs1[0].author.author_id
+            title = docs1[0].title
+            docs1[0].collect+=1
+            db.Article(docs1[0]).save(function (err) {
                 if (err) {
                     res.status(500).send()
                     return
                 }
             })
-            db.User.find({_id: authid}, function (err, docs) {
+            db.User.find({_id: authid}, function (err, docs2) {
                 if (err) {
                     return
                 }
-                docs[0].message.push(collectername+" collected your post: "+title)
-                db.User(docs[0]).save(function (err) {
+                docs2[0].message.push(collectername+" collected your post: "+title)
+                db.User(docs2[0]).save(function (err) {
                     if (err) {
                         res.status(500).send()
                         return
@@ -171,25 +171,25 @@ router.post('/admin/createComment', cors(),function (req, res) {
             res.send({message:"You are not allowed to comment."})
         commentername = docs[0].profile.uname
     
-        db.Article.find({_id: info.article_id}, function (err, docs2) {
+        db.Article.find({_id: info.article_id}, function (err, docs1) {
             if (err) {
                 return
             }
-            authid = docs2[0].author.author_id
-            title=docs2[0].title
-            docs2[0].comments.push(commentername +": "+ info.Text)
-            db.Article(docs2[0]).save(function (err) {
+            authid = docs1[0].author.author_id
+            title=docs1[0].title
+            docs1[0].comments.push(commentername +": "+ info.Text)
+            db.Article(docs1[0]).save(function (err) {
                 if (err) {
                     res.status(500).send()
                     return
                 }
             })
-            db.User.find({_id: authid}, function (err, docs) {
+            db.User.find({_id: authid}, function (err, docs2) {
                 if (err) {
                     return
                 }
-                docs[0].message.push(commentername+" commented your post: "+ title)
-                db.User(docs[0]).save(function (err) {
+                docs2[0].message.push(commentername+" commented your post: "+ title)
+                db.User(docs2[0]).save(function (err) {
                     if (err) {
                         res.status(500).send()
                         return
