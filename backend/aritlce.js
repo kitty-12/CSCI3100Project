@@ -63,7 +63,7 @@ router.post('/admin/like', cors(),function (req, res) {
             if (err) {
                 return
             }
-            likername = docs[0].author.uname
+            likername = docs[0].profile.uname
             docs[0].liked.push(info.article_id)
             db.User(docs[0]).save(function (err) {
                 if (err) {
@@ -121,7 +121,7 @@ router.post('/admin/collect', cors(),function (req, res) {
                     return
                 }
             })
-        collectername = docs[0].author.uname
+        collectername = docs[0].profile.uname
         }
         db.Article.find({_id: info.article_id}, function (err, docs) {
             if (err) {
