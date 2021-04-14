@@ -36,7 +36,6 @@ router.post('/admin/login', cors(),function (req, res) {
         }
     })
 })
-
 //mainPage_Hot in history
 router.post('/admin/mainPage', cors(),function (req, res) {
     db.connect()
@@ -47,20 +46,21 @@ router.post('/admin/mainPage', cors(),function (req, res) {
             return
         }
         blacklist=docs[0].black_list
-    })
+    
 
-    db.Article.find({},null,{sort: {read:-1}}, function (err,docs) {
-        if (err) {
-            return
-        }
-        for (var i = 0; i < docs.length; i++) {
-            if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
-                result.push(docs[i])
+        db.Article.find({},null,{sort: {read:-1}}, function (err,docs) {
+            if (err) {
+                return
             }
-        }
-        res.send(result)
+            for (var i = 0; i < docs.length; i++) {
+                if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
+                    result.push(docs[i])
+                }
+            }
+            res.send(result)
+        })
     })
-})
+})    
 
 //mainPage_latest
 router.post('/admin/mainPage_latest', cors(),function (req, res) {
@@ -72,21 +72,22 @@ router.post('/admin/mainPage_latest', cors(),function (req, res) {
             return
         }
         blacklist = docs[0].black_list
-    })
 
-    db.Article.find({}, null, {sort: {post_time: -1}}, function (err, docs) {
-        if (err) {
-            return
-        }
-        for (var i = 0; i < docs.length; i++) {
-            if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
-                result.push(docs[i])
+        db.Article.find({}, null, {sort: {post_time: -1}}, function (err, docs) {
+            if (err) {
+                return
             }
-        }
-        res.send(result)
-
+            for (var i = 0; i < docs.length; i++) {
+                if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
+                    result.push(docs[i])
+                }
+            }
+            res.send(result)
+    
+        })
     })
 })
+
 //mainPage_hotThiWeek
 router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
     db.connect()
@@ -98,19 +99,18 @@ router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
             return
         }
         blacklist = docs[0].black_list
-    })
-
-    db.Article.find({post_time: {$gt: aWeekBefore}}, null, {sort: {read: -1}}, function (err, docs) {
-        if (err) {
-            return
-        }
-        for (var i = 0; i < docs.length; i++) {
-            if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
-                result.push(docs[i])
+        
+        db.Article.find({post_time: {$gt: aWeekBefore}}, null, {sort: {read: -1}}, function (err, docs) {
+            if (err) {
+                return
             }
-        }
-        res.send(result)
+            for (var i = 0; i < docs.length; i++) {
+                if ((blacklist.filter(item => (docs[i].tag).includes(item))).length===0) {
+                    result.push(docs[i])
+                }
+            }
+            res.send(result)
+        })
     })
 })
-
 module.exports = router
