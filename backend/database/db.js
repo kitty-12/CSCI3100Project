@@ -23,12 +23,7 @@ const db = {
         liked: [],
         collected: [],
         post: [],
-        message: [{
-            sender: String,
-            article_id: String,
-            type: String,   //(like,collect,comment,complain)
-            text: String
-        }],
+        message: [],
         black_list: [],
         is_banned: Boolean
 
