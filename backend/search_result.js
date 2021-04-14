@@ -70,7 +70,7 @@ router.post('/admin/search', cors(),function (req, res) {
                 return
             }
             for(var i=0; i<docs.length; i++){
-                if(!(blacklist.filter(item=>(docs_2[i].tag).includes(item)))){
+                if((blacklist.filter(item=>(docs_2[i].tag).includes(item))).length===0){
                     result.push(docs_2[i])
                 }
             }
@@ -82,7 +82,7 @@ router.post('/admin/search', cors(),function (req, res) {
                 return
             }
             for(var i=0; i<docs.length; i++){
-                if(!(blacklist.filter(item=>(docs_2[i].tag).includes(item)))){
+                if((blacklist.filter(item=>(docs_2[i].tag).includes(item))).length===0){
                     result.push(docs_2[i])
                 }
             }
