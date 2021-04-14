@@ -10,11 +10,13 @@ let img = require("./img")
 router.post('/admin/editProfile', cors(),function (req, res) {
     db.connect()
     let info = req.body
+    console.log(info)
     db.User.find({_id: info._id}, function (err, docs) {
         if (err) {
             return
         }
-        docs[0].profile.user_name = info.uname
+        console.log(docs[0])
+        docs[0].profile.uname = info.uname
         docs[0].profile.introduction = info.introduction
         docs[0].profile.picture = info.profile
         docs[0].profile.banner = info.banner
@@ -36,7 +38,9 @@ router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
         if (err) {
             return
         }
+        console.log(docs)
         res.send(docs)
+
     })
 })
 
@@ -44,10 +48,12 @@ router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
 router.post('/admin/returnPersonalArtical', cors(),function (req, res) {
     db.connect()
     let info = req.body
-    db.Article.find({author_id: info._id}, ['_id','title','img'], function (err, docs) {
+    console.log(info)
+    db.Article.find({"author.author_id": info._id},  function (err, docs) {
         if (err) {
             return
         }
+        //console.log(docs.length)
         res.send(docs)
     })
 })
@@ -55,14 +61,17 @@ router.post('/admin/returnPersonalArtical', cors(),function (req, res) {
 router.post('/admin/returnCollectedArtical', cors(),function (req, res) {
     db.connect()
     let info = req.body
+    console.log(info._id)
     db.User.findOne({_id: info._id}, function (err, docs) {
         if (err) {
             return
         }
+        console.log("user ",docs)
         db.Article.find({_id: {$in:docs.collected}},['_id','title','img'], function (err, docs_2) {
             if (err) {
                 return
             }
+            //console.log(docs_2)
             res.send(docs_2)
         })
     })
@@ -71,6 +80,7 @@ router.post('/admin/returnCollectedArtical', cors(),function (req, res) {
 router.post('/admin/returnMessage', cors(),function (req, res) {
     db.connect()
     let info = req.body
+    console.log(req.body)
     db.User.findOne({_id: info._id}, function (err, docs) {
         if (err) {
             return
@@ -78,7 +88,7 @@ router.post('/admin/returnMessage', cors(),function (req, res) {
         res.send(docs.message.splice(0,docs.message.length))
         db.User(docs).save(function (err) {
             if (err) {
-                res.status(500).send()
+                //res.status(500).send()
                 return
             }
         })
@@ -92,8 +102,8 @@ router.post('/admin/addBlacklist', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs.black_list.push(info.tag)
-        db.User(docs).save(function (err) {
+        docs[0].black_list=info.tag
+        db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
                 return
