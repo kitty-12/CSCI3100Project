@@ -4,7 +4,7 @@ const db = require('./database/db')
 cors = require("cors")
 
 // ban
-router.post('/admin/admin/ban', cors(),function (req, res) {
+router.post('/admin/ban', cors(),function (req, res) {
     db.connect()
     db.User.update({email: req.body},{is_banned:true}, function (err) {
         if (err) {
@@ -15,7 +15,7 @@ router.post('/admin/admin/ban', cors(),function (req, res) {
 })
 
 // announcement
-router.post('/admin/admin/announce', cors(),function (req, res) {
+router.post('/admin/announce', cors(),function (req, res) {
     db.connect()
     db.User.updateMany( {$push:{message: "Admin has posted a new announcement: " + req.body}},function (err, docs) {
         if (err) {
