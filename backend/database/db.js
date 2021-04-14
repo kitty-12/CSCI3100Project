@@ -42,11 +42,7 @@ const db = {
         like: [],
         collect: Number,
         tag: [],
-        comments: [{
-            author_id: String,  // there may include all info that need to be displayed
-            time: Date,
-            text: String
-        }]
+        comments: []
     }),
 
     Tag : mongoose.model("Tag",{
