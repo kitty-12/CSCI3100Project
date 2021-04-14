@@ -14,10 +14,10 @@ router.post('/admin/editProfile', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].user_name = info.user_name
-        docs[0].introduction = info.introduction
-        docs[0].picture = info.picture
-        docs[0].banner = info.banner
+        docs[0].profile.user_name = info.uname
+        docs[0].profile.introduction = info.introduction
+        docs[0].profile.picture = info.profile
+        docs[0].profile.banner = info.banner
         db.User(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
