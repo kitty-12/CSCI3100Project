@@ -177,7 +177,7 @@ name: "SearchResult",
       this.currentPage--;
       this.setCurrentPageData();
     },
-    // 下一页
+   
     nextPage:function () {
       if (this.currentPage == this.totalPage)
         return ;
