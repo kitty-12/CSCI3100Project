@@ -61,7 +61,7 @@ router.post('/admin/search', cors(),function (req, res) {
     let filter={
         $or:[
             {"author.uname":{$regex:info.key}},
-            {title:{$regex:info.key}},
+            {"title":{$regex:info.key}},
         ]
     }
     if(info.criterion==="1"){//by read
