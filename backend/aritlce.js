@@ -42,11 +42,13 @@ router.post('/admin/like', cors(),function (req, res) {
     let info = req.body
     var authid
     var likername
+    var title
     db.Article.find({_id: info.article_id}, function (err, docs) {
         if (err) {
             return
         }
         authid = docs[0].author._id
+        title = docs[0].title
         if(docs[0].like.includes(info.likerid)){
             res.send(1)
             return
@@ -75,7 +77,7 @@ router.post('/admin/like', cors(),function (req, res) {
                 if (err) {
                     return
                 }
-                docs[0].message.push(likername, info.article_id, 1, 'Someone liked your post!')
+                docs[0].message.push(likername+" liked"+" your article: "+title)
                 db.User(docs[0]).save(function (err) {
                     if (err) {
                         res.status(500).send()
@@ -106,6 +108,7 @@ router.post('/admin/collect', cors(),function (req, res) {
     let info = req.body
     var authid
     var collectername
+    var title 
     db.User.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
@@ -128,27 +131,28 @@ router.post('/admin/collect', cors(),function (req, res) {
                 return
             }
             authid = docs[0].author._id
-              docs[0].collect+=1
+            title = docs[0].title
+            docs[0].collect+=1
             db.Article(docs[0]).save(function (err) {
                 if (err) {
                     res.status(500).send()
                     return
                 }
             })
-        })
-        db.User.find({_id: authid}, function (err, docs) {
-            if (err) {
-                return
-            }
-            docs[0].message.push(collectername, info.article_id, 2, 'Someone collected your post!')
-            db.User(docs[0]).save(function (err) {
+            db.User.find({_id: authid}, function (err, docs) {
                 if (err) {
-                    res.status(500).send()
                     return
                 }
-                res.send()
+                docs[0].message.push(collectername+" collected your post: '+title)
+                db.User(docs[0]).save(function (err) {
+                    if (err) {
+                        res.status(500).send()
+                        return
+                    }
+                    res.send()
+                })
             })
-        })
+        })        
     })
 })
 
@@ -158,6 +162,7 @@ router.post('/admin/createComment', cors(),function (req, res) {
     let info = req.body
     var authid
     var commentername
+    var title
     db.User.find({_id: info.user_id}, function (err, docs) {
         if (err) {
             return
@@ -174,26 +179,27 @@ router.post('/admin/createComment', cors(),function (req, res) {
         docs[0].comments.aid=info.aid
         docs[0].comments.Time=info.Time
         docs[0].comments.Text=info.Text
+        title=docs[0].title
         db.Article(docs[0]).save(function (err) {
             if (err) {
                 res.status(500).send()
                 return
             }
         })
-    })
-    db.User.find({_id: authid}, function (err, docs) {
-        if (err) {
-            return
-        }
-        docs[0].message.push(commentername, info.article_id, 3, 'Your post has a new comment!')
-        db.User(docs[0]).save(function (err) {
+        db.User.find({_id: authid}, function (err, docs) {
             if (err) {
-                res.status(500).send()
                 return
             }
-        res.send()
+            docs[0].message.push(commentername+" commented your post: "+ title)
+            db.User(docs[0]).save(function (err) {
+                if (err) {
+                    res.status(500).send()
+                    return
+                }
+                res.send()
+            })
+        })    
     })
-})
 })
 
 module.exports = router
