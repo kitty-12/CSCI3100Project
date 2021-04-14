@@ -48,7 +48,7 @@ router.post('/admin/returnPersonalArtical', cors(),function (req, res) {
         if (err) {
             return
         }
-        res.send({_id:docs._id,title:docs.title,img:docs.img})
+        res.send(docs)
     })
 })
 //returnCollectedArtical
@@ -63,7 +63,7 @@ router.post('/admin/returnCollectedArtical', cors(),function (req, res) {
             if (err) {
                 return
             }
-            res.send({_id:docs_2._id,title:docs_2.title,img:docs_2.img})
+            res.send(docs_2)
         })
     })
 })
