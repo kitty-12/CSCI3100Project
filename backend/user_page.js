@@ -92,8 +92,8 @@ router.post('/admin/addBlacklist', cors(),function (req, res) {
         if (err) {
             return
         }
-        docs[0].black_list=info.tag
-        db.User(docs[0]).save(function (err) {
+        docs.black_list.push(info.tag)
+        db.User(docs).save(function (err) {
             if (err) {
                 res.status(500).send()
                 return
