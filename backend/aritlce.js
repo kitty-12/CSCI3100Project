@@ -42,7 +42,7 @@ router.post('/admin/like', cors(),function (req, res) {
     let info = req.body
     var authid
     var likername
-    db.Article.find({_id: info.article_id}), function (err, docs) {
+    db.Article.find({_id: info.article_id}, function (err, docs) {
         if (err) {
             return
         }
@@ -59,7 +59,7 @@ router.post('/admin/like', cors(),function (req, res) {
                 }
             })
         }
-    }
+    })
     db.User.find({_id: info.likerid}, function (err, docs) {
         if (err) {
             return
