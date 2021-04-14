@@ -21,7 +21,7 @@ router.post('/admin/sendAvatar', cors(),function (req, res) {
 //insert a tag
 router.post('/admin/saveArticle', cors(),function (req, res) {
     db.connect()
-    db.my_insert(req.query.collection,req.query.content)
+    db.my_insert("Tag",req.body)
     res.send()
 })
 //send email
