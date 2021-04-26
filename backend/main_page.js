@@ -89,6 +89,7 @@ router.post('/admin/mainPage_latest', cors(),function (req, res) {
 })
 
 //mainPage_hotThiWeek
+/*
 router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
     db.connect()
     var blacklist
@@ -113,4 +114,5 @@ router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
         })
     })
 })
+*/
 module.exports = router
