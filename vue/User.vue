@@ -220,7 +220,7 @@ name: "User",
      *the information contains user's avatar link, name, introduction and banner link
      */
     this.$http.post(
-        "http://localhost:3000/user_page/admin/returnPersonalInfo",
+        "http://localhost:3000/api/user_page/returnPersonalInfo",
         {_id:this.userid},
         {emulateJSON:true}).then(
             function(res){
@@ -243,7 +243,7 @@ name: "User",
      * only need the works' id, image link and title
      */
     this.$http.post(
-        "http://localhost:3000/user_page/admin/returnPersonalArtical",
+        "http://localhost:3000/api/user_page/returnPersonalArtical",
         {_id:this.userid},
         {emulateJSON:true}).then(
         function (res){
@@ -264,7 +264,7 @@ name: "User",
      * only need the collections' id, image link and title
      */
     this.$http.post(
-        "http://localhost:3000/user_page/admin/returnCollectedArtical",
+        "http://localhost:3000/api/user_page/returnCollectedArtical",
         {_id:this.userid},
         {emulateJSON:true}).then(
         function (res){
@@ -305,7 +305,7 @@ name: "User",
         }
         //send the changes to the server to update the database
         this.$http.post(
-            "http://localhost:3000/user_page/admin/editProfile",
+            "http://localhost:3000/api/user_page/editProfile",
             obj,
             {emulateJSON:true}).then(
                 function (res){
