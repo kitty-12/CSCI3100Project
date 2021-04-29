@@ -79,7 +79,7 @@ export default {
                     let data = {email: this.regform.email}
                     //data.append('username', this.regform.username);
                     this.$http.post(
-                        'http://localhost:3000/plugin/admin/sendEmail', 
+                        'http://localhost:3000/api/plugin/sendEmail', 
                         data,
                         {emulateJSON: true})
                         .then(
@@ -126,7 +126,7 @@ export default {
 
                     console.log(data)
                     this.$http.post(
-                        'http://localhost:3000/main_page/admin/addNewUser', 
+                        'http://localhost:3000/api/main_page/addNewUser', 
                         {userInfo:data},
                         {emulateJSON: true})
                         .then(
