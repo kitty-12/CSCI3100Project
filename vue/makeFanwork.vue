@@ -171,7 +171,7 @@ import Navigator from "./Navigator.vue";
               this.$refs.upload.submit();
 
             this.$http.post(
-                        "http://localhost:3000/create_Article/admin/updateArticle",
+                        "http://localhost:3000/api/create_Article/updateArticle",
                         this.articleInformation,
                         {emulateJSON: true})
                         .then(
