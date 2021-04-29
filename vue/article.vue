@@ -129,7 +129,7 @@ export default {
         }
         
         this.$http.post(
-            'http://localhost:3000/article/api/admin/articlePage', 
+            'http://localhost:3000/api/article/articlePage', 
             {_id: this.article_id},
             {emulateJSON: true})
             .then(
@@ -149,7 +149,7 @@ export default {
 
         console.log(this.article_id)
         this.$http.post(
-            "http://localhost:3000/article/api/admin/articlePage1",
+            "http://localhost:3000/api/article/articlePage1",
             {_id: this.article_id},
             {emulateJSON: true},
         ).then(
@@ -189,7 +189,7 @@ export default {
             };//user id
 
             this.$http.post(
-                'http://localhost:3000/article/admin/like',
+                'http://localhost:3000/api/article/like',
                 likeInfo,
                 {emulateJSON: true})
                 .then(
@@ -217,7 +217,7 @@ export default {
             }
             console.log(commentInfo)
             this.$http.post(
-                'http://localhost:3000/article/admin/createComment',
+                'http://localhost:3000/api/article/createComment',
                 commentInfo,
                 {emulateJSON: true})
                 .then(
@@ -252,7 +252,7 @@ export default {
             //collectInfo.append(user)
             
             this.$http.post(
-                'http://localhost:3000/article/admin/collect',
+                'http://localhost:3000/api/article/collect',
                 collectInfo,
                 {emulateJSON: true})
                 .then(
