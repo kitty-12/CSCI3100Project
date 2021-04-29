@@ -36,7 +36,7 @@ router.post('/admin/login', cors(),function (req, res) {
         }
     })
 })
-//mainPage_Hot in history
+//mainPage, show articles rank by hot in history
 router.post('/admin/mainPage', cors(),function (req, res) {
     db.connect()
     var blacklist
@@ -62,7 +62,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
     })
 })    
 
-//mainPage_latest
+//mainPage_latest, show articles rank by recent in history
 router.post('/admin/mainPage_latest', cors(),function (req, res) {
     db.connect()
     var blacklist
