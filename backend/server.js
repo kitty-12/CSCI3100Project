@@ -36,11 +36,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // routes
-app.use("/upload",img.router)
-app.use("/plugin",plugin)
-app.use("/article",article)
-app.use("/create_article",create_article)
-app.use("/main_page",main_page)
-app.use("/search_result",search_result)
-app.use("/user_page",user_page)
-app.use("/admin",admin)
+app.use("/api/upload",img.router)
+app.use("/api/plugin",plugin)
+app.use("/api/article",article)
+app.use("/api/create_article",create_article)
+app.use("/api/main_page",main_page)
+app.use("/api/search_result",search_result)
+app.use("/api/user_page",user_page)
+app.use("/api/admin",admin)
