@@ -14,7 +14,7 @@ router.post('/admin/search', cors(),function (req, res) {
     var result=new Array()
     db.User.find({_id: info._id}, function (err,docs) {
         if (err) {
-            return
+            return (err)
         }
         blacklist=docs[0].black_list
     })
@@ -67,7 +67,7 @@ router.post('/admin/search', cors(),function (req, res) {
         db.Article.find(filter,null,{sort: {read:-1}}, function (err,docs_2) {
             console.log(docs_2)
             if (err) {
-                return
+                return (err)
             }
             for(var i=0; i<docs_2.length; i++){
                 if((blacklist.filter(item=>(docs_2[i].tag).includes(item))).length===0){
@@ -80,7 +80,7 @@ router.post('/admin/search', cors(),function (req, res) {
     }else{//by time
         db.Article.find(filter,null,{sort: {post_time:-1}}, function (err,docs_2) {
             if (err) {
-                return
+                return (err)
             }
             for(var i=0; i<docs_2.length; i++){
                 if((blacklist.filter(item=>(docs_2[i].tag).includes(item))).length===0){
