@@ -89,6 +89,7 @@ router.post('/like', cors(),function (req, res) {
         })
     })
 })
+/*
 //delete an article
 router.post('/delete', cors(),function (req, res) {
     db.connect()
@@ -100,7 +101,7 @@ router.post('/delete', cors(),function (req, res) {
         res.send()
     })
 })
-
+*/
 
 //collect an article, send a message
 router.post('/admin/collect', cors(),function (req, res) {
