@@ -7,7 +7,7 @@ let img = require("./img")
 
 // user page
 //editProfile
-router.post('/admin/editProfile', cors(),function (req, res) {
+router.post('/editProfile', cors(),function (req, res) {
     db.connect()
     let info = req.body
     console.log(info)
@@ -31,7 +31,7 @@ router.post('/admin/editProfile', cors(),function (req, res) {
 })
 
 //returnPersonalInfo
-router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
+router.post('/returnPersonalInfo', cors(),function (req, res) {
     db.connect()
     let info = req.body
     db.User.findOne({_id: info._id}, function (err, docs) {
@@ -45,7 +45,7 @@ router.post('/admin/returnPersonalInfo', cors(),function (req, res) {
 })
 
 //returnPersonalArtical
-router.post('/admin/returnPersonalArtical', cors(),function (req, res) {
+router.post('/returnPersonalArtical', cors(),function (req, res) {
     db.connect()
     let info = req.body
     console.log(info)
@@ -58,7 +58,7 @@ router.post('/admin/returnPersonalArtical', cors(),function (req, res) {
     })
 })
 //returnCollectedArtical
-router.post('/admin/returnCollectedArtical', cors(),function (req, res) {
+router.post('/returnCollectedArtical', cors(),function (req, res) {
     db.connect()
     let info = req.body
     console.log(info._id)
@@ -77,7 +77,7 @@ router.post('/admin/returnCollectedArtical', cors(),function (req, res) {
     })
 })
 //returnMessage
-router.post('/admin/returnMessage', cors(),function (req, res) {
+router.post('/returnMessage', cors(),function (req, res) {
     db.connect()
     let info = req.body
     console.log(req.body)
@@ -95,7 +95,7 @@ router.post('/admin/returnMessage', cors(),function (req, res) {
     })
 })
 //addBlacklist
-router.post('/admin/addBlacklist', cors(),function (req, res) {
+router.post('/addBlacklist', cors(),function (req, res) {
     db.connect()
     let info = req.body
     db.User.findOne({_id: info._id}, function (err, docs) {
