@@ -1,13 +1,17 @@
 <template>
   <div id="SearchResult">
-  <Navigator :uid="uid"></Navigator>
+    <!--insert the navigator component-->
+    <Navigator :uid="uid"></Navigator>
+    <!--show that the search result is sorted by heat-->
     <div v-if="type=='1'||type=='2'">
       <el-radio-group v-model="radio" @change="changeDefault">
         <el-radio style="font-size: 20px" label="1">By Heat</el-radio>
-        <el-radio style="font-size: 20px" label="2">By Time</el-radio>
+        <!--el-radio style="font-size: 20px" label="2">By Time</el-radio-->
       </el-radio-group>
     </div>
-    <div style="float: left;margin-right: 5%;margin-left: 5%">
+    <!-- show the result-->
+    <div class='result' style="float: left;margin-right: 5%;margin-left: 5%">
+      <!-- use a loop to traverse all the works and show them in cards-->
       <div v-for="value in postList" :key="value">
         <div v-if="value" class="card">
           <div class="img">
@@ -20,15 +24,6 @@
         </div>
       </div>
     </div>
-    <footer>
-      <button @click="prevPage()">
-        Previous Page
-      </button>
-      <span>Page{{currentPage}}/Total{{totalPage}}Pages</span>
-      <button @click="nextPage()">
-        Next Page
-      </button>
-    </footer>
 
   </div>
 </template>
@@ -55,9 +50,16 @@ name: "SearchResult",
     }
   },
   created() {
+    /*
+     * the parameters from other pages
+     * type is for what this page will show
+     * uid is for searching according to this user's tag blacklist and pass to navigator
+     */
     this.type=this.$route.params.type;
     this.keyword=this.$route.params.keyword;
     this.uid=this.$route.params.uid;
+
+    //the normal search result when user type keywords in search box and search
     if(this.type=='1' ||this.type=='2'){
       this.radio=this.type;
       this.$http.post(
@@ -75,6 +77,8 @@ name: "SearchResult",
           }
       )
     }
+
+    //search user's all works, the previous page is a user page
     else if(this.type=='3')
     {
       this.$http.post(
@@ -92,6 +96,8 @@ name: "SearchResult",
           }
       );
     }
+
+    //search user's all collections, the previous page is a user page
     else if(this.type=='4') {
       this.$http.post(
           "http://localhost:3000/user_page/admin/returnCollectedArtical",
@@ -108,6 +114,11 @@ name: "SearchResult",
           }
       )
     }
+
+      /*
+       * search all works and sorted by heat
+       * will use this function when come to this page by clicking the more link in main page hottest works
+       */
       else if(this.type=='5'){
       this.$http.post(
           "http://localhost:3000/main_page/admin/mainPage",
@@ -124,9 +135,13 @@ name: "SearchResult",
           }
       )
     }
+      /*
+       * search all works and sorted by time
+       * will use this when come to this page by clicking the more link in main page under latest works
+       */
       else if(this.type=='6'){
       this.$http.post(
-          "http://localhost:3000/main_page/admin/mainPage",
+          "http://localhost:3000/main_page/admin/mainPage_latest",
           {_id: this.uid},
           {emulateJSON: true}).then(
           function (res) {
@@ -140,7 +155,7 @@ name: "SearchResult",
           }
       )
     }
-      else if (this.type=='7'){
+      /*else if (this.type=='7'){
       this.$http.post(
           "http://localhost:3000/main_page/admin/mainPage",
           {_id: this.uid},
@@ -155,13 +170,14 @@ name: "SearchResult",
             console.log(res.status);
           }
       )
-    }
+    }*/
+    /*
     this.totalPage = Math.ceil(this.postList.length / this.pageSize);
     this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
-    this.setCurrentPageData();
+    this.setCurrentPageData();*/
   },
   methods:{
-    setCurrentPageData:function () {
+    /*setCurrentPageData:function () {
       let begin = (this.currentPage - 1) * this.pageSize;
       let end = this.currentPage * this.pageSize;
       this.currentData = this.postList.slice(
@@ -177,7 +193,7 @@ name: "SearchResult",
       this.currentPage--;
       this.setCurrentPageData();
     },
-    // 下一页
+
     nextPage:function () {
       if (this.currentPage == this.totalPage)
         return ;
@@ -189,7 +205,7 @@ name: "SearchResult",
     changeDefault:function (){
       this.$router.push({name: "result", params: {type: this.radio, keyword: this.keyword,uid:this.uid}});
 
-    }
+    }*/
   }
 }
 </script>
@@ -198,13 +214,20 @@ name: "SearchResult",
 .card{
   width:210px;
   height:250px;
-  margin-left:10%;
+  margin-left:120px;
+  margin-top: 80px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-  display: inline;
   float: left;
 }
 .img{
   width:210px;
   height: 200px;
+}
+
+.result{
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 </style>

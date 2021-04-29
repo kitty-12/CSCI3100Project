@@ -3,11 +3,13 @@
     <h2 style="font-size: 80px;">Admin</h2>
     <div style="margin-bottom: 20px;">
       <p style="font-size: 20px;">Ban User</p>
+      <!--The input box for admin to enter the e-mail of the user to ban-->
       <div style="width: 100%;float: left;margin-left: 30%">
         <el-input style="float: left;width:40%;margin-left: 5px;margin-bottom: 20px" v-model="input1" placeholder="Please enter the user you want to ban"></el-input>
         <el-button @click="ban" style="float:left;margin-left:5%" type="warning">Ban!</el-button>
       </div>
       </div>
+    <!--the input box for admin to enter the announcement-->
     <div style="margin-top: 20px">
       <p style="font-size: 20px;margin-top:20px ">Send Announcement</p>
       <div style="width: 100%;float: left;margin-left: 30%">
@@ -28,10 +30,12 @@ name: "Admin",
   }
 },
   methods:{
+    //send the email of the user to the server to ban the user
     ban:function (){
-      this.$http.post(
-          "http://localhost:3000/admin/admin/ban",
-          this.input1,
+        console.log(this.input1)
+      this.$http.get(
+          "http://localhost:3000/admin/ban",
+          {params:{input1:this.input1}},
           {emulateJSON:true}).then(
           function(res){
             console.log(res);
@@ -41,17 +45,17 @@ name: "Admin",
           }
       );
     },
+    //send the announcement text to the server
     sendAnc:function (){
-      this.$http.post(
-          "http://localhost:3000/admin/admin/announce",
-          this.input2,
+      this.$http.get(
+          "http://localhost:3000/admin/announce",
+          {params:{input2:this.input2}},
           {emulateJSON:true}).then(
           function(res){
             console.log(res);
-
           },
           function(res){
-            console.log(res.status);
+            console.log(res);
           }
       );
     },
@@ -60,5 +64,4 @@ name: "Admin",
 </script>
 
 <style scoped>
-
 </style>

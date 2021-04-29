@@ -4,7 +4,8 @@
       <div>
         <!--Website icon-->
         <el-tooltip class="item" effect="dark" content="Go to Main Page" placement="bottom-start">
-          <div @click="gotoMain" class = "icon"></div>
+          <!--click on it will go to main page-->
+          <div @click="gotoMain" class = "icon"><img src='../assets/fullLogo.png' width="70%" height="100%"></div>
         </el-tooltip>
         <!--Search box-->
         <div style="float: left;width:40%;margin-top: 30px;margin-left: 5%">
@@ -13,7 +14,9 @@
           </el-input>
         </div>
         <div>
+          <!-- user's avatar-->
           <div style="float: left;width: 30%;margin-top: 10px;">
+              <!--click on it will go to user's page-->
               <div @click="gotoUser" class="demo-basic--circle">
                 <div style="margin-left: 70%">
                   <el-avatar :size="80" :src="imglink" class="avataricon"></el-avatar>
@@ -23,11 +26,14 @@
           </div>
         </div>
     </nav>
+    <!--lower part of navigator-->
     <div class="Top-3">
       <div class="Top-2">
+        <!--message box button, click on it will show message box-->
         <el-button @click="drawer=true" class="message" type="warning" plain>
           <i class="el-icon-message" style="font-size: 2rem"></i>
         </el-button>
+        <!--message box-->
         <el-drawer
             title="Messages"
             :visible.sync="drawer"
@@ -43,8 +49,10 @@
               </span>
         </el-drawer>
       </div>
+      <!--create new work button-->
       <div class="Top-2">
-        <button @click ="goCreate" class="newWork">Creat New Work!</button>
+        <!--click on it will go to create article page-->
+        <button @click ="goCreate" class="newWork">Create New Work!</button>
       </div>
       <div class="Top-2"></div>
     </div>
@@ -70,16 +78,23 @@ name: "Navigator",
     }
   },
   methods: {
+    //go to search result page with keyword
     search: function () {
       console.log(this.keyword)//check whether got input
       this.$router.push({name:"result",params:{type:"1",keyword:this.keyword,uid:this.uid}});
     },
+
+    //go to user's page
     gotoUser:function (){
       this.$router.push({name:"user",params:{uid1:this.uid,uid2:this.uid}});
     },
+
+    //go to main page
     gotoMain:function (){
       this.$router.push({name:"main",params:{uid:this.uid}})
     },
+
+    //when open message box, ask the server for unread messages
     getMessage:function (){
       this.$http.post(
           "http://localhost:3000/user_page/admin/returnMessage",
@@ -96,6 +111,13 @@ name: "Navigator",
           }
       );
     },
+
+    /*
+     * go to create article page
+     * it will send the author id to the server for a request
+     * the server will send back the article id, here the article is already created
+     * user will update the details of the article in create article page
+     */
     goCreate:function (){
       let obj;
       obj = {
@@ -131,10 +153,13 @@ name: "Navigator",
     }
   },
   created() {
+    //get the userid
     this.userid=this.uid;
     let obj={
       _id:this.userid
     }
+
+    //use the userid to get other information such as the avatar
     this.$http.post(
         "http://localhost:3000/user_page/admin/returnPersonalInfo",
         obj,
@@ -162,9 +187,10 @@ name: "Navigator",
   border-radius: 5px;
 }
 .icon{
+  z-index: 10;
   width: 25%;
   height:100px;
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  background: url('D://csci3100/proj code/test/src/assets/fullLogo.png');
   float:left;
   border-radius: 5px;
 }
