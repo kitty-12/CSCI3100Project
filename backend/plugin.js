@@ -8,7 +8,7 @@ let img = require("./img")
 // plugin
 
 //send avatar
-router.post('/admin/sendAvatar', cors(),function (req, res) {
+router.post('/sendAvatar', cors(),function (req, res) {
     db.connect();
     db.User.find({_id: req.body._id}, function (err, docs){
         if (err) {
@@ -19,13 +19,13 @@ router.post('/admin/sendAvatar', cors(),function (req, res) {
     })
 })
 //insert a tag
-router.post('/admin/saveArticle', cors(),function (req, res) {
+router.post('/saveArticle', cors(),function (req, res) {
     db.connect()
     db.my_insert("Tag",req.body)
     res.send()
 })
 //send email
-router.post('/admin/sendEmail', function(req, res){
+router.post('/sendEmail', function(req, res){
     db.connect()
     let remail = req.body.email;
     let code = mail.send(remail)
