@@ -97,7 +97,7 @@ name: "Navigator",
     //when open message box, ask the server for unread messages
     getMessage:function (){
       this.$http.post(
-          "http://localhost:3000/user_page/admin/returnMessage",
+          "http://localhost:3000/api/user_page/returnMessage",
           {_id:this.uid},
           {emulateJSON:true}).then(
           function(res){
@@ -136,7 +136,7 @@ name: "Navigator",
         comments: []
       };
       this.$http.post(
-          "http://localhost:3000/create_article/admin/createArticle",
+          "http://localhost:3000/api/create_article/createArticle",
           {articleInformation:obj},
           {emulateJSON:true}).then(
           function(res){
@@ -161,7 +161,7 @@ name: "Navigator",
 
     //use the userid to get other information such as the avatar
     this.$http.post(
-        "http://localhost:3000/user_page/admin/returnPersonalInfo",
+        "http://localhost:3000/api/user_page/returnPersonalInfo",
         obj,
         {emulateJSON:true}).then(
         function(res){
