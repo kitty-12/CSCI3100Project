@@ -83,7 +83,7 @@ router.post('/like', cors(),function (req, res) {
                         res.status(500).send()
                         return
                     }
-                    res.send()
+                    res.send('0')
                 })
             })
         })
@@ -103,7 +103,7 @@ router.post('/delete', cors(),function (req, res) {
 
 
 //collect an article, send a message
-router.post('/collect', cors(),function (req, res) {
+router.post('/admin/collect', cors(),function (req, res) {
     db.connect()
     let info = req.body
     var authid
@@ -151,7 +151,7 @@ router.post('/collect', cors(),function (req, res) {
                         res.status(500).send()
                         return
                     }
-                    res.send()
+                    res.send('0')
                 })
             })
         })
