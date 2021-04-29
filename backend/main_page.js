@@ -8,7 +8,7 @@ let img = require("./img")
 
 // main page
 //add new user
-router.post('/admin/addNewUser', function(req, res){
+router.post('/addNewUser', function(req, res){
     db.connect()
     new db.User(req.body.userInfo).save(function (err) {
         if (err) {
@@ -20,7 +20,7 @@ router.post('/admin/addNewUser', function(req, res){
 })
 
 //login
-router.post('/admin/login', cors(),function (req, res) {
+router.post('/login', cors(),function (req, res) {
     //console.log("before connect");
     db.connect();
     //console.log("after connect");
@@ -37,7 +37,7 @@ router.post('/admin/login', cors(),function (req, res) {
     })
 })
 //mainPage, show articles rank by hot in history
-router.post('/admin/mainPage', cors(),function (req, res) {
+router.post('/mainPage', cors(),function (req, res) {
     db.connect()
     var blacklist
     var result=new Array()
@@ -63,7 +63,7 @@ router.post('/admin/mainPage', cors(),function (req, res) {
 })    
 
 //mainPage_latest, show articles rank by recent in history
-router.post('/admin/mainPage_latest', cors(),function (req, res) {
+router.post('/mainPage_latest', cors(),function (req, res) {
     db.connect()
     var blacklist
     var result = new Array()
@@ -90,7 +90,7 @@ router.post('/admin/mainPage_latest', cors(),function (req, res) {
 
 //mainPage_hotThiWeek
 /*
-router.post('/admin/mainPage_hotThiWeek', cors(),function (req, res) {
+router.post('/mainPage_hotThiWeek', cors(),function (req, res) {
     db.connect()
     var blacklist
     var result = new Array()
