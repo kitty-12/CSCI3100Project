@@ -3,7 +3,7 @@ const router = express.Router()
 const db = require('./database/db')
 cors = require("cors")
 
-// ban
+// Forbid a user to comment
 router.post('/admin/ban', cors(),function (req, res) {
     db.connect()
     db.User.update({email: req.body},{is_banned:true}, function (err) {
@@ -14,7 +14,7 @@ router.post('/admin/ban', cors(),function (req, res) {
     })
 })
 
-// announcement
+// Send a notification to all users
 router.post('/admin/announce', cors(),function (req, res) {
     db.connect()
     db.User.updateMany( {$push:{message: "Admin has posted a new announcement: " + req.body}},function (err, docs) {
