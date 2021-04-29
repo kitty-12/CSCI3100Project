@@ -34,7 +34,7 @@ name: "Admin",
     ban:function (){
         console.log(this.input1)
       this.$http.get(
-          "http://localhost:3000/admin/ban",
+          "http://localhost:3000/api/admin/ban",
           {params:{input1:this.input1}},
           {emulateJSON:true}).then(
           function(res){
@@ -48,7 +48,7 @@ name: "Admin",
     //send the announcement text to the server
     sendAnc:function (){
       this.$http.get(
-          "http://localhost:3000/admin/announce",
+          "http://localhost:3000/api/admin/announce",
           {params:{input2:this.input2}},
           {emulateJSON:true}).then(
           function(res){
