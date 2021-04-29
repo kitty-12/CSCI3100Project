@@ -118,7 +118,7 @@ export default {
 
     // ask the server to get data for hottest articles from the database
     this.$http.post(
-        "http://localhost:3000/main_page/admin/mainPage",
+        "http://localhost:3000/api/main_page/mainPage",
         {_id: this.userid},
         {emulateJSON: true}).then(
         function (res) {
@@ -143,7 +143,7 @@ export default {
 
     //get data for latest articles from the database
     this.$http.post(
-        "http://localhost:3000/main_page/admin/mainPage_latest",
+        "http://localhost:3000/api/main_page/mainPage_latest",
         {_id: this.userid},
         {emulateJSON: true}).then(
         function (res) {
@@ -167,7 +167,7 @@ export default {
 
     // not used
     this.$http.post(
-        "http://localhost:3000/main_page/admin/mainPage_hotThiWeek",
+        "http://localhost:3000/api/main_page/mainPage_hotThiWeek",
         {_id: this.userid},
         {emulateJSON: true}).then(
         function (res) {
