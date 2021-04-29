@@ -7,7 +7,7 @@ let img = require("./img")
 
 // article
 //articlePage, article infomation
-router.post('/api/admin/articlePage', cors(),function (req, res) {
+router.post('/articlePage', cors(),function (req, res) {
     db.connect()
     let info = req.body
     db.Article.find({_id: info._id}, function (err, docs) {
@@ -26,7 +26,7 @@ router.post('/api/admin/articlePage', cors(),function (req, res) {
 })
 
 //articlePage(only comment)
-router.post('/api/admin/articlePage1', cors(),function (req, res) {
+router.post('/articlePage1', cors(),function (req, res) {
     db.connect()
     let info = req.body
     db.Article.find({_id: info._id}, { comments: 1 },function (err, docs) {
@@ -37,7 +37,7 @@ router.post('/api/admin/articlePage1', cors(),function (req, res) {
     })
 })
 //like an article, send a message
-router.post('/admin/like', cors(),function (req, res) {
+router.post('/like', cors(),function (req, res) {
     db.connect()
     let info = req.body
     var authid
@@ -90,7 +90,7 @@ router.post('/admin/like', cors(),function (req, res) {
     })
 })
 //delete an article
-router.post('/admin/delete', cors(),function (req, res) {
+router.post('/delete', cors(),function (req, res) {
     db.connect()
     db.Article.remove({_id: req.body._id}, function (err) {
         if (err) {
@@ -103,7 +103,7 @@ router.post('/admin/delete', cors(),function (req, res) {
 
 
 //collect an article, send a message
-router.post('/admin/collect', cors(),function (req, res) {
+router.post('/collect', cors(),function (req, res) {
     db.connect()
     let info = req.body
     var authid
@@ -159,7 +159,7 @@ router.post('/admin/collect', cors(),function (req, res) {
 })
 
 //create a comment, send a message
-router.post('/admin/createComment', cors(),function (req, res) {
+router.post('/createComment', cors(),function (req, res) {
     db.connect()
     let info = req.body
     var authid
