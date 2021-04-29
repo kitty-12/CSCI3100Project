@@ -5,7 +5,7 @@ const mail = require('./mail')
 cors = require("cors")
 let img = require("./img")
 // search result
-//search
+//search a keyword, return articles whose title or author name includes the keyword, rank by read or time
 router.post('/admin/search', cors(),function (req, res) {
     db.connect()
     let info = req.body
