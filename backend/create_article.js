@@ -6,7 +6,7 @@ cors = require("cors")
 let img = require("./img")
 
 // create article
-//createArticle
+//createArticle, get an article id
 router.post('/admin/createArticle', cors(),function (req, res) {
     db.connect()
     let article= new db.Article(req.body.articleInformation)
@@ -31,7 +31,7 @@ router.post('/admin/createArticle', cors(),function (req, res) {
     })
 })
 
-//updateArticle
+//update an article's content, decide whether to publish it
 router.post('/admin/updateArticle', cors(),function (req, res) {
     db.connect()
     let info = req.body
