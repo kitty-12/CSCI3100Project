@@ -6,7 +6,7 @@ cors = require("cors")
 let img = require("./img")
 // search result
 //search a keyword, return articles whose title or author name includes the keyword, rank by read or time
-router.post('/admin/search', cors(),function (req, res) {
+router.post('/search', cors(),function (req, res) {
     db.connect()
     let info = req.body
     console.log(info)
