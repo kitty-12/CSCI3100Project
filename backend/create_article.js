@@ -7,7 +7,7 @@ let img = require("./img")
 
 // create article
 //createArticle, get an article id
-router.post('/admin/createArticle', cors(),function (req, res) {
+router.post('/createArticle', cors(),function (req, res) {
     db.connect()
     let article= new db.Article(req.body.articleInformation)
     article.save(function (err) {
@@ -32,7 +32,7 @@ router.post('/admin/createArticle', cors(),function (req, res) {
 })
 
 //update an article's content, decide whether to publish it
-router.post('/admin/updateArticle', cors(),function (req, res) {
+router.post('/updateArticle', cors(),function (req, res) {
     db.connect()
     let info = req.body
     console.log(info)
