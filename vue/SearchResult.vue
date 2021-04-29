@@ -63,7 +63,7 @@ name: "SearchResult",
     if(this.type=='1' ||this.type=='2'){
       this.radio=this.type;
       this.$http.post(
-          "http://localhost:3000/search_result/admin/search",
+          "http://localhost:3000/api/search_result/search",
           {_id: this.uid,criterion:this.type,key:this.keyword},
           {emulateJSON: true}).then(
           function (res) {
@@ -82,7 +82,7 @@ name: "SearchResult",
     else if(this.type=='3')
     {
       this.$http.post(
-          "http://localhost:3000/user_page/admin/returnPersonalArtical",
+          "http://localhost:3000/api/user_page/returnPersonalArtical",
           {_id:this.uid},
           {emulateJSON:true}).then(
           function (res){
@@ -100,7 +100,7 @@ name: "SearchResult",
     //search user's all collections, the previous page is a user page
     else if(this.type=='4') {
       this.$http.post(
-          "http://localhost:3000/user_page/admin/returnCollectedArtical",
+          "http://localhost:3000/api/user_page/returnCollectedArtical",
           {_id: this.uid},
           {emulateJSON: true}).then(
           function (res) {
@@ -121,7 +121,7 @@ name: "SearchResult",
        */
       else if(this.type=='5'){
       this.$http.post(
-          "http://localhost:3000/main_page/admin/mainPage",
+          "http://localhost:3000/api/main_page/mainPage",
           {_id: this.uid},
           {emulateJSON: true}).then(
           function (res) {
@@ -141,7 +141,7 @@ name: "SearchResult",
        */
       else if(this.type=='6'){
       this.$http.post(
-          "http://localhost:3000/main_page/admin/mainPage_latest",
+          "http://localhost:3000/api/main_page/mainPage_latest",
           {_id: this.uid},
           {emulateJSON: true}).then(
           function (res) {
@@ -157,7 +157,7 @@ name: "SearchResult",
     }
       /*else if (this.type=='7'){
       this.$http.post(
-          "http://localhost:3000/main_page/admin/mainPage",
+          "http://localhost:3000/api/main_page/mainPage",
           {_id: this.uid},
           {emulateJSON: true}).then(
           function (res) {
