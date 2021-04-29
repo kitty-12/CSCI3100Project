@@ -159,7 +159,7 @@ router.post('/admin/collect', cors(),function (req, res) {
 })
 
 //create a comment, send a message
-router.post('/createComment', cors(),function (req, res) {
+router.post('/admin/createComment', cors(),function (req, res) {
     db.connect()
     let info = req.body
     var authid
@@ -169,10 +169,14 @@ router.post('/createComment', cors(),function (req, res) {
         if (err) {
             return
         }
-        if (docs[0].is_banned)
-            res.send({message:"You are not allowed to comment."})
+        if (docs[0].is_banned){
+            res.send({message:"ban"})
+            return;
+        }
+
+
         commentername = docs[0].profile.uname
-    
+
         db.Article.find({_id: info.article_id}, function (err, docs1) {
             if (err) {
                 return
