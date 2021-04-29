@@ -6,7 +6,7 @@ cors = require("cors")
 let img = require("./img")
 
 // article
-//articlePage
+//articlePage, article infomation
 router.post('/api/admin/articlePage', cors(),function (req, res) {
     db.connect()
     let info = req.body
@@ -36,7 +36,7 @@ router.post('/api/admin/articlePage1', cors(),function (req, res) {
         res.send(docs[0])
     })
 })
-//like
+//like an article, send a message
 router.post('/admin/like', cors(),function (req, res) {
     db.connect()
     let info = req.body
@@ -89,7 +89,7 @@ router.post('/admin/like', cors(),function (req, res) {
         })
     })
 })
-//delete
+//delete an article
 router.post('/admin/delete', cors(),function (req, res) {
     db.connect()
     db.Article.remove({_id: req.body._id}, function (err) {
@@ -102,7 +102,7 @@ router.post('/admin/delete', cors(),function (req, res) {
 })
 
 
-//collect
+//collect an article, send a message
 router.post('/admin/collect', cors(),function (req, res) {
     db.connect()
     let info = req.body
@@ -158,7 +158,7 @@ router.post('/admin/collect', cors(),function (req, res) {
     })
 })
 
-//createComment
+//create a comment, send a message
 router.post('/admin/createComment', cors(),function (req, res) {
     db.connect()
     let info = req.body
