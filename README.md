@@ -1,5 +1,5 @@
 # CSCI3100Project Online Fan-work Platform: Donuts
-Group F2
+Group F2  
 Authors:
 Yao Haishu 1155107831  
 Ye Jianqiu 1155124313  
