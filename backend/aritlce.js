@@ -168,6 +168,7 @@ router.post('/admin/createComment', cors(),function (req, res) {
     var title
     db.User.find({_id: info.user_id}, function (err, docs) {
         if (err) {
+            res.status(500).send()
             return
         }
         if (docs[0].is_banned){
