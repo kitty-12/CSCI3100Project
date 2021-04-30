@@ -1,8 +1,9 @@
+// import the express framework and middlewares
 const express = require('express'),
     bodyParser = require("body-parser");
     app = express(),
     expressPort = 3000,
-cors = require("cors")
+cors = require("cors") 
 
 // import all routes
 article = require("./aritlce")
@@ -23,7 +24,7 @@ app.all('*', function(req, res, next) {
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
-
+// start service
 app.listen(expressPort,()=>{
     console.log("listening on " + expressPort)
 })
@@ -35,7 +36,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-// routes
+// assign the routes depending on the functionality
 app.use("/api/upload",img.router)
 app.use("/api/plugin",plugin)
 app.use("/api/article",article)
