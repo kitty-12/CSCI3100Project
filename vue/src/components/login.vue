@@ -69,7 +69,7 @@ export default {
                     }
                     
                     this.$http.post(
-                        "http://localhost:3000/main_page/admin/login",
+                        "http://localhost:3000/api/main_page/login",
                         postform,
                         {emulateJSON: true})
                         .then(
