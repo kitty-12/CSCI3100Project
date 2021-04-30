@@ -1,5 +1,3 @@
-//import Vue from 'vue'
-//import App from './App.vue'
 import Vue from "vue";
 import App from "./App.vue";
 import ElementUI from "element-ui";
@@ -34,7 +32,7 @@ const router = new VueRouter({
     {path: "/register",name:"register", component: () => import("@/components/register.vue")},
     {path: "/create",name:"create", component: () => import("@/components/makeFanwork.vue")},
     {path: "/article",name:'article',component:()=>import("@/components/article.vue")},
-    //{path: "/test",name:"", component: () => import("@/components/test.vue")}
+    {path:"/admin", name: 'Admin',component:()=>import("@/components/Admin.vue")}
   ]
 });
 
@@ -43,3 +41,4 @@ new Vue({
   render: h => h(App),
   router
 }).$mount('#app')
+
