@@ -1,3 +1,8 @@
+<!--
+    * @File Description: Create Post page, upload the fanwork to database
+    * @Last Edit Date: 2021/4/30
+-->
+
 <template>
     <div class="makefanwork">
       <Navigator :uid="uid"></Navigator>
@@ -81,7 +86,7 @@ import Navigator from "./Navigator.vue";
 
               actionUp:'/api/upload',
               fileList:[],
-              title:'',
+              title:'Title',
               content:'',
               choice: true,
               uid:'',
@@ -94,7 +99,7 @@ import Navigator from "./Navigator.vue";
                 tag: [],
                 like: [],
                 collect: [],
-                img:[],
+                img:'',
                 time: '',
                 hasImage: '1'
               },
@@ -127,13 +132,14 @@ import Navigator from "./Navigator.vue";
             console.log(file);
           },
 
+          // can be ignore, may have futher restriction to file
           beforeFile(file){
             let name = file.name
-            if(name != '123')
+            if(name)
                 name = file.name;
-
           },
 
+          // post the article with image
           fileRequest(item) {
             let uploadData = new FormData()
             uploadData.append('file',item.file)
@@ -142,10 +148,24 @@ import Navigator from "./Navigator.vue";
               .then(res =>{
                 //console.log(res);
                 console.log(res.data.path);
-                this.articleInformation.img[0] = res.data.path
-              })
+                this.articleInformation.img = res.data.path
+                this.$http.post(
+                        "http://localhost:3000/create_Article/admin/updateArticle",
+                        this.articleInformation,
+                        {emulateJSON: true})
+                        .then(
+                            function (res) {
+                                console.log(this.articleInformation)
+                                console.log(res.status);
+                                this.$router.push({name:"article", params:{uid:this.uid,article_id:this.articleInformation._id}})
+                            }
+                        );
+              }
+              
+              )
           },
 
+          // post the article content to server
           submitUpload() {
             console.log(this.dynamicTags);
             let finalContent = this.content.replace(/\r\n/g, '<br>').replace(/\n/g, '<br>').replace(/\s/g,' ');
@@ -155,7 +175,7 @@ import Navigator from "./Navigator.vue";
             if(this.choice !== true)
             {
               this.articleInformation.hasImage = '0';
-              this.img = [];
+              //this.img = [];
             }
               
 
@@ -164,22 +184,29 @@ import Navigator from "./Navigator.vue";
             this.articleInformation.text = finalContent;
             this.articleInformation.status = '1';
 
-            console.log(this.articleInformation);
-            console.log(this.fileList.length);
+            
+            //console.log(this.fileList.length);
 
             if(this.choice == true)
               this.$refs.upload.submit();
-
-            this.$http.post(
-                        "http://localhost:3000/api/create_Article/updateArticle",
+            else{
+              this.$http.post(
+                        "http://localhost:3000/create_Article/admin/updateArticle",
                         this.articleInformation,
                         {emulateJSON: true})
                         .then(
                             function (res) {
+                                console.log(this.articleInformation)
                                 console.log(res.status);
                                 this.$router.push({name:"article", params:{uid:this.uid,article_id:this.articleInformation._id}})
+                            },
+                            function(res){
+                              console.log(res);
                             }
                         );
+            }
+
+            console.log(this.articleInformation);
             
           }, 
 
