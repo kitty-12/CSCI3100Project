@@ -1,4 +1,4 @@
-# donuts
+# Donuts
 
 ## Project setup
 ```
