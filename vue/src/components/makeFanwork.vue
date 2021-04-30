@@ -143,14 +143,14 @@ import Navigator from "./Navigator.vue";
           fileRequest(item) {
             let uploadData = new FormData()
             uploadData.append('file',item.file)
-            this.$axios.post('/upload/img',uploadData
+            this.$axios.post('api/upload/img',uploadData
             )
               .then(res =>{
                 //console.log(res);
                 console.log(res.data.path);
                 this.articleInformation.img = res.data.path
                 this.$http.post(
-                        "http://localhost:3000/create_Article/admin/updateArticle",
+                        "http://localhost:3000/api/create_Article/updateArticle",
                         this.articleInformation,
                         {emulateJSON: true})
                         .then(
@@ -191,7 +191,7 @@ import Navigator from "./Navigator.vue";
               this.$refs.upload.submit();
             else{
               this.$http.post(
-                        "http://localhost:3000/create_Article/admin/updateArticle",
+                        "http://localhost:3000/api/create_Article/updateArticle",
                         this.articleInformation,
                         {emulateJSON: true})
                         .then(
